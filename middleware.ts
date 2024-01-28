@@ -1,0 +1,45 @@
+import NextAuth from "next-auth";
+
+import {
+  authRoutes,
+  publicRoutes,
+  apiAuthPrefix,
+  DEFAULT_LOGIN_REDIRECT,
+} from "@/routes";
+/**
+ * This way of configuring the next auth is because Prisma does not support Edge
+ */
+import authConfig from "@/auth.config";
+
+const { auth } = NextAuth(authConfig);
+
+export default auth((req) => {
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+
+  if (isApiAuthRoute) return null;
+
+  if (isAuthRoute) {
+    if (isLoggedIn)
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    return null;
+  }
+
+  if (!isLoggedIn && !isPublicRoute) {
+    return Response.redirect(new URL("/login", nextUrl));
+  }
+
+  return null;
+});
+
+/**
+ * This will decide which files will invoke the middleware
+ * With this particular regex it will invoke for all files and routes expect for some nextjs specific files
+ */
+export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};
