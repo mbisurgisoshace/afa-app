@@ -7,14 +7,14 @@
  * These routes do not require authentication
  * @type{string[]}
  */
-export const publicRoutes = [];
+export const publicRoutes: string[] = [];
 
 /**
  * An Array of routes that are use for authentication
  * These routes will redirect logged in users to /settings
  * @type{string[]}
  */
-export const authRoutes = ["/"];
+export const authRoutes: string[] = ["/"];
 
 /**
  * The prefix for API authentication routes

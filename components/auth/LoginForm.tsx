@@ -61,8 +61,12 @@ export default function LoginForm() {
     startTransition(async () => {
       if (!recordarUsuario) setUsuario("");
       if (recordarUsuario) setUsuario(values.email);
-      const { error } = await login(values);
-      //   setError(error);
+
+      const authResult = await login(values);
+
+      if (authResult && authResult.error) {
+        //   setError(error);
+      }
     });
   };
 

@@ -7,12 +7,6 @@ import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getUserById } from "@/lib/auth/user";
 
-declare module "next-auth" {
-  interface User {
-    role: UserRole;
-  }
-}
-
 /**
  * This way of configuring the next auth is because Prisma does not support Edge
  */
