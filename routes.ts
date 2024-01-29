@@ -3,18 +3,18 @@
  */
 
 /**
- * An Array of routes that are use for authentication
- * These routes will redirect logged in users to /settings
- * @type{string[]}
- */
-export const authRoutes = ["/login", "/register"];
-
-/**
  * An Array of routes that are accessible to the public
  * These routes do not require authentication
  * @type{string[]}
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = [];
+
+/**
+ * An Array of routes that are use for authentication
+ * These routes will redirect logged in users to /settings
+ * @type{string[]}
+ */
+export const authRoutes = ["/"];
 
 /**
  * The prefix for API authentication routes

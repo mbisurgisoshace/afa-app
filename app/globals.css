@@ -78,3 +78,28 @@ html, body, :root {
     @apply bg-background text-foreground;
   }
 }
+
+.background-animate {
+  background: linear-gradient(237deg, #31869b, #051314);
+  background-size: 400% 400%;
+
+  -webkit-animation: BackgroundAnimation 40s ease infinite;
+  -moz-animation: BackgroundAnimation 40s ease infinite;
+  animation: BackgroundAnimation 40s ease infinite;
+}
+
+@-webkit-keyframes BackgroundAnimation {
+  0%{background-position:0% 78%}
+  50%{background-position:100% 23%}
+  100%{background-position:0% 78%}
+}
+@-moz-keyframes BackgroundAnimation {
+  0%{background-position:0% 78%}
+  50%{background-position:100% 23%}
+  100%{background-position:0% 78%}
+}
+@keyframes BackgroundAnimation {
+  0%{background-position:0% 78%}
+  50%{background-position:100% 23%}
+  100%{background-position:0% 78%}
+}

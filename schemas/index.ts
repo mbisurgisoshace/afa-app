@@ -23,5 +23,5 @@ export const RegisterSchema = z.object({
   apellido: z.string().min(1, {
     message: "Apellido es requerido",
   }),
-  role: z.nativeEnum(UserRole).default("USER"),
+  role: z.nativeEnum(UserRole).optional(),
 });
