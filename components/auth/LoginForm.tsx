@@ -127,6 +127,7 @@ export default function LoginForm() {
               <div className="flex items-center space-x-2">
                 <Switch
                   id="recordar"
+                  disabled={isPending}
                   checked={recordarUsuario}
                   onCheckedChange={setRecordarUsuario}
                 />
