@@ -7,7 +7,7 @@ export default async function Home() {
       <div className="h-full flex-1 flex items-center justify-center background-animate">
         <Image alt="Logo" height={65} width={442} src={"/logo.svg"} />
       </div>
-      <div className="h-full flex-1 flex flex-col items-center justify-center">
+      <div className="h-full flex-1 flex flex-col items-center justify-center bg-[#F4F4FA]">
         <LoginForm />
         <Image
           alt="Logo Afa"
