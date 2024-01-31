@@ -75,7 +75,7 @@ export default function LoginForm() {
       <CardHeader>
         <CardTitle
           className={cn(
-            "font-semibold text-[#31869B] text-3xl",
+            "font-semibold text-primary text-3xl",
             textFont.className
           )}
         >
