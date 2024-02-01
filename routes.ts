@@ -24,6 +24,13 @@ export const authRoutes: string[] = ["/"];
 export const apiAuthPrefix = "/api/auth";
 
 /**
+ * The prefix for API webhook routes
+ * These routes do not require authentication
+ * @type{string}
+ */
+export const apiWebhookPrefix: string = "/api/webhook";
+
+/**
  * The default redirect path after logging in
  * @type{string}
  */
