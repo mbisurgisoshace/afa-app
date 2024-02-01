@@ -36,14 +36,23 @@ export const jotformParser = (
       const formattedAnswer = extractAnswer(jotformElement);
 
       if (isArray(formattedAnswer)) {
-        //TODO: Extraer cada respuesta de acuerdo al nombre del campo
         const formattedWidgetAnswer = parseWidgetAnswer(
           jotformElement.name as WidgetFieldName,
           formattedAnswer
         );
 
-        //formattedFormSubmission.personasInteres.push(...formattedAnswer);
-        formattedFormSubmission.personasInteres.push(...formattedWidgetAnswer);
+        if (
+          jotformElement.name === "dondeCotiza" ||
+          jotformElement.name === "oficinasExterior" ||
+          jotformElement.name === "operacionesExterior"
+        ) {
+          formattedFormSubmission[jotformElement.name] = formattedWidgetAnswer;
+        } else {
+          formattedFormSubmission.personasInteres.push(
+            ...formattedWidgetAnswer
+          );
+        }
+
         return;
       }
 
