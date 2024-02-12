@@ -25,3 +25,8 @@ export const RegisterSchema = z.object({
   }),
   role: z.nativeEnum(UserRole).optional(),
 });
+
+export const CreateSubmittedFormSchema = z.object({
+  formId: z.string(),
+  submissionId: z.string(),
+});

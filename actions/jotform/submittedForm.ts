@@ -1,10 +1,13 @@
 "use server";
 
-import { db } from "@/lib/db";
+import { z } from "zod";
 import { SubmittedForm } from "@prisma/client";
 
+import { db } from "@/lib/db";
+import { CreateSubmittedFormSchema } from "@/schemas";
+
 export const createSubmittedForm = async (
-  submittedForm: SubmittedForm
+  submittedForm: z.infer<typeof CreateSubmittedFormSchema>
 ): Promise<SubmittedForm> => {
   return await db.submittedForm.create({
     data: submittedForm,

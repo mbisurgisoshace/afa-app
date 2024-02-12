@@ -36,4 +36,6 @@ export const EXCLUDED_FIELDS = [
   "PJCargaDDJJGanancias",
   "PHCargaDJJJGanancias",
   "escribaUna189",
+  "tieneUd",
+  "algunoDe",
 ];

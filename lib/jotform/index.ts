@@ -16,8 +16,22 @@ import {
   extractDatetimeAnswer,
   extractFullnameAnswer,
 } from "@/lib/jotform/answerTypes";
-import { parseWidgetAnswer } from "./answerTypes/widget";
 import { EXCLUDED_FIELDS } from "./excludedFields";
+import { parseWidgetAnswer } from "./answerTypes/widget";
+import { dbValueToPrismaEnumValue } from "../utils";
+import {
+  condicionIvaDbMapper,
+  estadoCivilDbMapper,
+  sexoDbMapper,
+  tipoActividadDbMapper,
+  tipoCuentaBancariaDbMapper,
+  tipoDocumentoAfipDbMapper,
+  tipoDocumentoDbMapper,
+  tipoEntidadDbMapper,
+  tipoPersonaInteresDbMapper,
+  tipoRelacionDbMapper,
+  tipoSocietarioDbMapper,
+} from "@/lib/jotform/mapper";
 
 export const jotformParser = (
   jotformResponse: Response<JotformResponseContent>
@@ -35,6 +49,14 @@ export const jotformParser = (
       const jotformElement = jotformResponse.content.answers[key];
       const formattedAnswer = extractAnswer(jotformElement);
 
+      if (jotformElement.name === "dondeCotiza") {
+        formattedFormSubmission[jotformElement.name] = (
+          formattedAnswer as string
+        ).split("\n");
+
+        return;
+      }
+
       if (isArray(formattedAnswer)) {
         const formattedWidgetAnswer = parseWidgetAnswer(
           jotformElement.name as WidgetFieldName,
@@ -42,7 +64,6 @@ export const jotformParser = (
         );
 
         if (
-          jotformElement.name === "dondeCotiza" ||
           jotformElement.name === "oficinasExterior" ||
           jotformElement.name === "operacionesExterior"
         ) {
@@ -64,7 +85,10 @@ export const jotformParser = (
         return;
       }
 
-      formattedFormSubmission[jotformElement.name] = formattedAnswer;
+      formattedFormSubmission[jotformElement.name] = mapEnumAnswer(
+        formattedAnswer,
+        jotformElement.name
+      );
     });
 
   return formattedFormSubmission;
@@ -88,5 +112,32 @@ const extractAnswer = (jotformElement: JotformElement<any>) => {
       return extractDatetimeAnswer(jotformElement);
     case "control_address":
       return extractAddressAnswer(jotformElement);
+  }
+};
+
+const mapEnumAnswer = (answer: any, fieldName: string) => {
+  switch (fieldName) {
+    case "tipoRelacion":
+      return dbValueToPrismaEnumValue(answer, tipoRelacionDbMapper);
+    case "tipoActividad":
+      return dbValueToPrismaEnumValue(answer, tipoActividadDbMapper);
+    case "tipoDePersona":
+      return dbValueToPrismaEnumValue(answer, tipoEntidadDbMapper);
+    case "tipoCuentaBancaria":
+      return dbValueToPrismaEnumValue(answer, tipoCuentaBancariaDbMapper);
+    case "tipoSocietario":
+      return dbValueToPrismaEnumValue(answer, tipoSocietarioDbMapper);
+    case "tipoDocumento":
+      return dbValueToPrismaEnumValue(answer, tipoDocumentoDbMapper);
+    case "tipoDocumentoAfip":
+      return dbValueToPrismaEnumValue(answer, tipoDocumentoAfipDbMapper);
+    case "condicionIva":
+      return dbValueToPrismaEnumValue(answer, condicionIvaDbMapper);
+    case "sexo":
+      return dbValueToPrismaEnumValue(answer, sexoDbMapper);
+    case "estadoCivil":
+      return dbValueToPrismaEnumValue(answer, estadoCivilDbMapper);
+    default:
+      return answer;
   }
 };

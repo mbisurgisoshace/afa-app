@@ -1,7 +1,12 @@
-import { JotformElement, WidgetFieldName } from "../types";
+import { tipoPersonaInteresDbMapper } from "@/lib/jotform/mapper";
+import { dbValueToPrismaEnumValue, formatDate } from "@/lib/utils";
+import { JotformElement, WidgetFieldName } from "@/lib/jotform/types";
 
 export const extractWidgetAnswer = (jotformElement: JotformElement<string>) => {
-  if (!jotformElement.answer || jotformElement.answer === "Accepted") return [];
+  if (!jotformElement.answer) return [];
+
+  if (jotformElement.name === "dondeCotiza") return jotformElement.answer;
+
   return JSON.parse(jotformElement.answer);
 };
 
@@ -38,7 +43,10 @@ const parseExterior = (answers: any[]) => {
 
 const parseRepresentantesLegales = (answers: any[]) => {
   return answers.map((representanteLegal) => ({
-    tipo: "Representante Legal",
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      "Representante Legal",
+      tipoPersonaInteresDbMapper
+    ),
     nombreApellido: representanteLegal["Nombre y Apellido"],
     documento: representanteLegal["D.N.I. / C.U.I.T."],
     telefono: representanteLegal["Teléfono"],
@@ -51,39 +59,58 @@ const parseRepresentantesLegales = (answers: any[]) => {
 
 const parseEmpleadosActualesExAfa = (answers: any[]) => {
   return answers.map((empleadoActualExAfa) => ({
-    tipo: "Empleado Ex AFA",
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      "Empleado Ex AFA",
+      tipoPersonaInteresDbMapper
+    ),
     nombreApellido: empleadoActualExAfa["Nombre y Apellido"],
     cargoEnAfa: empleadoActualExAfa["Cargo que ocupó en AFA"],
-    fechaCargoEnAfa: empleadoActualExAfa["Desde fecha"]?.replaceAll("-", "/"),
+    fechaCargoEnAfa: formatDate(
+      empleadoActualExAfa["En que fecha ingreso en su empresa"]?.replaceAll(
+        "-",
+        "/"
+      )
+    ),
   }));
 };
 
 const parseExEmpleadosActualesAfa = (answers: any[]) => {
   return answers.map((exEmpleadoActualAfa) => ({
-    tipo: "Ex Empleado Actual AFA",
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      "Ex Empleado Actual AFA",
+      tipoPersonaInteresDbMapper
+    ),
     nombreApellido: exEmpleadoActualAfa["Nombre y Apellido"],
     cargoEnAfa: exEmpleadoActualAfa["Cargo que ocupa en AFA"],
-    fechaCargoEnAfa: exEmpleadoActualAfa[
-      "Hasta que fecha trabajo en su empresa"
-    ]?.replaceAll("-", "/"),
+    fechaCargoEnAfa: formatDate(
+      exEmpleadoActualAfa["Hasta que fecha trabajo en su empresa"]?.replaceAll(
+        "-",
+        "/"
+      )
+    ),
   }));
 };
 
 const parseFamiliaresComunAfa = (answers: any[]) => {
   return answers.map((familiarComunAfa) => ({
-    tipo: "Familiar Comun AFA Entidad",
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      "Familiar Comun AFA Entidad",
+      tipoPersonaInteresDbMapper
+    ),
     nombreApellido: familiarComunAfa["Nombre y Apellido"],
     cargoEnAfa: familiarComunAfa["Cargo que ocupa en AFA"],
-    fechaCargoEnAfa: familiarComunAfa["Desde fecha trabaja en AFA"]?.replaceAll(
-      "-",
-      "/"
+    fechaCargoEnAfa: formatDate(
+      familiarComunAfa["Desde fecha trabaja en AFA"]?.replaceAll("-", "/")
     ),
   }));
 };
 
 const parsePersonaInteresEconomicoAfa = (answers: any[]) => {
   return answers.map((personaInteresEconomicoAfa) => ({
-    tipo: "Personal Interes Economico AFA",
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      "Personal Interes Economico AFA",
+      tipoPersonaInteresDbMapper
+    ),
     nombreApellido: personaInteresEconomicoAfa["Nombre y Apellido"],
     tipoInteresAfa:
       personaInteresEconomicoAfa[
@@ -94,7 +121,10 @@ const parsePersonaInteresEconomicoAfa = (answers: any[]) => {
 
 const parseAutoridadesSocietarias = (answers: any[]) => {
   return answers.map((autoridadSocietaria) => ({
-    tipo: autoridadSocietaria["Tipo"],
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      autoridadSocietaria["Tipo"],
+      tipoPersonaInteresDbMapper
+    ),
     nombreApellido: autoridadSocietaria["Nombre y Apellido"],
     documento: autoridadSocietaria["D.N.I. / C.U.I.T."],
     telefono: autoridadSocietaria["Teléfono"],
@@ -107,7 +137,10 @@ const parseAutoridadesSocietarias = (answers: any[]) => {
 
 const parseDetallePropietarios = (answers: any[]) => {
   return answers.map((detallePropietario) => ({
-    tipo: detallePropietario["Tipo"],
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      detallePropietario["Tipo"],
+      tipoPersonaInteresDbMapper
+    ),
     nombreApellido: detallePropietario["Nombre y Apellido"],
     documento: detallePropietario["D.N.I. / C.U.I.T."],
     telefono: detallePropietario["Teléfono"],
