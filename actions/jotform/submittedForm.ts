@@ -16,7 +16,9 @@ export const createSubmittedForm = async (
 
 export const processSubmittedForm = async (id: string) => {
   await db.submittedForm.update({
-    where: { id },
+    where: {
+      id,
+    },
     data: { procesado: true },
   });
 };

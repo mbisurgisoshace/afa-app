@@ -6,7 +6,10 @@ import { db } from "@/lib/db";
 import { jotformParser } from "@/lib/jotform";
 import { createEntidad } from "@/actions/entidad/entidad";
 import { JotformResponseContent } from "@/lib/jotform/types";
-import { createSubmittedForm } from "@/actions/jotform/submittedForm";
+import {
+  createSubmittedForm,
+  processSubmittedForm,
+} from "@/actions/jotform/submittedForm";
 
 const jotformClient = new Jotform(process.env.JOTFORM_API_KEY);
 
@@ -24,25 +27,22 @@ export async function POST(request: NextRequest) {
     submissionId.toString()!
   )) as Response<JotformResponseContent>;
 
-  /**
-   * TODO: Guardar la informacion del formId y el submissionId y ponerle como estado no preocesado
-   *       Buscar la submission id en JotForm, procesarla, y guardarla en la base de datos. Si por algun motivo,
-   *       falla y no se puede guardar, se podra hacer de forma manual. Si se procesa correctamente, se cambia el
-   *       estado a procesada.
-   */
-  // await createSubmittedForm({
-  //   formId: submission.content.form_id,
-  //   submissionId: submissionId.toString(),
-  // });
+  const submittedForm = await createSubmittedForm({
+    formId: submission.content.form_id,
+    submissionId: submissionId.toString(),
+  });
 
   const formattedSubmission = jotformParser(submission);
 
-  await createEntidad(formattedSubmission);
+  try {
+    await createEntidad(formattedSubmission);
+    await processSubmittedForm(submittedForm.id);
+  } catch (err) {
+    /**
+     * TODO: Enviar algun tipo de notificacion via email o similar con el numero de submissionId
+     */
+  }
 
-  //const data = await request.formData();
-  //console.log("formID", data.get("formID"));
-  //console.log("submissionID", data.get("submissionID"));
   return NextResponse.json({ data: submission, parsed: formattedSubmission });
-  //return NextResponse.json({ data: submission });
   return NextResponse.json({ success: true });
 }
