@@ -15,7 +15,8 @@ const jotformClient = new Jotform(process.env.JOTFORM_API_KEY);
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
-  const submissionId = data.get("submissionId");
+  console.log("data", data);
+  const submissionId = data.get("submissionID");
 
   if (!submissionId)
     return NextResponse.json(
