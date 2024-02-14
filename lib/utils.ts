@@ -16,7 +16,7 @@ export function dbValueToPrismaEnumValue<I, O>(
 }
 
 export function formatDate(date: string) {
-  if (!date) return;
+  if (!date) return undefined;
 
   const day = date.split("/")[0];
   const month = date.split("/")[1];

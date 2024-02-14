@@ -49,7 +49,7 @@ export const jotformParser = (
       const jotformElement = jotformResponse.content.answers[key];
       const formattedAnswer = extractAnswer(jotformElement);
 
-      if (jotformElement.name === "dondeCotiza") {
+      if (jotformElement.name === "dondeCotiza" && !isArray(formattedAnswer)) {
         formattedFormSubmission[jotformElement.name] = (
           formattedAnswer as string
         ).split("\n");

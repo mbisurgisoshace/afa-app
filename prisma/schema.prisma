@@ -132,35 +132,36 @@ model SubmittedForm {
 }
 
 model Entidad {
-  id                                      Int                @id @default(autoincrement())
+  id                                      Int                 @id @default(autoincrement())
   codigoEntidad                           String
-  fecha                                   DateTime
-  tipoRelacion                            TipoRelacion
-  tipoActividad                           TipoActividad
-  condicionIva                            CondicionIva
-  codigoActividadAfip                     String
-  tipoIndustria                           String
-  ingresosEnPesos                         Decimal
-  fechaCierrePesos                        DateTime
-  tipoDePersona                           TipoEntidad
-  direccion                               String
-  ciudad                                  String
-  estado                                  String
-  codigoPostal                            String
-  pais                                    String
-  telefono                                String
-  email                                   String
-  contactoAfa                             String
-  bancoCuentaBancaria                     String
-  titularCuentaBancaria                   String
-  sucursalCuentaBancaria                  String
-  numeroCuentaBancaria                    String
-  tipoCuentaBancaria                      TipoCuentaBancaria
-  cbu                                     String
+  fecha                                   DateTime?
+  tipoRelacion                            TipoRelacion?
+  tipoActividad                           TipoActividad?
+  condicionIva                            CondicionIva?
+  codigoActividadAfip                     String?
+  tipoIndustria                           String?
+  ingresosEnPesos                         Decimal?
+  fechaCierrePesos                        DateTime?
+  tipoDePersona                           TipoEntidad?
+  direccion                               String?
+  ciudad                                  String?
+  estado                                  String?
+  codigoPostal                            String?
+  pais                                    String?
+  telefono                                String?
+  email                                   String?
+  contactoAfa                             String?
+  bancoCuentaBancaria                     String?
+  titularCuentaBancaria                   String?
+  sucursalCuentaBancaria                  String?
+  numeroCuentaBancaria                    String?
+  tipoCuentaBancaria                      TipoCuentaBancaria?
+  cbu                                     String?
   alias                                   String?
-  tieneOficinasExterior                   Boolean
+  cuentaEnExterior                        Boolean?
+  tieneOficinasExterior                   Boolean?
   oficinasExterior                        String[]
-  tieneOperacionesExterior                Boolean
+  tieneOperacionesExterior                Boolean?
   operacionesExterior                     String[]
   montoOperacionesExterior                Decimal?
   fechaCierrePesosExterior                DateTime?
@@ -180,12 +181,12 @@ model Entidad {
   esPepEnCaracterDe                       String?
   archivoDDJJPep                          String?
   cuit                                    String?
-  conflictoInteresEmpleadosAfa            Boolean
+  conflictoInteresEmpleadosAfa            Boolean?
   descripcionConflictoInteresEmpleadosAfa String?
-  empleadoActualExAfa                     Boolean
-  exEmpleadoActualAfa                     Boolean
-  familiarComunAfaEntidad                 Boolean
-  personalConInteresEconomicoAfa          Boolean
+  empleadoActualExAfa                     Boolean?
+  exEmpleadoActualAfa                     Boolean?
+  familiarComunAfaEntidad                 Boolean?
+  personalConInteresEconomicoAfa          Boolean?
   razonSocial                             String?
   tipoSocietario                          TipoSocietario?
   fechaConstitucionSociedad               DateTime?
@@ -196,14 +197,14 @@ model Entidad {
   dondeCotiza                             String[]
   esSujetoObligado                        Boolean?
   razonSujetoObligado                     String?
-  tieneProgramaPrevencion                 Boolean
+  tieneProgramaPrevencion                 Boolean?
   archivoProgramaPrevencion               String?
-  tieneProgramaIntegridad                 Boolean
+  tieneProgramaIntegridad                 Boolean?
   archivoProgramaIntegridad               String?
   personasInteres                         PersonaInteres[]
   archivoFormularioDDJJ                   String?
-  createdAt                               DateTime           @default(now())
-  updatedAt                               DateTime           @updatedAt
+  createdAt                               DateTime            @default(now())
+  updatedAt                               DateTime            @updatedAt
 
   @@map("Entidades")
 }

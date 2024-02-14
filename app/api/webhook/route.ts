@@ -15,7 +15,6 @@ const jotformClient = new Jotform(process.env.JOTFORM_API_KEY);
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
-  console.log("data", data);
   const submissionId = data.get("submissionID");
 
   if (!submissionId)
@@ -39,6 +38,8 @@ export async function POST(request: NextRequest) {
     await createEntidad(formattedSubmission);
     await processSubmittedForm(submittedForm.id);
   } catch (err) {
+    console.log("err", err);
+
     /**
      * TODO: Enviar algun tipo de notificacion via email o similar con el numero de submissionId
      */
