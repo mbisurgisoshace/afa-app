@@ -2,9 +2,9 @@ import Link from "next/link";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
-import { DataTable } from "./_components/UsersTable";
 import { columns } from "./_components/UsersTable/columns";
 import { getUsers } from "@/actions/users";
+import { DataTable } from "@/components/DataTable";
 
 export default async function Users() {
   const users = await getUsers();

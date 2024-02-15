@@ -6,7 +6,7 @@ import LogoutButton from "@/components/auth/LogoutButton";
 
 export default function Navbar() {
   return (
-    <div className="bg-white py-4 px-6 flex items-center justify-between border-b border-[#DEDEDE]">
+    <div className="bg-white h-[64px] px-6 flex items-center justify-between border-b border-[#DEDEDE]">
       <div className="flex items-center justify-center gap-6">
         <Image alt="Logo" width={144} height={22} src="/logo-nav.svg" />
       </div>

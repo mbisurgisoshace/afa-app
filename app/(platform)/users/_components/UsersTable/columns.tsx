@@ -1,10 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { User } from "@prisma/client";
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { FilePenIcon, Trash2Icon, ViewIcon } from "lucide-react";
-import Link from "next/link";
+
+import { User } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { deleteUser } from "@/actions/users";
 
 export const columns: ColumnDef<Omit<User, "password">>[] = [
   {
@@ -33,17 +35,21 @@ export const columns: ColumnDef<Omit<User, "password">>[] = [
       const user = row.original;
 
       return (
-        <div className="flex items-center gap-4 text-primary">
+        <div className="flex items-center gap-4 text-primary justify-evenly">
           <Button size={"icon"} variant={"ghost"}>
-            <ViewIcon width={24} height={24} />
+            <ViewIcon size={24} strokeWidth={1.5} />
           </Button>
           <Button size={"icon"} asChild variant={"ghost"}>
             <Link href={`/users/${user.id}`}>
-              <FilePenIcon width={24} height={24} />
+              <FilePenIcon size={24} strokeWidth={1.5} />
             </Link>
           </Button>
-          <Button size={"icon"} variant={"ghost"}>
-            <Trash2Icon width={24} height={24} />
+          <Button
+            size={"icon"}
+            variant={"ghost"}
+            onClick={() => deleteUser(user.id)}
+          >
+            <Trash2Icon size={24} strokeWidth={1.5} />
           </Button>
         </div>
       );

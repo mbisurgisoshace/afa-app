@@ -7,6 +7,7 @@ import {
   BriefcaseIcon,
   CircleUserIcon,
   LayoutDashboardIcon,
+  MenuSquareIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -16,15 +17,25 @@ export default function SubNavbar() {
   const pathname = usePathname();
 
   return (
-    <div className="bg-white py-4 px-6 flex items-center border-b border-[#DEDEDE] gap-4">
+    <div className="bg-white h-[64px] px-6 flex items-center border-b border-[#DEDEDE] gap-4">
       <Button
         asChild
         className="rounded-2xl"
         variant={pathname === "/dashboard" ? "default" : "secondary"}
       >
         <Link href="/dashboard" className="flex flex-row items-center gap-2">
-          <LayoutDashboardIcon />
+          <LayoutDashboardIcon size={24} strokeWidth={1.5} />
           <span>Dashboard</span>
+        </Link>
+      </Button>
+      <Button
+        asChild
+        className="rounded-2xl"
+        variant={pathname === "/formularios" ? "default" : "secondary"}
+      >
+        <Link href="/formularios" className="flex flex-row items-center gap-2">
+          <MenuSquareIcon size={24} strokeWidth={1.5} />
+          <span>Formularios</span>
         </Link>
       </Button>
       <Button
@@ -33,7 +44,7 @@ export default function SubNavbar() {
         variant={pathname.includes("/entidades") ? "default" : "secondary"}
       >
         <Link href="/entidades" className="flex flex-row items-center gap-2">
-          <BriefcaseIcon />
+          <BriefcaseIcon size={24} strokeWidth={1.5} />
           <span>Entidades</span>
         </Link>
       </Button>
@@ -44,7 +55,7 @@ export default function SubNavbar() {
           variant={pathname.includes("/users") ? "default" : "secondary"}
         >
           <Link href="/users" className="flex flex-row items-center gap-2">
-            <CircleUserIcon />
+            <CircleUserIcon size={24} strokeWidth={1.5} />
             <span>Administración de Usuarios</span>
           </Link>
         </Button>

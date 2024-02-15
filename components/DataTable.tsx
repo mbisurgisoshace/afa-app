@@ -39,7 +39,15 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="text-sm text-[#475569]">
+                  <TableHead
+                    key={header.id}
+                    className="text-sm text-[#475569]"
+                    style={{
+                      width: header.getSize(),
+                      maxWidth: header.getSize(),
+                      minWidth: header.getSize(),
+                    }}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(

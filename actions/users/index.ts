@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export const getUsers = async () => {
   const users = await db.user.findMany();
@@ -13,4 +14,14 @@ export const getUsers = async () => {
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   }));
+};
+
+export const deleteUser = async (id: string) => {
+  await db.user.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/users");
 };
