@@ -4,7 +4,14 @@ import LoginForm from "@/components/auth/LoginForm";
 export default async function Home() {
   return (
     <div className="h-full flex flex-row">
-      <div className="h-full flex-1 flex flex-col items-center justify-center background-animate">
+      <div className="h-full flex-1 flex flex-col items-center justify-center bg-[#0f172a]">
+        <Image
+          alt="Login Image"
+          width={262}
+          height={275}
+          className="mb-16"
+          src={"/login-image.svg"}
+        />
         <Image alt="Logo" height={65} width={442} src={"/logo.svg"} />
         <Image
           alt="Logo Afa"

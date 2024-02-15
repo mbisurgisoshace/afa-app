@@ -37,3 +37,32 @@ export const createAdminUser = async (
 
   return { success: "User created" };
 };
+
+export const createUser = async (values: z.infer<typeof RegisterSchema>) => {
+  const validatedFields = RegisterSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields" };
+  }
+
+  const { email, password, nombre, apellido, role } = validatedFields.data;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const existingUser = await getUserByEmail(email);
+
+  if (existingUser) {
+    return { error: "Email already in use" };
+  }
+
+  await db.user.create({
+    data: {
+      email,
+      nombre,
+      apellido,
+      password: hashedPassword,
+      role,
+    },
+  });
+
+  return { success: "User created" };
+};

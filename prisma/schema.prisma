@@ -232,3 +232,14 @@ model PersonaInteres {
 
   @@map("PersonasInteres")
 }
+
+model PersonaTerrorista {
+  id           Int       @id @default(autoincrement())
+  dataId       String    @unique
+  nombre       String
+  organizacion String
+  desde        DateTime?
+  comments     String?
+
+  @@map("PersonasTerroristas")
+}

@@ -11,10 +11,10 @@ export default function Navbar() {
         <Image alt="Logo" width={144} height={22} src="/logo-nav.svg" />
       </div>
       <LogoutButton>
-        <Button>
-          <div className="flex items-center gap-2">
+        <Button variant={"secondary"} className="rounded-2xl">
+          <div className="flex items-center gap-2 text-[#475569] font-semibold">
+            <span>Cerrar sesión</span>
             <ExitIcon width={18} height={18} />
-            Salir
           </div>
         </Button>
       </LogoutButton>

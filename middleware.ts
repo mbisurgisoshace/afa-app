@@ -6,6 +6,7 @@ import {
   apiAuthPrefix,
   DEFAULT_LOGIN_REDIRECT,
   apiWebhookPrefix,
+  adminRoutes,
 } from "@/routes";
 /**
  * This way of configuring the next auth is because Prisma does not support Edge
@@ -14,11 +15,12 @@ import authConfig from "@/auth.config";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isApiWebhookRoute = nextUrl.pathname.startsWith(apiWebhookPrefix);
@@ -26,8 +28,12 @@ export default auth((req) => {
   if (isApiAuthRoute || isApiWebhookRoute) return null;
 
   if (isAuthRoute) {
-    if (isLoggedIn)
+    if (isLoggedIn) {
+      //if (isAdminRoute && req.auth?.user.role === "ADMIN") return null;
+
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+
     return null;
   }
 

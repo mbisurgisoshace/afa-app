@@ -4,12 +4,9 @@ import { Response } from "jotform/dist/types/response";
 
 import { db } from "@/lib/db";
 import { jotformParser } from "@/lib/jotform";
-import { createEntidad } from "@/actions/entidad/entidad";
+import { createEntidad } from "@/actions/entidad";
 import { JotformResponseContent } from "@/lib/jotform/types";
-import {
-  createSubmittedForm,
-  processSubmittedForm,
-} from "@/actions/jotform/submittedForm";
+import { createSubmittedForm, processSubmittedForm } from "@/actions/jotform";
 
 const jotformClient = new Jotform(process.env.JOTFORM_API_KEY);
 

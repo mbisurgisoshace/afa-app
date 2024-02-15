@@ -57,7 +57,6 @@ export default function LoginForm() {
   }, [form, usuario]);
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    // setError("");
     startTransition(async () => {
       if (!recordarUsuario) setUsuario("");
       if (recordarUsuario) setUsuario(values.email);
@@ -65,7 +64,6 @@ export default function LoginForm() {
       const authResult = await login(values);
 
       if (authResult && authResult.error) {
-        //   setError(error);
       }
     });
   };
