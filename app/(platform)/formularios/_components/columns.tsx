@@ -1,9 +1,10 @@
 "use client";
 
+import { toast } from "sonner";
 import { es } from "date-fns/locale";
-import { format, formatDistance } from "date-fns";
-import { ColumnDef } from "@tanstack/react-table";
+import { formatDistance } from "date-fns";
 import { AlertCircleIcon } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
 
 import { SubmittedForm } from "@prisma/client";
 import {
@@ -12,6 +13,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { procesarFormulario } from "@/actions/formularios";
+
+async function onProcesarFormulario(submittedForm: SubmittedForm) {
+  try {
+    await procesarFormulario(submittedForm);
+    toast.success("El formulario fue procesado correctamente.");
+  } catch (err) {
+    toast.error("Ha ocurrido un error procesando el formulario.");
+  }
+}
 
 export const columns: ColumnDef<SubmittedForm>[] = [
   {
@@ -28,7 +39,10 @@ export const columns: ColumnDef<SubmittedForm>[] = [
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <span className="text-sm text-primary font-semibold flex items-center gap-2">
+                  <span
+                    onClick={() => onProcesarFormulario(formulario)}
+                    className="text-sm text-primary font-semibold flex items-center gap-2"
+                  >
                     <AlertCircleIcon
                       size={16}
                       strokeWidth={1.5}
