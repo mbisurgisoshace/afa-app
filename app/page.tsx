@@ -1,7 +1,7 @@
 import Image from "next/image";
 import LoginForm from "@/components/auth/LoginForm";
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className="h-full flex flex-row">
       <div className="h-full flex-1 flex flex-col items-center justify-center bg-[#0f172a]">
