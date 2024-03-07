@@ -30,3 +30,24 @@ export const CreateSubmittedFormSchema = z.object({
   formId: z.string(),
   submissionId: z.string(),
 });
+
+export const EntidadSchema = z.object({
+  codigoEntidad: z.string(),
+  fecha: z.any(),
+  tipoRelacion: z.any(),
+  tipoActividad: z.any(),
+  condicionIva: z.any(),
+  codigoActividadAfip: z.any(),
+  tipoIndustria: z.any(),
+  ingresosEnPesos: z.any(),
+  fechaCierrePesos: z.any(),
+  tipoDePersona: z.any(),
+  direccion: z.any(),
+  ciudad: z.any(),
+  estado: z.any(),
+  pais: z.any(),
+  codigoPostal: z.any(),
+  telefono: z.any(),
+  email: z.any(),
+  contactoAfa: z.any(),
+});

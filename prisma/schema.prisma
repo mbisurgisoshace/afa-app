@@ -243,3 +243,24 @@ model PersonaTerrorista {
 
   @@map("PersonasTerroristas")
 }
+
+model Pais {
+  id   Int    @id @default(autoincrement())
+  pais String
+
+  @@map("Paises")
+}
+
+model ActividadAfip {
+  id            Int    @id @default(autoincrement())
+  actividadAfip String
+
+  @@map("ActividadesAfip")
+}
+
+model Industria {
+  id        Int    @id @default(autoincrement())
+  industria String
+
+  @@map("Industrias")
+}

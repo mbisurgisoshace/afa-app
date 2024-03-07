@@ -11,11 +11,47 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import InformacionGeneral from "./EntidadForm/InformacionGeneral";
+import { EntidadSchema } from "@/schemas";
+import { Entidad } from "@prisma/client";
+import { useEntidadesStore } from "@/zustand/store";
 
-export default function EntidadForm() {
-  const form = useForm();
+interface Tablas {
+  paises: string[];
+  industrias: string[];
+  actividadesAfip: string[];
+}
+
+interface EntidadFormProps {
+  tablas: Tablas;
+  entidad: Entidad;
+}
+
+export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
+  const form = useForm<z.infer<typeof EntidadSchema>>({
+    resolver: zodResolver(EntidadSchema),
+    defaultValues: {
+      codigoEntidad: entidad.codigoEntidad,
+      fecha: entidad.fecha?.toLocaleString(),
+      tipoRelacion: entidad.tipoRelacion,
+      tipoActividad: entidad.tipoActividad,
+      tipoIndustria: entidad.tipoIndustria,
+      codigoActividadAfip: entidad.codigoActividadAfip,
+      fechaCierrePesos: entidad.fechaCierrePesos,
+      condicionIva: entidad.condicionIva,
+      ingresosEnPesos: entidad.ingresosEnPesos,
+      tipoDePersona: entidad.tipoDePersona,
+      direccion: entidad.direccion,
+      ciudad: entidad.ciudad,
+      codigoPostal: entidad.codigoPostal,
+      estado: entidad.estado,
+      pais: entidad.pais,
+      telefono: entidad.telefono,
+      email: entidad.email,
+      contactoAfa: entidad.contactoAfa,
+    },
+  });
+
   return (
     <Form {...form}>
       <form>
@@ -24,24 +60,11 @@ export default function EntidadForm() {
           collapsible
           className="w-full flex flex-col gap-3"
         >
-          <AccordionItem
-            value="generales"
-            className="bg-white border border-[#DEDEDE] px-6 py-2 rounded-xl"
-          >
-            <AccordionTrigger>Datos generales</AccordionTrigger>
-            <AccordionContent>
-              <div className="w-fill grid grid-cols-2 gap-3">
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="codigoEntidad">Codigo</Label>
-                  <Input type="codigoEntidad" id="codigoEntidad" />
-                </div>
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="fecha">Fecha de Creacion</Label>
-                  <Input type="fecha" id="fecha" />
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
+          <InformacionGeneral
+            paises={tablas.paises}
+            industrias={tablas.industrias}
+            actividadesAfip={tablas.actividadesAfip}
+          />
           <AccordionItem
             value="datos_bancarios"
             className="bg-white border border-[#DEDEDE] px-6 py-2 rounded-xl"
