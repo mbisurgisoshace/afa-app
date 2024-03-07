@@ -10,11 +10,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Entidad } from "@prisma/client";
+import { EntidadSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
 import InformacionGeneral from "./EntidadForm/InformacionGeneral";
-import { EntidadSchema } from "@/schemas";
-import { Entidad } from "@prisma/client";
-import { useEntidadesStore } from "@/zustand/store";
 
 interface Tablas {
   paises: string[];

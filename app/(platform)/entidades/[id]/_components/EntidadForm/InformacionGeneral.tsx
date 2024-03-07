@@ -1,33 +1,18 @@
 "use client";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+import { z } from "zod";
 import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
+
+import {
+  condicionIvaDbMapper,
+  tipoActividadDbMapper,
+  tipoEntidadDbMapper,
+  tipoRelacionDbMapper,
+} from "@/lib/jotform/mapper";
 import {
   FormControl,
   FormField,
@@ -35,14 +20,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { EntidadSchema } from "@/schemas";
-import { z } from "zod";
 import {
-  condicionIvaDbMapper,
-  tipoActividadDbMapper,
-  tipoEntidadDbMapper,
-  tipoRelacionDbMapper,
-} from "@/lib/jotform/mapper";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { EntidadSchema } from "@/schemas";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 
 interface InformacionGeneralProps {
   paises: string[];

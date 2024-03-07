@@ -1,17 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Form } from "@/components/ui/form";
 import EntidadForm from "./_components/EntidadForm";
 import { getEntidad, getTablas } from "@/actions/entidad";
-import { useEntidadesStore } from "@/zustand/store";
 
 interface EntidadProps {
   params: { id: string };
