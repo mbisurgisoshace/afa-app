@@ -9,17 +9,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 import { EntidadSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { tipoCuentaBancariaDbMapper } from "@/lib/jotform/mapper";
@@ -176,9 +177,9 @@ export default function InformacionBancaria({
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
-                      //disabled
+                      disabled
                       onValueChange={field.onChange}
-                      defaultValue={field.value ? "si" : "no"}
+                      defaultValue={field.value}
                       className="flex flex-col space-y-1"
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">

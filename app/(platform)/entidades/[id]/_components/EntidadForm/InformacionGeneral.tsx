@@ -1,5 +1,3 @@
-"use client";
-
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";

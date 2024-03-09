@@ -62,4 +62,11 @@ export const EntidadSchema = z.object({
   iban: z.any(),
   swift: z.any(),
   bancoCorresponsal: z.any(),
+  tieneOficinasExterior: z.any(),
+  oficinasExterior: z.any(),
+  tieneOperacionesExterior: z.any(),
+  operacionesExterior: z.any(),
+  montoOperacionesExterior: z.any(),
+  fechaCierrePesosExterior: z.any(),
+  porcentajeExportacionVsTotal: z.any(),
 });

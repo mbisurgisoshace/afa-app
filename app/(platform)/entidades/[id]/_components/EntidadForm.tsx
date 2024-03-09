@@ -59,11 +59,18 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       cbu: entidad.cbu || "",
       alias: entidad.alias || "",
       tipoCuentaBancaria: entidad.tipoCuentaBancaria,
-      cuentaEnExterior: entidad.cuentaEnExterior,
+      cuentaEnExterior: entidad.cuentaEnExterior ? "si" : "no",
       paisCuentaExterior: entidad.paisCuentaExterior,
       iban: entidad.iban,
       swift: entidad.swift,
       bancoCorresponsal: entidad.bancoCorresponsal,
+      tieneOficinasExterior: entidad.tieneOficinasExterior ? "si" : "no",
+      oficinasExterior: entidad.oficinasExterior,
+      tieneOperacionesExterior: entidad.tieneOperacionesExterior ? "si" : "no",
+      operacionesExterior: entidad.operacionesExterior,
+      montoOperacionesExterior: entidad.montoOperacionesExterior,
+      fechaCierrePesosExterior: entidad.fechaCierrePesosExterior,
+      porcentajeExportacionVsTotal: entidad.porcentajeExportacionVsTotal,
     },
   });
 
@@ -81,7 +88,7 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
             actividadesAfip={tablas.actividadesAfip}
           />
           <InformacionBancaria paises={tablas.paises} />
-          <PaisesDondeOpera />
+          <PaisesDondeOpera paises={tablas.paises} />
           {form.watch().tipoDePersona === "HUMANA" && <PersonasHumanas />}
           {form.watch().tipoDePersona === "JURIDICA" && <PersonasJuridicas />}
         </Accordion>
