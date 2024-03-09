@@ -20,7 +20,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import { EntidadSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { tipoCuentaBancariaDbMapper } from "@/lib/jotform/mapper";
