@@ -309,31 +309,6 @@ export default function InformacionGeneral({
               )}
             />
 
-            {/* <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="fecha">Fecha de Cierre</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-[280px] justify-start text-left font-normal"
-                      //!date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {"" ? format("", "PPP") : <span>Seleccione una fecha</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    //selected={date}
-                    //onSelect={setDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div> */}
             <FormField
               control={form.control}
               name="tipoDePersona"

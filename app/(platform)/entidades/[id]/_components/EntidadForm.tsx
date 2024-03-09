@@ -14,6 +14,10 @@ import { Entidad } from "@prisma/client";
 import { EntidadSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
 import InformacionGeneral from "./EntidadForm/InformacionGeneral";
+import InformacionBancaria from "./EntidadForm/InformacionBancaria";
+import PaisesDondeOpera from "./EntidadForm/PaisesDondeOpera";
+import PersonasHumanas from "./EntidadForm/PersonasHumanas";
+import PersonasJuridicas from "./EntidadForm/PersonasJuridicas";
 
 interface Tablas {
   paises: string[];
@@ -48,6 +52,18 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       telefono: entidad.telefono,
       email: entidad.email,
       contactoAfa: entidad.contactoAfa,
+      bancoCuentaBancaria: entidad.bancoCuentaBancaria,
+      titularCuentaBancaria: entidad.titularCuentaBancaria,
+      sucursalCuentaBancaria: entidad.sucursalCuentaBancaria,
+      numeroCuentaBancaria: entidad.numeroCuentaBancaria,
+      cbu: entidad.cbu || "",
+      alias: entidad.alias || "",
+      tipoCuentaBancaria: entidad.tipoCuentaBancaria,
+      cuentaEnExterior: entidad.cuentaEnExterior,
+      paisCuentaExterior: entidad.paisCuentaExterior,
+      iban: entidad.iban,
+      swift: entidad.swift,
+      bancoCorresponsal: entidad.bancoCorresponsal,
     },
   });
 
@@ -55,8 +71,8 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
     <Form {...form}>
       <form>
         <Accordion
-          type="single"
-          collapsible
+          type="multiple"
+          //collapsible
           className="w-full flex flex-col gap-3"
         >
           <InformacionGeneral
@@ -64,17 +80,10 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
             industrias={tablas.industrias}
             actividadesAfip={tablas.actividadesAfip}
           />
-          <AccordionItem
-            value="datos_bancarios"
-            className="bg-white border border-[#DEDEDE] px-6 py-2 rounded-xl"
-          >
-            <AccordionTrigger>
-              Identificación bancaria para gestión de pagos
-            </AccordionTrigger>
-            <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
-            </AccordionContent>
-          </AccordionItem>
+          <InformacionBancaria paises={tablas.paises} />
+          <PaisesDondeOpera />
+          {form.watch().tipoDePersona === "HUMANA" && <PersonasHumanas />}
+          {form.watch().tipoDePersona === "JURIDICA" && <PersonasJuridicas />}
         </Accordion>
       </form>
     </Form>

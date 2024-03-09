@@ -159,6 +159,10 @@ model Entidad {
   cbu                                     String?
   alias                                   String?
   cuentaEnExterior                        Boolean?
+  paisCuentaExterior                      String?
+  iban                                    String?
+  swift                                   String?
+  bancoCorresponsal                       String?
   tieneOficinasExterior                   Boolean?
   oficinasExterior                        String[]
   tieneOperacionesExterior                Boolean?
