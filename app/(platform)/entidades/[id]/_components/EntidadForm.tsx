@@ -18,6 +18,7 @@ import InformacionBancaria from "./EntidadForm/InformacionBancaria";
 import PaisesDondeOpera from "./EntidadForm/PaisesDondeOpera";
 import PersonasHumanas from "./EntidadForm/PersonasHumanas";
 import PersonasJuridicas from "./EntidadForm/PersonasJuridicas";
+import ConflictoIntereses from "./EntidadForm/ConflictoIntereses";
 
 interface Tablas {
   paises: string[];
@@ -76,6 +77,8 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       fechaConstitucionSociedad: entidad.fechaConstitucionSociedad,
       fechaInscripcionRpc: entidad.fechaInscripcionRpc,
       datosInscripcionRegistrales: entidad.datosInscripcionRegistrales,
+      cotizaEnBolsa: entidad.cotizaEnBolsa ? "si" : "no",
+      dondeCotiza: entidad.dondeCotiza,
       nombreCompleto: entidad.nombreCompleto,
       nacionalidad: entidad.nacionalidad,
       tipoDocumento: entidad.tieneOficinasExterior,
@@ -89,6 +92,11 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       oficio: entidad.oficio,
       expuestaPoliticamente: entidad.expuestaPoliticamente ? "si" : "no",
       esPepEnCaracterDe: entidad.esPepEnCaracterDe,
+      conflictoInteresEmpleadosAfa: entidad.conflictoInteresEmpleadosAfa
+        ? "si"
+        : "no",
+      descripcionConflictoInteresEmpleadosAfa:
+        entidad.descripcionConflictoInteresEmpleadosAfa,
     },
   });
 
@@ -96,8 +104,8 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
     <Form {...form}>
       <form>
         <Accordion
-          type="multiple"
-          //collapsible
+          type="single"
+          collapsible
           className="w-full flex flex-col gap-3"
         >
           <InformacionGeneral
@@ -111,6 +119,7 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
             <PersonasHumanas paises={tablas.paises} />
           )}
           {form.watch().tipoDePersona === "JURIDICA" && <PersonasJuridicas />}
+          <ConflictoIntereses />
         </Accordion>
       </form>
     </Form>

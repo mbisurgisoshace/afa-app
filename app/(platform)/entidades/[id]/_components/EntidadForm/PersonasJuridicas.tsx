@@ -31,9 +31,11 @@ import {
 } from "@/components/ui/accordion";
 import { EntidadSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { tipoSocietarioDbMapper } from "@/lib/jotform/mapper";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function PersonasJuridicas() {
   const form = useFormContext<z.infer<typeof EntidadSchema>>();
@@ -177,8 +179,7 @@ export default function PersonasJuridicas() {
                 </FormItem>
               )}
             />
-          </div>
-          <div className="w-fill grid grid-cols-3 gap-3">
+
             <FormField
               control={form.control}
               name="datosInscripcionRegistrales"
@@ -192,6 +193,50 @@ export default function PersonasJuridicas() {
                 </FormItem>
               )}
             />
+          </div>
+
+          <div className="w-fill grid grid-cols-3 gap-3">
+            <FormField
+              control={form.control}
+              name="cotizaEnBolsa"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Cotiza en Bolsa</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      disabled
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="si" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Si</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="no" />
+                        </FormControl>
+                        <FormLabel className="font-normal">No</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="flex flex-row gap-2">
+            {/* TODO: Add multiple selects */}
+            {form.watch().cotizaEnBolsa === "si" &&
+              form
+                .getValues()
+                .dondeCotiza.map((dondeCotiza: string) => (
+                  <Badge key={dondeCotiza}>{dondeCotiza}</Badge>
+                ))}
           </div>
         </div>
       </AccordionContent>

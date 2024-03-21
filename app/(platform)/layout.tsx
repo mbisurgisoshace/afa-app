@@ -10,7 +10,9 @@ export default function PlatformLayout({
     <div className="h-full bg-[#F4F4FA] flex flex-col">
       <Navbar />
       <SubNavbar />
-      <div className="py-2 px-10 flex-1 h-[calc(100%-128px)]">{children}</div>
+      <div className="py-2 px-10 flex-1 h-[calc(100%-128px)] overflow-auto">
+        {children}
+      </div>
     </div>
   );
 }
