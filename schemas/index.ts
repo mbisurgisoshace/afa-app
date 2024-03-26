@@ -92,4 +92,9 @@ export const EntidadSchema = z.object({
   esPepEnCaracterDe: z.any(),
   conflictoInteresEmpleadosAfa: z.any(),
   descripcionConflictoInteresEmpleadosAfa: z.any(),
+  empleadoActualExAfa: z.any(),
+  exEmpleadoActualAfa: z.any(),
+  familiarComunAfaEntidad: z.any(),
+  personalConInteresEconomicoAfa: z.any(),
+  personasInteres: z.any(),
 });

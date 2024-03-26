@@ -13,6 +13,7 @@ import {
 import { Entidad } from "@prisma/client";
 import { EntidadSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
+import { EntidadWithPersonasInteres } from "@/types";
 import InformacionGeneral from "./EntidadForm/InformacionGeneral";
 import InformacionBancaria from "./EntidadForm/InformacionBancaria";
 import PaisesDondeOpera from "./EntidadForm/PaisesDondeOpera";
@@ -28,7 +29,7 @@ interface Tablas {
 
 interface EntidadFormProps {
   tablas: Tablas;
-  entidad: Entidad;
+  entidad: EntidadWithPersonasInteres;
 }
 
 export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
@@ -97,6 +98,13 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
         : "no",
       descripcionConflictoInteresEmpleadosAfa:
         entidad.descripcionConflictoInteresEmpleadosAfa,
+      empleadoActualExAfa: entidad.empleadoActualExAfa ? "si" : "no",
+      exEmpleadoActualAfa: entidad.exEmpleadoActualAfa ? "si" : "no",
+      familiarComunAfaEntidad: entidad.familiarComunAfaEntidad ? "si" : "no",
+      personalConInteresEconomicoAfa: entidad.personalConInteresEconomicoAfa
+        ? "si"
+        : "no",
+      personasInteres: entidad.personasInteres,
     },
   });
 

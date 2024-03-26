@@ -26,7 +26,10 @@ export const createEntidad = async (values: any) => {
 };
 
 export const getEntidad = async (entidadId: number) => {
-  return await db.entidad.findUnique({ where: { id: entidadId } });
+  return await db.entidad.findUnique({
+    where: { id: entidadId },
+    include: { personasInteres: true },
+  });
 };
 
 export const getEntidades = async () => {
