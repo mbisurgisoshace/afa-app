@@ -74,6 +74,8 @@ export const EntidadSchema = z.object({
   fechaConstitucionSociedad: z.any(),
   fechaInscripcionRpc: z.any(),
   datosInscripcionRegistrales: z.any(),
+  cotizaEnBolsa: z.any(),
+  dondeCotiza: z.any(),
   nombreCompleto: z.any(),
   nacionalidad: z.any(),
   tipoDocumento: z.any(),
@@ -88,4 +90,6 @@ export const EntidadSchema = z.object({
   oficio: z.any(),
   expuestaPoliticamente: z.any(),
   esPepEnCaracterDe: z.any(),
+  conflictoInteresEmpleadosAfa: z.any(),
+  descripcionConflictoInteresEmpleadosAfa: z.any(),
 });

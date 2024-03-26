@@ -6,10 +6,10 @@ import { CalendarIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
 import {
-  FormControl,
-  FormField,
   FormItem,
   FormLabel,
+  FormField,
+  FormControl,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -25,12 +25,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  AccordionContent,
   AccordionItem,
+  AccordionContent,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { EntidadSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -81,38 +82,16 @@ export default function PaisesDondeOpera({ paises }: PaisesDondeOperaProps) {
                 </FormItem>
               )}
             />
+          </div>
 
-            {form.watch().tieneOficinasExterior === "si" && (
-              //TODO: Add multiple selects
-              <FormField
-                control={form.control}
-                name="oficinasExterior"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Paises con oficinas</FormLabel>
-                    <Select
-                      disabled
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccione" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {paises.map((pais) => (
-                          <SelectItem key={pais} value={pais}>
-                            {pais}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+          <div className="flex flex-row gap-2">
+            {/* TODO: Add multiple selects */}
+            {form.watch().tieneOficinasExterior === "si" &&
+              form
+                .getValues()
+                .oficinasExterior.map((oficinaExterior: string) => (
+                  <Badge key={oficinaExterior}>{oficinaExterior}</Badge>
+                ))}
           </div>
 
           <div className="w-fill grid grid-cols-3 gap-3">
@@ -149,38 +128,16 @@ export default function PaisesDondeOpera({ paises }: PaisesDondeOperaProps) {
                 </FormItem>
               )}
             />
+          </div>
 
-            {form.watch().tieneOperacionesExterior === "si" && (
-              //TODO: Add multiple selects
-              <FormField
-                control={form.control}
-                name="operacionesExterior"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Paises con operaciones</FormLabel>
-                    <Select
-                      disabled
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccione" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {paises.map((pais) => (
-                          <SelectItem key={pais} value={pais}>
-                            {pais}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+          <div className="flex flex-row gap-2">
+            {/* TODO: Add multiple selects */}
+            {form.watch().tieneOperacionesExterior === "si" &&
+              form
+                .getValues()
+                .operacionesExterior.map((operacionExterior: string) => (
+                  <Badge key={operacionExterior}>{operacionExterior}</Badge>
+                ))}
           </div>
 
           {form.watch().tieneOperacionesExterior === "si" && (
