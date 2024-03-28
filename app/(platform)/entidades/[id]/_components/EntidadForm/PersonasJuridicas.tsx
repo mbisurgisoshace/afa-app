@@ -36,6 +36,9 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { tipoSocietarioDbMapper } from "@/lib/jotform/mapper";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { DataTable } from "@/components/DataTable";
+import { propietariosBeneficiariosColumns } from "./columns";
+import { PersonaInteres } from "@prisma/client";
 
 export default function PersonasJuridicas() {
   const form = useFormContext<z.infer<typeof EntidadSchema>>();
@@ -237,6 +240,26 @@ export default function PersonasJuridicas() {
                 .dondeCotiza.map((dondeCotiza: string) => (
                   <Badge key={dondeCotiza}>{dondeCotiza}</Badge>
                 ))}
+          </div>
+
+          <div className="w-fill grid grid-cols-1 gap-3">
+            <FormLabel>Propietarios y/o Beneficiarios</FormLabel>
+
+            <DataTable
+              columns={propietariosBeneficiariosColumns}
+              data={form
+                .watch()
+                .personasInteres.filter(
+                  (personaInteres: PersonaInteres) =>
+                    personaInteres.tipoPersonaInteres === "ACCIONISTA" ||
+                    personaInteres.tipoPersonaInteres ===
+                      "REPRESENTANTE_LEGAL" ||
+                    personaInteres.tipoPersonaInteres === "SOCIO" ||
+                    personaInteres.tipoPersonaInteres ===
+                      "BENEFICIARIO_FINAL" ||
+                    personaInteres.tipoPersonaInteres === "OTRO"
+                )}
+            />
           </div>
         </div>
       </AccordionContent>

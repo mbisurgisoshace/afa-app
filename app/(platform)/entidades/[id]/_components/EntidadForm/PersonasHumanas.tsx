@@ -37,9 +37,12 @@ import {
 } from "@/components/ui/accordion";
 import { EntidadSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
+import { PersonaInteres } from "@prisma/client";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/DataTable";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { representatesLegalesColumns } from "./columns";
 
 interface PersonasHumanasProps {
   paises: string[];
@@ -457,6 +460,22 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
                   <FormMessage />
                 </FormItem>
               )}
+            />
+          </div>
+
+          <div className="w-fill grid grid-cols-1 gap-3">
+            <FormLabel>Representates Legales</FormLabel>
+
+            <DataTable
+              columns={representatesLegalesColumns}
+              data={form
+                .watch()
+                .personasInteres.filter(
+                  (personaInteres: PersonaInteres) =>
+                    personaInteres.tipoPersonaInteres ===
+                      "REPRESENTANTE_LEGAL" ||
+                    personaInteres.tipoPersonaInteres === "OTRO"
+                )}
             />
           </div>
         </div>
