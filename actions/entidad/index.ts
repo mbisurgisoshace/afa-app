@@ -41,9 +41,16 @@ export const getEntidades = async (searchParams: SearchParams) => {
   return await db.entidad.findMany({
     where: {
       OR: [
-        { razonSocial: { contains: searchParams.search } },
-        { nombreCompleto: { contains: searchParams.search } },
-        { codigoEntidad: { contains: searchParams.search } },
+        {
+          nombreCompleto: {
+            contains: searchParams.search,
+            mode: "insensitive",
+          },
+        },
+        { razonSocial: { contains: searchParams.search, mode: "insensitive" } },
+        {
+          codigoEntidad: { contains: searchParams.search, mode: "insensitive" },
+        },
       ],
     },
   });
