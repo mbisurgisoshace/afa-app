@@ -1,11 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { ChevronRightIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Entidad } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export const columns: ColumnDef<Entidad>[] = [
   {
@@ -14,22 +14,28 @@ export const columns: ColumnDef<Entidad>[] = [
   },
   {
     size: 400,
-    accessorKey: "submissionId",
     header: "Nombre y Apellido / Razon Social",
     cell: ({ row }) => {
       const formulario = row.original;
+      const razonSocial =
+        row.original.nombreCompleto || row.original.razonSocial;
 
-      return <div className="flex items-center gap-4 justify-between"></div>;
+      return (
+        <div className="flex items-center gap-4 justify-between">
+          {razonSocial}
+        </div>
+      );
     },
   },
   {
     accessorKey: "tipo",
     header: "Tipo",
-    cell: ({ row }) => <div className="text-right"></div>,
+    cell: ({ row }) => <div className="">{row.original.tipoDePersona}</div>,
   },
   {
     accessorKey: "acciones",
     header: "",
+    size: 10,
     cell: ({ row }) => {
       const { id } = row.original;
       return (

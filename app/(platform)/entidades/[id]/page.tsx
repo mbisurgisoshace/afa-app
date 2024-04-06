@@ -8,7 +8,7 @@ interface EntidadProps {
 }
 
 export default async function Entidad({ params }: EntidadProps) {
-  const entidad = await getEntidad(parseInt(params.id));
+  const entidad = await getEntidad(params.id);
   const { paises, industrias, actividadesAfip } = await getTablas();
   console.log(entidad);
 

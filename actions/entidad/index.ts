@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { SearchParams } from "@/types";
 
 export const getTablas = async () => {
   const paises = await db.pais.findMany();
@@ -25,13 +26,25 @@ export const createEntidad = async (values: any) => {
   });
 };
 
-export const getEntidad = async (entidadId: number) => {
-  return await db.entidad.findUnique({
-    where: { id: entidadId },
+export const getEntidad = async (entidadId: string) => {
+  return await db.entidad.findFirst({
+    where: { codigoEntidad: entidadId },
     include: { personasInteres: true },
   });
 };
 
-export const getEntidades = async () => {
-  return await db.entidad.findMany();
+export const getEntidades = async (searchParams: SearchParams) => {
+  const page = parseInt(searchParams.page) || 1;
+
+  if (!searchParams.search) return await db.entidad.findMany();
+
+  return await db.entidad.findMany({
+    where: {
+      OR: [
+        { razonSocial: { contains: searchParams.search } },
+        { nombreCompleto: { contains: searchParams.search } },
+        { codigoEntidad: { contains: searchParams.search } },
+      ],
+    },
+  });
 };

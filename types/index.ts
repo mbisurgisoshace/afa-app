@@ -7,3 +7,8 @@ const entidadWithPersonasInteres = Prisma.validator<Prisma.EntidadArgs>()({
 export type EntidadWithPersonasInteres = Prisma.EntidadGetPayload<
   typeof entidadWithPersonasInteres
 >;
+
+export type SearchParams = {
+  page: string;
+  search: string;
+};
