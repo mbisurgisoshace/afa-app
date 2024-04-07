@@ -65,7 +65,8 @@ export const propietariosBeneficiariosColumns: ColumnDef<PersonaInteres>[] = [
     cell: ({ row }) => (
       <div>
         {row.original.porcentajeAccionario
-          ? numeral(row.original.porcentajeAccionario / 100).format("0.00%")
+          ? //@ts-ignore
+            numeral(row.original.porcentajeAccionario / 100).format("0.00%")
           : "-"}
       </div>
     ),
