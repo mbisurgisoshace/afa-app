@@ -37,11 +37,11 @@ export const columns: ColumnDef<Entidad>[] = [
     header: "",
     size: 10,
     cell: ({ row }) => {
-      const { id } = row.original;
+      const { id, codigoEntidad } = row.original;
       return (
         <div className="flex items-center gap-4 text-primary justify-evenly">
           <Button size={"icon"} asChild variant={"ghost"}>
-            <Link href={`/entidades/${id}`}>
+            <Link href={`/entidades/${codigoEntidad}`}>
               <ChevronRightIcon size={24} strokeWidth={1.5} />
             </Link>
           </Button>

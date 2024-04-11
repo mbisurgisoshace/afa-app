@@ -211,7 +211,7 @@ model Entidad {
   createdAt                                 DateTime            @default(now())
   updatedAt                                 DateTime            @updatedAt
   nosisPeorSituacion                        String?
-  nosisCantidadBancos                       String?
+  nosisCantidadBancos                       Int?
   nosisMontoTotal                           Decimal?
   nosisAntiguedadBCRA                       Int?
   nosisPeorSituacion12Meses                 String?
@@ -235,6 +235,7 @@ model Entidad {
   nosisCantidadHomonimosEnBaseLaFt          Int?
   nosisEnlanceHomonimosEnBaseLaFt           String?
   nosisPeorSituacion12MesesBcra             String?
+  nosisUltimaActualizacion                  DateTime?
 
   @@map("Entidades")
 }

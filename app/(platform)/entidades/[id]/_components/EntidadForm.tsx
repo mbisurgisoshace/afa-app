@@ -4,13 +4,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Entidad } from "@prisma/client";
+import { Accordion } from "@/components/ui/accordion";
+import Nosis from "./EntidadForm/Nosis";
 import { EntidadSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
 import { EntidadWithPersonasInteres } from "@/types";
@@ -105,6 +100,39 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
         ? "si"
         : "no",
       personasInteres: entidad.personasInteres,
+      nosisPeorSituacion: entidad.nosisPeorSituacion,
+      nosisCantidadBancos: entidad.nosisCantidadBancos,
+      nosisMontoTotal: entidad.nosisMontoTotal,
+      nosisAntiguedadBCRA: entidad.nosisAntiguedadBCRA,
+      nosisPeorSituacion12Meses: entidad.nosisPeorSituacion12Meses,
+      nosisCantidadBancos12Meses: entidad.nosisCantidadBancos12Meses,
+      nosisPerfilCumplimientoDeudor: entidad.nosisPerfilCumplimientoDeudor,
+      nosisEsMoroso: entidad.nosisEsMoroso ? "si" : "no",
+      nosisCantidadSinFondosNoPagados6Meses:
+        entidad.nosisCantidadSinFondosNoPagados6Meses,
+      nosisMontoSinFondosNoPagados6Meses:
+        entidad.nosisMontoSinFondosNoPagados6Meses,
+      nosisJuiciosCantidad12Meses: entidad.nosisJuiciosCantidad12Meses,
+      nosisConcursosQuiebrasCantidad12Meses:
+        entidad.nosisConcursosQuiebrasCantidad12Meses,
+      nosisScore: entidad.nosisScore,
+      nosisFacturacionEstimada: entidad.nosisFacturacionEstimada,
+      nosisProveedorEstado: entidad.nosisProveedorEstado,
+      nosisFacturasApocrifas: entidad.nosisFacturasApocrifas ? "si" : "no",
+      nosisDeudasFiscales: entidad.nosisDeudasFiscales ? "si" : "no",
+      nosisPedidoQuebrasCantidad12Meses:
+        entidad.nosisPedidoQuebrasCantidad12Meses,
+      nosisPeorSituacionCon10Porciento12Mesas:
+        entidad.nosisPeorSituacionCon10Porciento12Mesas,
+      nosisSectorActividadPrincipalDelEmpleador:
+        entidad.nosisSectorActividadPrincipalDelEmpleador,
+      nosisSujetoObligado: entidad.nosisSujetoObligado,
+      nosisPersonaExpuestaPoliticamente:
+        entidad.nosisPersonaExpuestaPoliticamente,
+      nosisCantidadHomonimosEnBaseLaFt:
+        entidad.nosisCantidadHomonimosEnBaseLaFt,
+      nosisEnlanceHomonimosEnBaseLaFt: entidad.nosisEnlanceHomonimosEnBaseLaFt,
+      nosisPeorSituacion12MesesBcra: entidad.nosisPeorSituacion12MesesBcra,
     },
   });
 
@@ -128,6 +156,7 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
           )}
           {form.watch().tipoDePersona === "JURIDICA" && <PersonasJuridicas />}
           <ConflictoIntereses />
+          <Nosis />
         </Accordion>
       </form>
     </Form>
