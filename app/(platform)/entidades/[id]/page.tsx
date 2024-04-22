@@ -10,6 +10,8 @@ interface EntidadProps {
 
 export default async function Entidad({ params }: EntidadProps) {
   const entidad = await getEntidad(params.id);
+  console.log("entidad", entidad);
+
   const { paises, industrias, actividadesAfip } = await getTablas();
 
   return (

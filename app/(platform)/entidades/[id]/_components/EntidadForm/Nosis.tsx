@@ -15,6 +15,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
+import {
+  peorSituacionValue,
+  perfilCumplimientoDeudorValue,
+} from "../NosisResponseMapper";
 
 export default function Nosis() {
   const form = useFormContext<z.infer<typeof EntidadSchema>>();
@@ -35,7 +39,11 @@ export default function Nosis() {
                 <FormItem>
                   <FormLabel>Peor situación</FormLabel>
                   <FormControl>
-                    <Input disabled {...field} />
+                    <Input
+                      disabled
+                      {...field}
+                      value={peorSituacionValue(field.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +101,11 @@ export default function Nosis() {
                 <FormItem>
                   <FormLabel>Peor situación - Últ. 12 Meses</FormLabel>
                   <FormControl>
-                    <Input disabled {...field} />
+                    <Input
+                      disabled
+                      {...field}
+                      value={peorSituacionValue(field.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -123,7 +135,11 @@ export default function Nosis() {
                 <FormItem>
                   <FormLabel>Perfil Cumplimiento del Deudor</FormLabel>
                   <FormControl>
-                    <Input disabled {...field} />
+                    <Input
+                      disabled
+                      {...field}
+                      value={perfilCumplimientoDeudorValue(field.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -215,7 +231,7 @@ export default function Nosis() {
               name="nosisScore"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Score</FormLabel>
+                  <FormLabel>Score (0 - 999)</FormLabel>
                   <FormControl>
                     <Input disabled {...field} />
                   </FormControl>
@@ -309,7 +325,11 @@ export default function Nosis() {
                     Peor situación (con 10%) - Últ. 12 meses
                   </FormLabel>
                   <FormControl>
-                    <Input disabled {...field} />
+                    <Input
+                      disabled
+                      {...field}
+                      value={peorSituacionValue(field.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -407,7 +427,11 @@ export default function Nosis() {
                 <FormItem>
                   <FormLabel>Peor situación - Últ. 12 Meses BCRA.</FormLabel>
                   <FormControl>
-                    <Input disabled {...field} />
+                    <Input
+                      disabled
+                      {...field}
+                      value={peorSituacionValue(field.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
