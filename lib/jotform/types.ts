@@ -12,7 +12,9 @@ type JotformSubmissionStatus = "ACTIVE" | "DELETED";
 
 export type WidgetFieldName =
   | "dondeCotiza"
+  | "directivosClub"
   | "oficinasExterior"
+  | "vinculosOrganismos"
   | "operacionesExterior"
   | "representatesLegales"
   | "exEmpleadosActualAfa"
@@ -20,6 +22,7 @@ export type WidgetFieldName =
   | "detalleDePropietarios"
   | "autoridadesSocietarias"
   | "empleadosActualesExAfa"
+  | "descripcionConflictoAfa"
   | "personasConInteresEconomicoAfa";
 
 export type JotformPhoneAnswer = {

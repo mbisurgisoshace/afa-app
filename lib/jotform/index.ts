@@ -58,14 +58,22 @@ export const jotformParser = (
       }
 
       if (isArray(formattedAnswer)) {
+        console.log("jotformElement.name", jotformElement.name);
+
+        console.log("formattedAnswer", formattedAnswer);
+
         const formattedWidgetAnswer = parseWidgetAnswer(
           jotformElement.name as WidgetFieldName,
           formattedAnswer
         );
 
+        console.log("formattedWidgetAnswer", formattedWidgetAnswer);
+
         if (
           jotformElement.name === "oficinasExterior" ||
-          jotformElement.name === "operacionesExterior"
+          jotformElement.name === "vinculosOrganismos" ||
+          jotformElement.name === "operacionesExterior" ||
+          jotformElement.name === "descripcionConflictoAfa"
         ) {
           formattedFormSubmission[jotformElement.name] = formattedWidgetAnswer;
         } else {

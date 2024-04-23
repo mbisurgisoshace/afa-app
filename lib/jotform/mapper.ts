@@ -111,4 +111,7 @@ export const tipoPersonaInteresDbMapper = {
   "Personal Interes Economico AFA":
     TipoPersonaInteres.PERSONAL_INTERES_ECONOMICO_AFA,
   Otro: TipoPersonaInteres.OTRO,
+  Secretario: TipoPersonaInteres.SECRETARIO,
+  Vicepresidente: TipoPersonaInteres.VICEPRESIDENTE,
+  Tesorero: TipoPersonaInteres.TESORERO,
 };

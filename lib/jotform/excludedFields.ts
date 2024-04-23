@@ -39,4 +39,5 @@ export const EXCLUDED_FIELDS = [
   "tieneUd",
   "algunoDe",
   "Que",
+  "escribaUna258",
 ];

@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import {
+  TableIcon,
   BriefcaseIcon,
   CircleUserIcon,
-  LayoutDashboardIcon,
   MenuSquareIcon,
+  LayoutDashboardIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,17 @@ export default function SubNavbar() {
         <Link href="/dashboard" className="flex flex-row items-center gap-2">
           <LayoutDashboardIcon size={24} strokeWidth={1.5} />
           <span>Dashboard</span>
+        </Link>
+      </Button>
+      <Button
+        asChild
+        // className="rounded-2xl"
+        // variant={pathname === "/dashboard" ? "default" : "secondary"}
+        variant={pathname === "/tablas" ? "navbarLinkSelected" : "navbarLink"}
+      >
+        <Link href="/tablas" className="flex flex-row items-center gap-2">
+          <TableIcon size={24} strokeWidth={1.5} />
+          <span>Tablas Generales</span>
         </Link>
       </Button>
       <Button

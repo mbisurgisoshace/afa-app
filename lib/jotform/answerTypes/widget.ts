@@ -17,9 +17,13 @@ export const parseWidgetAnswer = (
   switch (fieldName) {
     case "dondeCotiza":
       return [];
+    case "directivosClub":
+      return parseDirectivosClub(answers);
     case "oficinasExterior":
     case "operacionesExterior":
       return parseExterior(answers);
+    case "vinculosOrganismos":
+      return parseOrganismos(answers);
     case "familiaresComunEnAfa":
       return parseFamiliaresComunAfa(answers);
     case "representatesLegales":
@@ -32,6 +36,8 @@ export const parseWidgetAnswer = (
       return parseAutoridadesSocietarias(answers);
     case "empleadosActualesExAfa":
       return parseEmpleadosActualesExAfa(answers);
+    case "descripcionConflictoAfa":
+      return parseDescripcionesConflicto(answers);
     case "personasConInteresEconomicoAfa":
       return parsePersonaInteresEconomicoAfa(answers);
   }
@@ -39,6 +45,17 @@ export const parseWidgetAnswer = (
 
 const parseExterior = (answers: any[]) => {
   return answers.map((exterior) => exterior["Pais"]);
+};
+
+const parseOrganismos = (answers: any[]) => {
+  return answers.map((organismo) => organismo["Organismo"]);
+};
+
+const parseDescripcionesConflicto = (answers: any[]) => {
+  return answers.map(
+    (conflictoInteres) =>
+      conflictoInteres["Descripcion del conflicto de interés"]
+  );
 };
 
 const parseRepresentantesLegales = (answers: any[]) => {
@@ -149,5 +166,24 @@ const parseDetallePropietarios = (answers: any[]) => {
     expuestaPoliticamente:
       detallePropietario["Es Persona Expuesta Políticamente ?"] === "Si",
     esPepEnCaracterDe: detallePropietario["Es PEP en carácter de"],
+  }));
+};
+
+const parseDirectivosClub = (answers: any[]) => {
+  return answers.map((directivoClub) => ({
+    tipoPersonaInteres: dbValueToPrismaEnumValue(
+      directivoClub["Cargo"],
+      tipoPersonaInteresDbMapper
+    ),
+    nombreApellido: directivoClub["Nombre y Apellido"],
+    documento: directivoClub["D.N.I. / C.U.I.T."],
+    telefono: directivoClub["Teléfono"],
+    email: directivoClub["Correo electrónico"],
+    fechaCargoEnAfa: formatDate(
+      directivoClub["Ocupo el cargo DESDE"]?.replaceAll("-", "/")
+    ),
+    expuestaPoliticamente:
+      directivoClub["Es Persona Expuesta Políticamente ?"] === "Si",
+    esPepEnCaracterDe: directivoClub["Cargo que ocupa u ocupó en el estado"],
   }));
 };
