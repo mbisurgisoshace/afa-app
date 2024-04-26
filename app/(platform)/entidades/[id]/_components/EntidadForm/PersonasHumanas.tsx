@@ -404,9 +404,7 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
               name="expuestaPoliticamente"
               render={({ field }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel>
-                    Tiene cuentas bancarias fuera de la Argentina
-                  </FormLabel>
+                  <FormLabel>Es expuesta politicamente?</FormLabel>
                   <FormControl>
                     <RadioGroup
                       disabled
@@ -438,25 +436,10 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
               name="esPepEnCaracterDe"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Es PEP en carácter de</FormLabel>
-                  <Select
-                    disabled
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccione" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {paises.map((pais) => (
-                        <SelectItem key={pais} value={pais}>
-                          {pais}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Es PEPE en carácter de</FormLabel>
+                  <FormControl>
+                    <Input disabled {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

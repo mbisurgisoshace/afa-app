@@ -173,18 +173,18 @@ export default class NosisDataParser {
     );
 
     const Com_SO_Es = nosisDataResponse.Contenido.Datos.Variables.find(
-      (variable) => variable.Nombre === "Com_SO_Es"
+      (variable) => variable.Nombre === "COM_SO_Es"
     )!;
     this.sujetoObligado = new NosisTexto(Com_SO_Es.Valor);
 
     const Com_PEP_Es = nosisDataResponse.Contenido.Datos.Variables.find(
-      (variable) => variable.Nombre === "Com_PEP_Es"
+      (variable) => variable.Nombre === "COM_PEP_Es"
     )!;
     this.personaExpuestaPoliticamente = new NosisTexto(Com_PEP_Es.Valor);
 
     const Com_Homonimos_LAFT_Cant =
       nosisDataResponse.Contenido.Datos.Variables.find(
-        (variable) => variable.Nombre === "Com_Homonimos_LAFT_Cant"
+        (variable) => variable.Nombre === "COM_Homonimos_LAFT_Cant"
       )!;
     this.cantidadHomonimosEnBaseLaFt = new NosisEntero(
       Com_Homonimos_LAFT_Cant.Valor
@@ -192,7 +192,7 @@ export default class NosisDataParser {
 
     const Com_Homonimos_LAFT_Link =
       nosisDataResponse.Contenido.Datos.Variables.find(
-        (variable) => variable.Nombre === "Com_Homonimos_LAFT_Link"
+        (variable) => variable.Nombre === "COM_Homonimos_LAFT_Link"
       )!;
     this.enlanceHomonimosEnBaseLaFt = new NosisTexto(
       Com_Homonimos_LAFT_Link.Valor

@@ -74,6 +74,7 @@ enum TipoEntidad {
   FUNDACION_ASOCIACION_CIVIL @map("Fundacion o Asociacion Civil")
   FIDEICOMISO                @map("Fideicomiso")
   OTROS                      @map("Otra")
+  CLUB                       @map("Club")
 }
 
 enum TipoCuentaBancaria {
