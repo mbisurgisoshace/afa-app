@@ -144,6 +144,7 @@ model Entidad {
   condicionIva                              CondicionIva?
   codigoActividadAfip                       String?
   tipoIndustria                             String?
+  otraActividad                             String?
   ingresosEnPesos                           Decimal?
   fechaCierrePesos                          DateTime?
   tipoDePersona                             TipoEntidad?
