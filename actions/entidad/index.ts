@@ -31,6 +31,27 @@ export const createEntidad = async (values: any) => {
   });
 };
 
+export const upsertEntidad = async (values: any) => {
+  return await db.entidad.upsert({
+    where: {
+      codigoEntidad: values.codigoEntidad,
+    },
+    create: {
+      ...values,
+      personasInteres: {
+        create: values.personasInteres,
+      },
+    },
+    update: {
+      ...values,
+      personasInteres: {
+        deleteMany: {},
+        create: values.personasInteres,
+      },
+    },
+  });
+};
+
 export const getEntidad = async (entidadId: string) => {
   return await db.entidad.findFirst({
     where: { codigoEntidad: entidadId },

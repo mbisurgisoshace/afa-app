@@ -40,4 +40,10 @@ export const EXCLUDED_FIELDS = [
   "algunoDe",
   "Que",
   "escribaUna258",
+  "adjunteContrato",
+  "separadorDe220",
+  "lth3gtltspanStylecolor255",
+  "poderDel",
+  "lth3gtltspanStylecolor265",
+  "dentroDe",
 ];
