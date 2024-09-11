@@ -46,4 +46,5 @@ export const EXCLUDED_FIELDS = [
   "poderDel",
   "lth3gtltspanStylecolor265",
   "dentroDe",
+  "numeroDe",
 ];
