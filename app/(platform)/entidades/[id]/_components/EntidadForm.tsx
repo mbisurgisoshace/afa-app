@@ -16,6 +16,7 @@ import PersonasHumanas from "./EntidadForm/PersonasHumanas";
 import PersonasJuridicas from "./EntidadForm/PersonasJuridicas";
 import ConflictoIntereses from "./EntidadForm/ConflictoIntereses";
 import { useEffect } from "react";
+import Club from "./EntidadForm/Club";
 
 interface Tablas {
   paises: string[];
@@ -101,6 +102,7 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
         ? "si"
         : "no",
       personasInteres: entidad.personasInteres,
+      categoriaClub: entidad.categoriaClub,
       nosisPeorSituacion: entidad.nosisPeorSituacion,
       nosisCantidadBancos: entidad.nosisCantidadBancos,
       nosisMontoTotal: entidad.nosisMontoTotal,
@@ -208,6 +210,7 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
         ? "si"
         : "no",
       personasInteres: entidad.personasInteres,
+      categoriaClub: entidad.categoriaClub,
       nosisPeorSituacion: entidad.nosisPeorSituacion,
       nosisCantidadBancos: entidad.nosisCantidadBancos,
       nosisMontoTotal: entidad.nosisMontoTotal,
@@ -262,6 +265,7 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
           {form.watch().tipoDePersona === "HUMANA" && (
             <PersonasHumanas paises={tablas.paises} />
           )}
+          {form.watch().tipoRelacion === "CLUB" && <Club />}
           {form.watch().tipoDePersona === "JURIDICA" && <PersonasJuridicas />}
           <ConflictoIntereses />
           <Nosis />

@@ -153,54 +153,6 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
 
             <FormField
               control={form.control}
-              name="tipoDocumentoAfip"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>C.U.I.T. - C.U.I.L.</FormLabel>
-                  <Select
-                    disabled
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccione" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {Object.keys(tipoDocumentoAfipDbMapper).map((key) => (
-                        <SelectItem
-                          key={key}
-                          //@ts-ignore
-                          value={tipoDocumentoAfipDbMapper[key]}
-                        >
-                          {key}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="cuit"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Numero de C.U.I.T. - C.U.I.L.</FormLabel>
-                  <FormControl>
-                    <Input disabled {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="w-fill grid grid-cols-3 gap-3">
-            <FormField
-              control={form.control}
               name="sexo"
               render={({ field }) => (
                 <FormItem>
@@ -265,6 +217,7 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
               )}
             />
           </div>
+          <div className="w-fill grid grid-cols-3 gap-3"></div>
 
           <div className="w-fill grid grid-cols-3 gap-3">
             <FormField

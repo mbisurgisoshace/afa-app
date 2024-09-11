@@ -97,6 +97,7 @@ export const EntidadSchema = z.object({
   familiarComunAfaEntidad: z.any(),
   personalConInteresEconomicoAfa: z.any(),
   personasInteres: z.any(),
+  categoriaClub: z.any(),
   nosisPeorSituacion: z.any(),
   nosisCantidadBancos: z.any(),
   nosisMontoTotal: z.any(),
