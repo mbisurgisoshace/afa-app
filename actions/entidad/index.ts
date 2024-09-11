@@ -32,24 +32,24 @@ export const createEntidad = async (values: any) => {
 };
 
 export const upsertEntidad = async (values: any) => {
-  // return await db.entidad.upsert({
-  //   where: {
-  //     codigoEntidad: values.codigoEntidad,
-  //   },
-  //   create: {
-  //     ...values,
-  //     personasInteres: {
-  //       create: values.personasInteres,
-  //     },
-  //   },
-  //   update: {
-  //     ...values,
-  //     personasInteres: {
-  //       deleteMany: {},
-  //       create: values.personasInteres,
-  //     },
-  //   },
-  // });
+  return await db.entidad.upsert({
+    where: {
+      codigoEntidad: values.codigoEntidad,
+    },
+    update: {
+      ...values,
+      personasInteres: {
+        deleteMany: {},
+        create: values.personasInteres,
+      },
+    },
+    create: {
+      ...values,
+      personasInteres: {
+        create: values.personasInteres,
+      },
+    },
+  });
 };
 
 export const getEntidad = async (entidadId: string) => {
