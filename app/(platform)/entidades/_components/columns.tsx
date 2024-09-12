@@ -18,7 +18,8 @@ export const columns: ColumnDef<Entidad>[] = [
     cell: ({ row }) => {
       const formulario = row.original;
       const razonSocial =
-        row.original.nombreCompleto || row.original.razonSocial;
+        (row.original.nombreCompleto && row.original.nombreCompleto.trim()) ||
+        (row.original.razonSocial && row.original.razonSocial.trim());
 
       return (
         <div className="flex items-center gap-4 justify-between">

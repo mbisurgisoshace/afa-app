@@ -265,7 +265,7 @@ model PersonaInteres {
   cargoEnAfa            String?
   fechaCargoEnAfa       DateTime?
   tipoInteresAfa        String?
-  entidad               Entidad            @relation(fields: [entidadId], references: [id])
+  entidad               Entidad            @relation(fields: [entidadId], references: [id], onDelete: Cascade)
   entidadId             Int
   createdAt             DateTime           @default(now())
   updatedAt             DateTime           @updatedAt
