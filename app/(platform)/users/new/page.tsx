@@ -48,22 +48,20 @@ export default function NewUser() {
   });
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    console.log(values);
+    startTransition(async () => {
+      const newUser = await createUser(values);
 
-    // startTransition(async () => {
-    //   const newUser = await createUser(values);
+      if (newUser && newUser.error) {
+        console.log("error", newUser.error);
+        return;
+      }
 
-    //   if (newUser && newUser.error) {
-    //     console.log("error", newUser.error);
-    //     return;
-    //   }
-
-    //   router.push("/users");
-    // });
+      router.push("/users");
+    });
   };
 
   return (
-    <div className="w-full max-w-[1196px] m-auto overflow-scroll">
+    <div className="w-full max-w-[1196px] m-auto">
       <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
