@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { Response } from "jotform/dist/types/response";
 
 import { db } from "@/lib/db";
-import { createEntidad } from "../entidad";
+import { createEntidad, upsertEntidad } from "../entidad";
 import { jotformParser } from "@/lib/jotform";
 import { SubmittedForm } from "@prisma/client";
 import { processSubmittedForm } from "../jotform";
@@ -25,7 +25,8 @@ export const procesarFormulario = async (submittedForm: SubmittedForm) => {
   const formattedSubmission = jotformParser(submission);
 
   try {
-    await createEntidad(formattedSubmission);
+    //await createEntidad(formattedSubmission);
+    await upsertEntidad(formattedSubmission);
     await processSubmittedForm(submittedForm.id);
     revalidatePath("/formularios");
   } catch (err) {

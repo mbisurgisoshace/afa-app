@@ -4,7 +4,7 @@ import { Response } from "jotform/dist/types/response";
 
 import { db } from "@/lib/db";
 import { jotformParser } from "@/lib/jotform";
-import { createEntidad } from "@/actions/entidad";
+import { createEntidad, upsertEntidad } from "@/actions/entidad";
 import { JotformResponseContent } from "@/lib/jotform/types";
 import { createSubmittedForm, processSubmittedForm } from "@/actions/jotform";
 
@@ -32,7 +32,8 @@ export async function POST(request: NextRequest) {
   const formattedSubmission = jotformParser(submission);
 
   try {
-    await createEntidad(formattedSubmission);
+    //await createEntidad(formattedSubmission);
+    await upsertEntidad(formattedSubmission);
     await processSubmittedForm(submittedForm.id);
   } catch (err) {
     console.log("err", err);
@@ -43,5 +44,4 @@ export async function POST(request: NextRequest) {
   }
 
   return NextResponse.json({ data: submission, parsed: formattedSubmission });
-  return NextResponse.json({ success: true });
 }
