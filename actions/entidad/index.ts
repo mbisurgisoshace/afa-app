@@ -71,6 +71,7 @@ export const getEntidades = async (searchParams: SearchParams) => {
       AND: [
         {
           tipoRelacion: {
+            //@ts-ignore
             in: searchParams.tipo
               ? searchParams.tipo.split(",").map((tipo) => tipo.toUpperCase())
               : ["CLUB", "SPONSOR", "PROVEEDOR", "AGENTE_COMERCIAL"],
