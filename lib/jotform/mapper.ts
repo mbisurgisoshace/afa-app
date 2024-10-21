@@ -85,7 +85,7 @@ export const tipoDocumentoDbMapper = {
 };
 
 export const tipoRelacionDbMapper = {
-  Proveedor: TipoRelacion.PROVEDOOR,
+  Proveedor: TipoRelacion.PROVEEDOR,
   Sponsor: TipoRelacion.SPONSOR,
   "Agente Comercial": TipoRelacion.AGENTE_COMERCIAL,
   Club: TipoRelacion.CLUB,
