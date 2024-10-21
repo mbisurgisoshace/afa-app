@@ -5,6 +5,8 @@ import {
   flexRender,
   useReactTable,
   getCoreRowModel,
+  Table as ITable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -16,23 +18,31 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 
+export interface FilteringToolsProps<TData> {
+  table: ITable<TData>;
+}
+
 interface DataTableProps<TData, TValue> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
+  filterTool?: (props: FilteringToolsProps<TData>) => JSX.Element;
 }
 
 export function DataTable<TData, TValue>({
-  columns,
   data,
+  columns,
+  filterTool,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    //getFilteredRowModel: getFilteredRowModel(),
   });
 
   return (
     <div className="rounded-md border">
+      {/* {filterTool && filterTool({ table })} */}
       <Table>
         <TableHeader className="bg-[#E2E8F0]">
           {table.getHeaderGroups().map((headerGroup) => (

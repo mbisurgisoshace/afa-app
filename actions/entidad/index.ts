@@ -7,6 +7,7 @@ import { SearchParams } from "@/types";
 import NosisDataParser, {
   NosisDataResponse,
 } from "@/lib/nosis/NosisDataParser";
+import { TipoRelacion } from "@prisma/client";
 
 export const getTablas = async () => {
   const paises = await db.pais.findMany();
@@ -62,22 +63,45 @@ export const getEntidad = async (entidadId: string) => {
 export const getEntidades = async (searchParams: SearchParams) => {
   const page = parseInt(searchParams.page) || 1;
 
-  if (!searchParams.search) return await db.entidad.findMany();
+  if (!searchParams.search && !searchParams.tipo)
+    return await db.entidad.findMany({ orderBy: { codigoEntidad: "asc" } });
 
   return await db.entidad.findMany({
     where: {
-      OR: [
+      AND: [
         {
-          nombreCompleto: {
-            contains: searchParams.search,
-            mode: "insensitive",
+          tipoRelacion: {
+            in: searchParams.tipo
+              ? searchParams.tipo.split(",").map((tipo) => tipo.toUpperCase())
+              : ["CLUB", "SPONSOR", "PROVEEDOR", "AGENTE_COMERCIAL"],
           },
         },
-        { razonSocial: { contains: searchParams.search, mode: "insensitive" } },
         {
-          codigoEntidad: { contains: searchParams.search, mode: "insensitive" },
+          OR: [
+            {
+              nombreCompleto: {
+                contains: searchParams.search,
+                mode: "insensitive",
+              },
+            },
+            {
+              razonSocial: {
+                contains: searchParams.search,
+                mode: "insensitive",
+              },
+            },
+            {
+              codigoEntidad: {
+                contains: searchParams.search,
+                mode: "insensitive",
+              },
+            },
+          ],
         },
       ],
+    },
+    orderBy: {
+      codigoEntidad: "asc",
     },
   });
 };

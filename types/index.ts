@@ -10,5 +10,6 @@ export type EntidadWithPersonasInteres = Prisma.EntidadGetPayload<
 
 export type SearchParams = {
   page: string;
+  tipo: string;
   search: string;
 };

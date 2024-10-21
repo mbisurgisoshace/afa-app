@@ -46,7 +46,7 @@ enum TipoDocumentoAfip {
 }
 
 enum TipoRelacion {
-  PROVEDOOR        @map("Proveedor")
+  PROVEEDOR        @map("Proveedor")
   SPONSOR          @map("Sponsor")
   AGENTE_COMERCIAL @map("Agente Comercial")
   CLUB             @map("Club")
