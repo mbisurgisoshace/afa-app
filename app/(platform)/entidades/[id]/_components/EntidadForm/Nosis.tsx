@@ -23,6 +23,18 @@ import {
 export default function Nosis() {
   const form = useFormContext<z.infer<typeof EntidadSchema>>();
 
+  const getScoreColor = (score: number) => {
+    if (score >= 0 && score <= 299) {
+      return "bg-red-600";
+    } else if (score >= 300 && score <= 499) {
+      return "bg-orange-600";
+    } else if (score >= 500 && score <= 649) {
+      return "bg-yellow-600";
+    } else if (score >= 650 && score <= 999) {
+      return "bg-green-600";
+    }
+  };
+
   return (
     <AccordionItem
       value="informacion_nosis"
@@ -233,7 +245,14 @@ export default function Nosis() {
                 <FormItem>
                   <FormLabel>Score (0 - 999)</FormLabel>
                   <FormControl>
-                    <Input disabled {...field} />
+                    <div className="flex items-center">
+                      <Input disabled {...field} />
+                      <div
+                        className={`rounded-full size-3 ${getScoreColor(
+                          field.value
+                        )} -ml-6`}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
