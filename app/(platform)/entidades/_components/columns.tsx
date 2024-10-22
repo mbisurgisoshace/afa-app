@@ -14,6 +14,18 @@ export const columns: ColumnDef<Entidad>[] = [
   },
   {
     size: 400,
+    id: "nombreCompleto",
+    filterFn: (row, columnId, filterValue) => {
+      const codigo = row.original.codigoEntidad;
+      const razonSocial =
+        (row.original.nombreCompleto && row.original.nombreCompleto.trim()) ||
+        (row.original.razonSocial && row.original.razonSocial.trim());
+
+      return (
+        !!razonSocial?.toLowerCase().includes(filterValue.toLowerCase()) ||
+        codigo.includes(filterValue)
+      );
+    },
     header: "Nombre y Apellido / Razon Social",
     cell: ({ row }) => {
       const formulario = row.original;
@@ -31,6 +43,11 @@ export const columns: ColumnDef<Entidad>[] = [
   {
     accessorKey: "tipo",
     header: "Tipo",
+    filterFn: (row, columnId, filterValue) => {
+      return filterValue
+        .map((value: string) => value.toLowerCase())
+        .includes(row.original.tipoRelacion?.toLowerCase());
+    },
     cell: ({ row }) => <div className="">{row.original.tipoDePersona}</div>,
   },
   {

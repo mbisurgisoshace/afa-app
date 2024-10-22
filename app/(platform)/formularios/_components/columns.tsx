@@ -29,6 +29,9 @@ export const columns: ColumnDef<SubmittedForm>[] = [
     size: 400,
     accessorKey: "submissionId",
     header: "ID del Formulario",
+    filterFn: (row, columnId, filterValue) => {
+      return filterValue.includes(row.original.procesado.toString());
+    },
     cell: ({ row }) => {
       const formulario = row.original;
 
