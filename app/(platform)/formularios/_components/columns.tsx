@@ -36,8 +36,8 @@ export const columns: ColumnDef<SubmittedForm>[] = [
       const formulario = row.original;
 
       return (
-        <div className="flex items-center gap-4 justify-between">
-          {formulario.submissionId}
+        <div className="flex items-center gap-4 ">
+          <span className="w-[250px]">{formulario.submissionId}</span>
           {!formulario.procesado && (
             <TooltipProvider>
               <Tooltip>

@@ -11,7 +11,7 @@ const opcionesTipo = [
   { value: "Club", label: "Club" },
   { value: "Sponsor", label: "Sponsor" },
   { value: "Proveedor", label: "Proveedor" },
-  { value: "Agente Comercial", label: "Agente Comercial" },
+  { value: "Agente_Comercial", label: "Agente Comercial" },
 ];
 
 interface FiltersToolbarProps<TData> {
