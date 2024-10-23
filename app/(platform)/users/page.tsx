@@ -16,13 +16,10 @@ export default async function Users() {
         <h3 className="text-2xl font-semibold text-[#070F3F]">
           Administración de usuarios
         </h3>
-        <Button variant={"outline"} size={"sm"} asChild>
-          <Link
-            href={"/users/new"}
-            className="flex items-center gap-2 text-primary"
-          >
+        <Button variant={"tertiary"} size={"sm"} asChild>
+          <Link href={"/users/new"} className="flex items-center gap-2 ">
             <PlusCircledIcon />
-            <span className="text-sm font-semibold">Crear usuario</span>
+            <span className="text-sm font-normal">Nuevo usuario</span>
           </Link>
         </Button>
       </div>

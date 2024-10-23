@@ -48,7 +48,9 @@ export const columns: ColumnDef<Entidad>[] = [
         .map((value: string) => value.toLowerCase())
         .includes(row.original.tipoRelacion?.toLowerCase());
     },
-    cell: ({ row }) => <div className="">{row.original.tipoDePersona}</div>,
+    cell: ({ row }) => (
+      <div className="">{row.original.tipoRelacion?.replace("_", " ")}</div>
+    ),
   },
   {
     accessorKey: "acciones",
