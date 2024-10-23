@@ -1,4 +1,5 @@
 import { Row } from "@tanstack/react-table";
+import { UserX } from "lucide-react";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 
@@ -32,7 +33,10 @@ export function UserMoreOptions<TData>({
         <DropdownMenuItem>Editar</DropdownMenuItem>
         <DropdownMenuItem>Resetear clave</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Borrar</DropdownMenuItem>
+        <DropdownMenuItem className="text-destructive flex items-center justify-between">
+          Borrar
+          <UserX />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
