@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { UserRole } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusCircleIcon, XCircleIcon } from "lucide-react";
 
 import {
   Form,
@@ -22,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createUser } from "@/actions/auth/admin";
 import { generateRandomPassword } from "@/lib/utils";
+import { DottedSeparator } from "@/components/DottedSeparator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function NewUser() {
@@ -53,17 +53,12 @@ export default function NewUser() {
   };
 
   return (
-    <div className="w-full max-w-[1196px] m-auto">
-      <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg flex flex-row">
-        <div className="w-full">
-          <h3 className="text-2xl font-semibold text-[#070F3F]">
-            Crear nuevo usuario
-          </h3>
-        </div>
+    <div className="w-full max-w-[598px] m-auto">
+      <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg flex flex-row gap-5">
         <div className="w-full">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="space-y-4 border-b border-[#E2E8F0] pb-8 mb-8">
+              <div className="space-y-4 pb-8 mb-8">
                 <FormField
                   control={form.control}
                   name="nombre"
@@ -130,6 +125,7 @@ export default function NewUser() {
                           <Button
                             size={"xs"}
                             type="button"
+                            variant={"secondary"}
                             onClick={() =>
                               form.setValue(
                                 "password",
@@ -168,7 +164,6 @@ export default function NewUser() {
                             <Button
                               size={"sm"}
                               type="button"
-                              //className="rounded-2xl"
                               variant={
                                 field.value === UserRole.ADMIN
                                   ? "default"
@@ -194,7 +189,6 @@ export default function NewUser() {
                             <Button
                               size={"sm"}
                               type="button"
-                              //className="rounded-2xl cursor-pointer"
                               variant={
                                 field.value === UserRole.USER
                                   ? "default"
@@ -216,10 +210,12 @@ export default function NewUser() {
                   )}
                 />
               </div>
+
+              <DottedSeparator />
+
               <div className="flex flex-row items-center justify-between gap-4">
                 <Button asChild type="button" variant={"outline"}>
                   <Link href="/users" className="flex items-center gap-2">
-                    <XCircleIcon className="size-4" />
                     <span className="text-sm font-medium">Cancelar</span>
                   </Link>
                 </Button>
@@ -229,8 +225,7 @@ export default function NewUser() {
                   variant={"default"}
                   className="flex items-center gap-2"
                 >
-                  <PlusCircleIcon className="size-4" />
-                  <span className="text-sm font-medium">Crear usuario</span>
+                  <span className="text-sm font-medium">Crear</span>
                 </Button>
               </div>
             </form>
