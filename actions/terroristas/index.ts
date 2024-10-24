@@ -5,6 +5,7 @@ import { PersonaTerrorista } from "@prisma/client";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import { updateTablaStatus } from "../settings";
 
 const API_TERRORISTAS_ENTIDADES = "https://repet.jus.gob.ar/xml/entidades.json";
 const API_TERRORISTAS_INDIVIDUOS = "https://repet.jus.gob.ar/xml/personas.json";
@@ -46,33 +47,10 @@ export const updateTerroristas = async () => {
     }
   );
 
-  for (const terrorista of terroristasEntidades) {
-    await db.personaTerrorista.upsert({
-      where: {
-        dataId: terrorista.dataId,
-      },
-      update: {
-        ...terrorista,
-      },
-      create: {
-        ...terrorista,
-      },
-    });
-  }
+  await db.personaTerrorista.deleteMany();
+  await db.personaTerrorista.createMany({
+    data: [...terroristasEntidades, ...terroristasIndividuos],
+  });
 
-  for (const terrorista of terroristasIndividuos) {
-    await db.personaTerrorista.upsert({
-      where: {
-        dataId: terrorista.dataId,
-      },
-      update: {
-        ...terrorista,
-      },
-      create: {
-        ...terrorista,
-      },
-    });
-  }
-
-  console.log("Done");
+  await updateTablaStatus("listado-terroristas");
 };

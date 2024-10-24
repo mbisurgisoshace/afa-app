@@ -389,7 +389,7 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
               name="esPepEnCaracterDe"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Es PEPE en carácter de</FormLabel>
+                  <FormLabel>Es PEP en carácter de</FormLabel>
                   <FormControl>
                     <Input disabled {...field} />
                   </FormControl>

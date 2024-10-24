@@ -275,7 +275,7 @@ model PersonaInteres {
 
 model PersonaTerrorista {
   id           Int       @id @default(autoincrement())
-  dataId       String    @unique
+  dataId       String
   nombre       String
   organizacion String
   desde        DateTime?
@@ -303,4 +303,13 @@ model Industria {
   industria String
 
   @@map("Industrias")
+}
+
+model TablaStatus {
+  id        Int      @id @default(autoincrement())
+  tabla     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("TablasStatus")
 }

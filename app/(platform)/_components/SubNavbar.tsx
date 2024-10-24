@@ -9,6 +9,7 @@ import {
   CircleUserIcon,
   MenuSquareIcon,
   LayoutDashboardIcon,
+  SettingsIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -21,8 +22,6 @@ export default function SubNavbar() {
     <div className="bg-white h-[52px] px-6 flex items-center border-b border-[#DEDEDE] gap-4">
       <Button
         asChild
-        // className="rounded-2xl"
-        // variant={pathname === "/dashboard" ? "default" : "secondary"}
         variant={
           pathname === "/dashboard" ? "navbarLinkSelected" : "navbarLink"
         }
@@ -32,21 +31,9 @@ export default function SubNavbar() {
           <span>Dashboard</span>
         </Link>
       </Button>
+
       <Button
         asChild
-        // className="rounded-2xl"
-        // variant={pathname === "/dashboard" ? "default" : "secondary"}
-        variant={pathname === "/tablas" ? "navbarLinkSelected" : "navbarLink"}
-      >
-        <Link href="/tablas" className="flex flex-row items-center gap-2">
-          <TableIcon size={24} strokeWidth={1.5} />
-          <span>Tablas Generales</span>
-        </Link>
-      </Button>
-      <Button
-        asChild
-        // className="rounded-2xl"
-        // variant={pathname === "/formularios" ? "default" : "secondary"}
         variant={
           pathname === "/formularios" ? "navbarLinkSelected" : "navbarLink"
         }
@@ -58,8 +45,6 @@ export default function SubNavbar() {
       </Button>
       <Button
         asChild
-        // className="rounded-2xl"
-        // variant={pathname.includes("/entidades") ? "default" : "secondary"}
         variant={
           pathname.includes("/entidades") ? "navbarLinkSelected" : "navbarLink"
         }
@@ -69,11 +54,24 @@ export default function SubNavbar() {
           <span>Entidades</span>
         </Link>
       </Button>
+
       {data?.user.role === "ADMIN" && (
         <Button
           asChild
-          // className="rounded-2xl"
-          // variant={pathname.includes("/users") ? "default" : "secondary"}
+          variant={
+            pathname === "/settings" ? "navbarLinkSelected" : "navbarLink"
+          }
+        >
+          <Link href="/settings" className="flex flex-row items-center gap-2">
+            <SettingsIcon size={24} strokeWidth={1.5} />
+            <span>Settings</span>
+          </Link>
+        </Button>
+      )}
+
+      {data?.user.role === "ADMIN" && (
+        <Button
+          asChild
           variant={
             pathname.includes("/users") ? "navbarLinkSelected" : "navbarLink"
           }

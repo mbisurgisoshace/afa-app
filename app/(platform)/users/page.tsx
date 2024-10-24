@@ -3,7 +3,6 @@ import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { getUsers } from "@/actions/users";
 import { Button } from "@/components/ui/button";
-//import { DataTable } from "@/components/DataTable";
 import { DataTable } from "@/components/DataTable/index";
 import { columns } from "./_components/UsersTable/columns";
 
