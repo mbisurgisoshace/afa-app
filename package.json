@@ -32,6 +32,7 @@
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
     "date-fns": "^3.3.1",
+    "double-metaphone": "^2.0.1",
     "jotform": "^1.0.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.330.0",

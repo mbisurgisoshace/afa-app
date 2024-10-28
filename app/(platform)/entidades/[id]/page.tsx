@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import EntidadForm from "./_components/EntidadForm";
 import NosisTrigger from "./_components/NosisTrigger";
 import { getEntidad, getTablas } from "@/actions/entidad";
+import { CalcularRiesgo } from "./_components/CalcularRiesgo";
 
 interface EntidadProps {
   params: { id: string };
@@ -52,7 +53,8 @@ export default async function Entidad({ params }: EntidadProps) {
 
   const razonSocial =
     (entidad?.nombreCompleto && entidad?.nombreCompleto.trim()) ||
-    (entidad?.razonSocial && entidad?.razonSocial.trim());
+    (entidad?.razonSocial && entidad?.razonSocial.trim()) ||
+    "";
 
   return (
     <div className="flex flex-row">
@@ -81,7 +83,16 @@ export default async function Entidad({ params }: EntidadProps) {
             />
           )}
         </TabsContent>
-        <TabsContent value="riesgos">Riesgos</TabsContent>
+        <TabsContent value="riesgos">
+          <CalcularRiesgo
+            razonSocial={razonSocial}
+            personasDeInteres={
+              entidad?.personasInteres.map(
+                (persona) => persona.nombreApellido || ""
+              ) || []
+            }
+          />
+        </TabsContent>
       </Tabs>
     </div>
   );

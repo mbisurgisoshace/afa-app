@@ -30,6 +30,7 @@ import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/auth/login";
+import { toast } from "sonner";
 
 const textFont = Inter({
   subsets: ["latin"],
@@ -64,6 +65,11 @@ export default function LoginForm() {
       const authResult = await login(values);
 
       if (authResult && authResult.error) {
+        if (authResult.error === "Invalid credentials") {
+          toast.error("Datos de acceso incorrectos.");
+        } else {
+          toast.error("Ha ocurrido un error al iniciar sesion");
+        }
       }
     });
   };

@@ -10,6 +10,16 @@ import { updateTablaStatus } from "../settings";
 const API_TERRORISTAS_ENTIDADES = "https://repet.jus.gob.ar/xml/entidades.json";
 const API_TERRORISTAS_INDIVIDUOS = "https://repet.jus.gob.ar/xml/personas.json";
 
+export const getListadoTerroristas = async () => {
+  const session = await auth();
+
+  if (!session) {
+    return;
+  }
+
+  return db.personaTerrorista.findMany();
+};
+
 export const updateTerroristas = async () => {
   const session = await auth();
 
