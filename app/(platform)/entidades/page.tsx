@@ -1,8 +1,6 @@
 import { SearchParams } from "@/types";
 import { columns } from "./_components/columns";
 import { getEntidades } from "@/actions/entidad";
-//import { DataTable } from "@/components/DataTable";
-//import { FilteringTools } from "./_components/Filters";
 import { DataTable } from "@/components/DataTable/index";
 import { FiltersToolbar } from "./_components/FiltersToolbar";
 
@@ -20,9 +18,6 @@ export default async function Entidades({ searchParams }: EntidadesProps) {
           Administración de entidades
         </h3>
       </div>
-      {/* <div className="mb-2 flex items-center gap-2">
-        <FilteringTools searchParams={searchParams} />
-      </div> */}
       <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg overflow-scroll h-full">
         <DataTable
           data={entidades}

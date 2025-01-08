@@ -245,6 +245,7 @@ model Entidad {
   nosisEnlanceHomonimosEnBaseLaFt           String?
   nosisPeorSituacion12MesesBcra             String?
   nosisUltimaActualizacion                  DateTime?
+  EstadoContable                            EstadoContable[]
 
   @@map("Entidades")
 }
@@ -271,6 +272,44 @@ model PersonaInteres {
   updatedAt             DateTime           @updatedAt
 
   @@map("PersonasInteres")
+}
+
+model EstadoContable {
+  id                                     Int      @id @default(autoincrement())
+  fechaDesde                             String
+  fechaHasta                             String
+  cajaBancos                             Decimal  @default(0)
+  inversiones                            Decimal  @default(0)
+  cuentasPorCobrarAsociados              Decimal  @default(0)
+  cuentasCobrarTerceros                  Decimal  @default(0)
+  derechosRecibirServicios               Decimal  @default(0)
+  otrosCreditos                          Decimal  @default(0)
+  bienesParaConsumo                      Decimal  @default(0)
+  otrosActivos                           Decimal  @default(0)
+  inversionesNoCorrientes                Decimal  @default(0)
+  bienesDeUso                            Decimal  @default(0)
+  activosIntangibles                     Decimal  @default(0)
+  otrosActivosNoCorrientes               Decimal  @default(0)
+  deudas                                 Decimal  @default(0)
+  fondosConDestinoEspecifico             Decimal  @default(0)
+  previsiones                            Decimal  @default(0)
+  deudasNoCorrientes                     Decimal  @default(0)
+  fondosConDestinoEspecificoNoCorrientes Decimal  @default(0)
+  previsionesNoCorrientes                Decimal  @default(0)
+  capital                                Decimal  @default(0)
+  reservas                               Decimal  @default(0)
+  resultadosNoAsignados                  Decimal  @default(0)
+  resultadoDelEjercicio                  Decimal  @default(0)
+  recursosIngresos                       Decimal  @default(0)
+  gastosOperativos                       Decimal  @default(0)
+  resultadosFinancierosPorTenencia       Decimal  @default(0)
+  resultadosExtraordinarios              Decimal  @default(0)
+  entidad                                Entidad  @relation(fields: [entidadId], references: [id], onDelete: Cascade)
+  entidadId                              Int
+  createdAt                              DateTime @default(now())
+  updatedAt                              DateTime @updatedAt
+
+  @@map("EstadosContables")
 }
 
 model PersonaTerrorista {

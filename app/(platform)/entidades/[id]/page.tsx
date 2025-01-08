@@ -5,6 +5,7 @@ import EntidadForm from "./_components/EntidadForm";
 import NosisTrigger from "./_components/NosisTrigger";
 import { getEntidad, getTablas } from "@/actions/entidad";
 import { CalcularRiesgo } from "./_components/CalcularRiesgo";
+import EstadosContables from "./_components/EstadosContables";
 
 interface EntidadProps {
   params: { id: string };
@@ -61,8 +62,9 @@ export default async function Entidad({ params }: EntidadProps) {
       <Tabs defaultValue="informacion" className="w-full">
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row items-center gap-4">
-            <TabsList className="grid w-[332px] grid-cols-2">
+            <TabsList className="grid grid-cols-3">
               <TabsTrigger value="informacion">Información básica</TabsTrigger>
+              <TabsTrigger value="eecc">Estados Contables</TabsTrigger>
               <TabsTrigger value="riesgos">Detalle de riesgos</TabsTrigger>
             </TabsList>
             <h2 className="flex items-center font-semibold text-lg text-muted-foreground gap-4">
@@ -82,6 +84,9 @@ export default async function Entidad({ params }: EntidadProps) {
               entidad={entidad}
             />
           )}
+        </TabsContent>
+        <TabsContent value="eecc">
+          {entidad && <EstadosContables entidadId={entidad.id} />}
         </TabsContent>
         <TabsContent value="riesgos">
           <CalcularRiesgo
