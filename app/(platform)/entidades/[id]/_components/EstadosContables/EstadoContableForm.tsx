@@ -95,7 +95,6 @@ export default function EstadoContableForm({
     getTotalPasivoCorriente,
     getTotalPasivoNoCorriente,
     getTotalPatrimonioNeto,
-    getTotalResultadosOrdinarios,
     getResultado,
   } = useTotales(form);
 
