@@ -9,3 +9,12 @@ export const getEstadosContables = async (entidadId: number) => {
     },
   });
 };
+
+export const createEstadoContable = async (entidadId: number, values: any) => {
+  return await db.estadoContable.create({
+    data: {
+      ...values,
+      entidadId,
+    },
+  });
+};

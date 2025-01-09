@@ -127,8 +127,8 @@ export const EntidadSchema = z.object({
 });
 
 export const EstadoContableSchema = z.object({
-  fechaDesde: z.string(),
-  fechaHasta: z.string(),
+  fechaDesde: z.any(),
+  fechaHasta: z.any(),
   cajaBancos: z.any(),
   inversiones: z.any(),
   cuentasPorCobrarAsociados: z.any(),

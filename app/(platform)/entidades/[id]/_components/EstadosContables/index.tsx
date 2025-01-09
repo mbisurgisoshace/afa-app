@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { columns } from "./columns";
 import { EstadoContable } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/DataTable";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { getEstadosContables } from "@/actions/estadosContables";
+
 import EstadoContableForm from "./EstadoContableForm";
 
 interface EstadosContablesProps {
@@ -20,14 +21,19 @@ export default function EstadosContables({ entidadId }: EstadosContablesProps) {
     []
   );
 
-  useEffect(() => {
-    const fetchEstadosContables = async () => {
-      const estadosContables = await getEstadosContables(entidadId);
-      setEstadosContables(estadosContables);
-    };
-
-    fetchEstadosContables();
+  const fetchEstadosContables = useCallback(async () => {
+    const estadosContables = await getEstadosContables(entidadId);
+    setEstadosContables(estadosContables);
   }, [entidadId]);
+
+  useEffect(() => {
+    fetchEstadosContables();
+  }, [entidadId, fetchEstadosContables]);
+
+  const onEstadoContableAdded = async () => {
+    setIsOpen(false);
+    await fetchEstadosContables();
+  };
 
   return (
     <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg overflow-scroll h-full">
@@ -44,7 +50,12 @@ export default function EstadosContables({ entidadId }: EstadosContablesProps) {
       </div>
       <DataTable data={estadosContables} columns={columns} />
       {isOpen && (
-        <EstadoContableForm isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        <EstadoContableForm
+          isOpen={isOpen}
+          entidadId={entidadId}
+          onClose={() => setIsOpen(false)}
+          onEstadoContableAdded={onEstadoContableAdded}
+        />
       )}
     </div>
   );

@@ -1,7 +1,12 @@
 "use client";
 
 import { z } from "zod";
+import numeral from "numeral";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { useForm } from "react-hook-form";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "@radix-ui/react-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
@@ -11,120 +16,45 @@ import { EstadoContableSchema } from "@/schemas";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Dialog, DialogFooter, DialogContent } from "@/components/ui/dialog";
 
+import {
+  PATRIMONIO_NETO,
+  ACTIVO_CORRIENTE,
+  PASIVO_CORRIENTE,
+  ACTIVO_NO_CORRIENTE,
+  PASIVO_NO_CORRIENTE,
+  RESULTADO_ORDINARIO,
+} from "./clasificacion";
+import useTotales from "./useTotales";
+
+import { cn } from "@/lib/utils";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popoverDialog";
+import { createEstadoContable } from "@/actions/estadosContables";
+
 interface EstadoContableFormProps {
   isOpen: boolean;
+  entidadId: number;
   onClose: () => void;
   estadoContable?: EstadoContable;
+  onEstadoContableAdded: () => void;
 }
-
-const ACTIVO_CORRIENTE = [
-  {
-    id: "cajaBancos",
-    label: "Caja y Bancos",
-  },
-  {
-    id: "inversiones",
-    label: "Inversiones",
-  },
-  {
-    id: "cuentasPorCobrarAsociados",
-    label: "Cuentas por Cobrar Asociados",
-  },
-  {
-    id: "cuentasCobrarTerceros",
-    label: "Cuentas a Cobrar a Terceros",
-  },
-  {
-    id: "derechosRecibirServicios",
-    label: "Derechos a Recibir Servicios",
-  },
-  {
-    id: "otrosCreditos",
-    label: "Otros Creditos",
-  },
-  {
-    id: "bienesParaConsumo",
-    label: "Bienes para Consumo",
-  },
-  {
-    id: "otrosActivos",
-    label: "Otros Activos",
-  },
-];
-
-const ACTIVO_NO_CORRIENTE = [
-  {
-    id: "inversionesNoCorrientes",
-    label: "Inversiones No Corrientes",
-  },
-  {
-    id: "bienesDeUso",
-    label: "Bienes de Uso",
-  },
-  {
-    id: "activosIntangibles",
-    label: "Activos Intangibles",
-  },
-  {
-    id: "otrosActivosNoCorrientes",
-    label: "Otros Activos No Corrientes",
-  },
-];
-
-const PASIVO_CORRIENTE = [
-  {
-    id: "deudas",
-    label: "Deudas",
-  },
-  {
-    id: "fondosConDestinoEspecifico",
-    label: "Fondos con Destino Especifico",
-  },
-  {
-    id: "previsiones",
-    label: "Previsiones",
-  },
-];
-
-const PASIVO_NO_CORRIENTE = [
-  {
-    id: "deudasNoCorrientes",
-    label: "Deudas No Corrientes",
-  },
-  {
-    id: "fondosConDestinoEspecificoNoCorrientes",
-    label: "Fondos con Destino Especifico No Ctes",
-  },
-  {
-    id: "previsionesNoCorrientes",
-    label: "Previsiones No Corrientes",
-  },
-];
-
-const PATRIMONIO_NETO = [
-  { id: "capital", label: "Capital" },
-  { id: "reservas", label: "Reservas" },
-  { id: "resultadosNoAsignados", label: "Resultados No Asignados" },
-  { id: "resultadoDelEjercicio", label: "Resultado del Ejercicio" },
-];
-
-const RESULTADO_ORDINARIO = [
-  { id: "recursosIngresos", label: "Recursos e Ingresos" },
-  { id: "gastosOperativos", label: "Gastos Operativos" },
-  {
-    id: "resultadosFinancierosPorTenencia",
-    label: "Resultados Financieros y Por Tenencia",
-  },
-];
 
 export default function EstadoContableForm({
   isOpen,
   onClose,
+  entidadId,
   estadoContable,
+  onEstadoContableAdded,
 }: EstadoContableFormProps) {
   const form = useForm<z.infer<typeof EstadoContableSchema>>({
     resolver: zodResolver(EstadoContableSchema),
     defaultValues: {
+      fechaDesde: estadoContable?.fechaDesde || undefined,
+      fechaHasta: estadoContable?.fechaHasta || undefined,
       cajaBancos: estadoContable?.cajaBancos || 0,
       inversiones: estadoContable?.inversiones || 0,
       cuentasPorCobrarAsociados: estadoContable?.cuentasPorCobrarAsociados || 0,
@@ -157,369 +87,447 @@ export default function EstadoContableForm({
     },
   });
 
-  const getTotalActivoCorriente = () => {
-    const activoCorriente = ACTIVO_CORRIENTE.reduce(
-      (acc, activo) => acc + parseFloat(form.watch(activo.id as any)),
-      0
-    );
+  const {
+    getTotalActivo,
+    getTotalActivoCorriente,
+    getTotalActivoNoCorriente,
+    getTotalPasivo,
+    getTotalPasivoCorriente,
+    getTotalPasivoNoCorriente,
+    getTotalPatrimonioNeto,
+    getTotalResultadosOrdinarios,
+    getResultado,
+  } = useTotales(form);
 
-    return activoCorriente;
+  const onSubmit = async (values: z.infer<typeof EstadoContableSchema>) => {
+    try {
+      const eecc = {
+        fechaDesde: format(values.fechaDesde, "dd/MM/yyyy"),
+        fechaHasta: format(values.fechaHasta, "dd/MM/yyyy"),
+        cajaBancos: parseFloat(values.cajaBancos),
+        inversiones: parseFloat(values.inversiones),
+        cuentasPorCobrarAsociados: parseFloat(values.cuentasPorCobrarAsociados),
+        cuentasCobrarTerceros: parseFloat(values.cuentasCobrarTerceros),
+        derechosRecibirServicios: parseFloat(values.derechosRecibirServicios),
+        otrosCreditos: parseFloat(values.otrosCreditos),
+        bienesParaConsumo: parseFloat(values.bienesParaConsumo),
+        otrosActivos: parseFloat(values.otrosActivos),
+        inversionesNoCorrientes: parseFloat(values.inversionesNoCorrientes),
+        bienesDeUso: parseFloat(values.bienesDeUso),
+        activosIntangibles: parseFloat(values.activosIntangibles),
+        otrosActivosNoCorrientes: parseFloat(values.otrosActivosNoCorrientes),
+        deudas: parseFloat(values.deudas),
+        fondosConDestinoEspecifico: parseFloat(
+          values.fondosConDestinoEspecifico
+        ),
+        previsiones: parseFloat(values.previsiones),
+        deudasNoCorrientes: parseFloat(values.deudasNoCorrientes),
+        fondosConDestinoEspecificoNoCorrientes: parseFloat(
+          values.fondosConDestinoEspecificoNoCorrientes
+        ),
+        previsionesNoCorrientes: parseFloat(values.previsionesNoCorrientes),
+        capital: parseFloat(values.capital),
+        reservas: parseFloat(values.reservas),
+        resultadosNoAsignados: parseFloat(values.resultadosNoAsignados),
+        resultadoDelEjercicio: parseFloat(values.resultadoDelEjercicio),
+        recursosIngresos: parseFloat(values.recursosIngresos),
+        gastosOperativos: parseFloat(values.gastosOperativos),
+        resultadosFinancierosPorTenencia: parseFloat(
+          values.resultadosFinancierosPorTenencia
+        ),
+        resultadosExtraordinarios: parseFloat(values.resultadosExtraordinarios),
+      };
+
+      await createEstadoContable(entidadId, eecc);
+      onEstadoContableAdded();
+    } catch (err) {
+      console.log("err", err);
+    }
   };
 
-  const getTotalActivoNoCorriente = () => {
-    const activoNoCorriente = ACTIVO_NO_CORRIENTE.reduce(
-      (acc, activo) => acc + parseFloat(form.watch(activo.id as any)),
-      0
-    );
-
-    return activoNoCorriente;
-  };
-
-  const getTotalActivo = () => {
-    return getTotalActivoCorriente() + getTotalActivoNoCorriente();
-  };
-
-  const getTotalPasivoCorriente = () => {
-    const pasivoCorriente = PASIVO_CORRIENTE.reduce(
-      (acc, pasivo) => acc + parseFloat(form.watch(pasivo.id as any)),
-      0
-    );
-
-    return pasivoCorriente;
-  };
-
-  const getTotalPasivoNoCorriente = () => {
-    const pasivoNoCorriente = PASIVO_NO_CORRIENTE.reduce(
-      (acc, pasivo) => acc + parseFloat(form.watch(pasivo.id as any)),
-      0
-    );
-
-    return pasivoNoCorriente;
-  };
-
-  const getTotalPatrimonioNeto = () => {
-    const patrimonioNeto = PATRIMONIO_NETO.reduce(
-      (acc, patrimonio) => acc + parseFloat(form.watch(patrimonio.id as any)),
-      0
-    );
-
-    return patrimonioNeto;
-  };
-
-  const getTotalPasivo = () => {
-    return (
-      getTotalPasivoCorriente() +
-      getTotalPasivoNoCorriente() +
-      getTotalPatrimonioNeto()
-    );
-  };
-
-  const getTotalResultadosOrdinarios = () => {
-    const resultadosOrdinarios = RESULTADO_ORDINARIO.reduce(
-      (acc, resultado) => acc + parseFloat(form.watch(resultado.id as any)),
-      0
-    );
-
-    return resultadosOrdinarios;
-  };
-
-  const getResultado = () => {
-    return (
-      getTotalResultadosOrdinarios() +
-      parseFloat(form.watch("resultadosExtraordinarios"))
-    );
-  };
+  const fechaDesde = form.watch("fechaDesde");
+  const fechaHasta = form.watch("fechaHasta");
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[1000px]">
+      <DialogContent className="sm:max-w-[1340px]">
         <Form {...form}>
-          <div>
-            <h3 className="mb-4 text-3xl font-semibold text-primary">
-              Estado de Situacion Patrimonial
-            </h3>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-2">
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
-                    ACTIVO
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-gray-500">
-                    $
-                  </h4>
-                </div>
-                {ACTIVO_CORRIENTE.map((activo) => (
-                  <div
-                    key={activo.id}
-                    className="w-full grid grid-cols-4 border-b py-2 items-center"
-                  >
-                    <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
-                      {activo.label}
-                    </h4>
-                    <FormField
-                      control={form.control}
-                      name={activo.id as any}
-                      render={({ field }) => (
-                        <FormItem>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div>
+              <div className="flex gap-9 items-center mb-4 ">
+                <h3 className="text-3xl font-semibold text-primary">
+                  Estado de Situacion Patrimonial
+                </h3>
+                <FormField
+                  control={form.control}
+                  name="fechaDesde"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <PopoverTrigger asChild>
                           <FormControl>
-                            <Input {...field} type="number" />
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-[240px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP", { locale: es })
+                              ) : (
+                                <span>Periodo Desde</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
                           </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                ))}
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-auto p-0"
+                          style={{ zIndex: 9999 }}
+                          align="start"
+                        >
+                          <Calendar
+                            locale={es}
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
 
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
-                    TOTAL ACTIVO CORRIENTE
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    <Input disabled value={getTotalActivoCorriente()} />
-                  </h4>
-                </div>
-
-                {ACTIVO_NO_CORRIENTE.map((activo) => (
-                  <div
-                    key={activo.id}
-                    className="w-full grid grid-cols-4 border-b py-2 items-center"
-                  >
-                    <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
-                      {activo.label}
-                    </h4>
-                    <FormField
-                      control={form.control}
-                      name={activo.id as any}
-                      render={({ field }) => (
-                        <FormItem>
+                <FormField
+                  control={form.control}
+                  name="fechaHasta"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <PopoverTrigger asChild>
                           <FormControl>
-                            <Input {...field} type="number" />
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-[240px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP", { locale: es })
+                              ) : (
+                                <span>Periodo Hasta</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
                           </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                ))}
-
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
-                    TOTAL ACTIVO NO CORRIENTE
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    <Input disabled value={getTotalActivoNoCorriente()} />
-                  </h4>
-                </div>
-
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
-                    TOTAL DEL ACTIVO
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    <Input disabled value={getTotalActivo()} />
-                  </h4>
-                </div>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-auto p-0"
+                          style={{ zIndex: 9999 }}
+                          align="start"
+                        >
+                          <Calendar
+                            locale={es}
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
-                    PASIVO
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-gray-500">
-                    $
-                  </h4>
-                </div>
-
-                {PASIVO_CORRIENTE.map((pasivo) => (
-                  <div
-                    key={pasivo.id}
-                    className="w-full grid grid-cols-4 border-b py-2 items-center"
-                  >
-                    <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
-                      {pasivo.label}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
+                      ACTIVO
                     </h4>
-                    <FormField
-                      control={form.control}
-                      name={pasivo.id as any}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input {...field} type="number" />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                ))}
-
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
-                    TOTAL PASIVO CORRIENTE
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    <Input disabled value={getTotalPasivoCorriente()} />
-                  </h4>
-                </div>
-
-                {PASIVO_NO_CORRIENTE.map((pasivo) => (
-                  <div
-                    key={pasivo.id}
-                    className="w-full grid grid-cols-4 border-b py-2 items-center"
-                  >
-                    <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
-                      {pasivo.label}
+                    <h4 className="text-center text-xl font-semibold text-gray-500">
+                      $
                     </h4>
-                    <FormField
-                      control={form.control}
-                      name={pasivo.id as any}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input {...field} type="number" />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
                   </div>
-                ))}
+                  {ACTIVO_CORRIENTE.map((activo) => (
+                    <div
+                      key={activo.id}
+                      className="w-full grid grid-cols-4 border-b py-2 items-center"
+                    >
+                      <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
+                        {activo.label}
+                      </h4>
+                      <FormField
+                        control={form.control}
+                        name={activo.id as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))}
 
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
-                    TOTAL PASIVO NO CORRIENTE
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    <Input disabled value={getTotalPasivoNoCorriente()} />
-                  </h4>
-                </div>
-
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
-                    PATRIMONIO NETO
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-gray-500">
-                    <Input className="opacity-0" />
-                  </h4>
-                </div>
-
-                {PATRIMONIO_NETO.map((patrimonioNeto) => (
-                  <div
-                    key={patrimonioNeto.id}
-                    className="w-full grid grid-cols-4 border-b py-2 items-center"
-                  >
-                    <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
-                      {patrimonioNeto.label}
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
+                      TOTAL ACTIVO CORRIENTE
                     </h4>
-                    <FormField
-                      control={form.control}
-                      name={patrimonioNeto.id as any}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input {...field} type="number" />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
+                    <h4 className="text-center text-xl font-semibold text-[#070F3F] h-9">
+                      {numeral(getTotalActivoCorriente()).format("$0,0.00")}
+                    </h4>
                   </div>
-                ))}
 
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
-                    TOTAL DEL PATRIMONIO NETO
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    <Input disabled value={getTotalPatrimonioNeto()} />
-                  </h4>
+                  {ACTIVO_NO_CORRIENTE.map((activo) => (
+                    <div
+                      key={activo.id}
+                      className="w-full grid grid-cols-4 border-b py-2 items-center"
+                    >
+                      <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
+                        {activo.label}
+                      </h4>
+                      <FormField
+                        control={form.control}
+                        name={activo.id as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))}
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
+                      TOTAL ACTIVO NO CORRIENTE
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-[#070F3F] h-9">
+                      {numeral(getTotalActivoNoCorriente()).format("$0,0.00")}
+                    </h4>
+                  </div>
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
+                      TOTAL DEL ACTIVO
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-gray-500 h-9">
+                      {numeral(getTotalActivo()).format("$0,0.00")}
+                    </h4>
+                  </div>
                 </div>
 
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
-                    TOTAL DEL PASIVO
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-gray-500">
-                    <Input disabled value={getTotalPasivo()} />
-                  </h4>
+                <div className="flex flex-col gap-2">
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
+                      PASIVO
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-gray-500">
+                      $
+                    </h4>
+                  </div>
+
+                  {PASIVO_CORRIENTE.map((pasivo) => (
+                    <div
+                      key={pasivo.id}
+                      className="w-full grid grid-cols-4 border-b py-2 items-center"
+                    >
+                      <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
+                        {pasivo.label}
+                      </h4>
+                      <FormField
+                        control={form.control}
+                        name={pasivo.id as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))}
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
+                      TOTAL PASIVO CORRIENTE
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-[#070F3F] h-9">
+                      {numeral(getTotalPasivoCorriente()).format("$0,0.00")}
+                    </h4>
+                  </div>
+
+                  {PASIVO_NO_CORRIENTE.map((pasivo) => (
+                    <div
+                      key={pasivo.id}
+                      className="w-full grid grid-cols-4 border-b py-2 items-center"
+                    >
+                      <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
+                        {pasivo.label}
+                      </h4>
+                      <FormField
+                        control={form.control}
+                        name={pasivo.id as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))}
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
+                      TOTAL PASIVO NO CORRIENTE
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-[#070F3F] h-9">
+                      {numeral(getTotalPasivoNoCorriente()).format("$0,0.00")}
+                    </h4>
+                  </div>
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
+                      PATRIMONIO NETO
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-gray-500 h-9"></h4>
+                  </div>
+
+                  {PATRIMONIO_NETO.map((patrimonioNeto) => (
+                    <div
+                      key={patrimonioNeto.id}
+                      className="w-full grid grid-cols-4 border-b py-2 items-center"
+                    >
+                      <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
+                        {patrimonioNeto.label}
+                      </h4>
+                      <FormField
+                        control={form.control}
+                        name={patrimonioNeto.id as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))}
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
+                      TOTAL DEL PATRIMONIO NETO
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-[#070F3F] h-9">
+                      {numeral(getTotalPatrimonioNeto()).format("$0,0.00")}
+                    </h4>
+                  </div>
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
+                      TOTAL DEL PASIVO
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-gray-500 h-9">
+                      {numeral(getTotalPasivo()).format("$0,0.00")}
+                    </h4>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div>
-            <h3 className="mt-4 mb-4 text-3xl font-semibold text-primary">
-              Estado de Resultados
-            </h3>
+            <div>
+              <h3 className="mt-4 mb-4 text-3xl font-semibold text-primary">
+                Estado de Resultados
+              </h3>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-2">
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
-                    RESULTADOS ORDINARIOS
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    $
-                  </h4>
-                </div>
-
-                {RESULTADO_ORDINARIO.map((resultado) => (
-                  <div
-                    key={resultado.id}
-                    className="w-full grid grid-cols-4 border-b py-2 items-center"
-                  >
-                    <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
-                      {resultado.label}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-2">
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
+                      RESULTADOS ORDINARIOS
                     </h4>
-                    <FormField
-                      control={form.control}
-                      name={resultado.id as any}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input {...field} type="number" />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
+                    <h4 className="text-center text-xl font-semibold text-[#070F3F]">
+                      $
+                    </h4>
                   </div>
-                ))}
 
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
-                    RESULTADOS EXTRAORDINARIOS
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-[#070F3F]">
-                    <FormField
-                      control={form.control}
-                      name={"resultadosExtraordinarios"}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input {...field} type="number" />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </h4>
-                </div>
+                  {RESULTADO_ORDINARIO.map((resultado) => (
+                    <div
+                      key={resultado.id}
+                      className="w-full grid grid-cols-4 border-b py-2 items-center"
+                    >
+                      <h4 className="col-span-3 text-lg font-normal text-[#070F3F]">
+                        {resultado.label}
+                      </h4>
+                      <FormField
+                        control={form.control}
+                        name={resultado.id as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))}
 
-                <div className="w-full grid grid-cols-4 border-b py-2 items-center">
-                  <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
-                    RESULTADO DEL EJERCICIO
-                  </h4>
-                  <h4 className="text-center text-xl font-semibold text-gray-500">
-                    <Input disabled value={getResultado()} />
-                  </h4>
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="col-span-3 text-xl font-semibold text-[#070F3F]">
+                      RESULTADOS EXTRAORDINARIOS
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-[#070F3F]">
+                      <FormField
+                        control={form.control}
+                        name={"resultadosExtraordinarios"}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </h4>
+                  </div>
+
+                  <div className="w-full grid grid-cols-4 border-b py-2 items-center">
+                    <h4 className="text-center col-span-3 text-xl font-semibold text-gray-500">
+                      RESULTADO DEL EJERCICIO
+                    </h4>
+                    <h4 className="text-center text-xl font-semibold text-gray-500 h-9">
+                      {numeral(getResultado()).format("$0,0.00")}
+                    </h4>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+
+            <DialogFooter>
+              <Button variant={"secondary"} onClick={onClose}>
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                variant={"default"}
+                disabled={!fechaDesde || !fechaHasta}
+              >
+                Guardar
+              </Button>
+            </DialogFooter>
+          </form>
         </Form>
-
-        <DialogFooter>
-          <Button variant={"default"} onClick={onClose}>
-            Guardar
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
