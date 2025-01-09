@@ -74,7 +74,15 @@ export default function useTotales(
 
   const getTotalResultadosOrdinarios = () => {
     const resultadosOrdinarios = RESULTADO_ORDINARIO.reduce(
-      (acc, resultado) => acc + parseFloat(form.watch(resultado.id as any)),
+      (acc, resultado) => {
+        let value = parseFloat(form.watch(resultado.id as any));
+
+        if (resultado.id === "gastosOperativos") {
+          value = value * -1;
+        }
+
+        return acc + value;
+      },
       0
     );
 
