@@ -4,10 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { columns } from "./columns";
+import {
+  getEstadosContables,
+  getEstadoContable,
+} from "@/actions/estadosContables";
 import { EstadoContable } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/DataTable";
-import { getEstadosContables } from "@/actions/estadosContables";
 
 import EstadoContableForm from "./EstadoContableForm";
 
@@ -17,6 +20,9 @@ interface EstadosContablesProps {
 
 export default function EstadosContables({ entidadId }: EstadosContablesProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [estadoContable, setEstadoContable] = useState<
+    EstadoContable | undefined
+  >();
   const [estadosContables, setEstadosContables] = useState<EstadoContable[]>(
     []
   );
@@ -35,6 +41,18 @@ export default function EstadosContables({ entidadId }: EstadosContablesProps) {
     await fetchEstadosContables();
   };
 
+  const onSelectEecc = async (eeccId: number) => {
+    const estadoContable = await getEstadoContable(eeccId);
+    if (estadoContable) {
+      setIsOpen(true);
+      setEstadoContable(estadoContable);
+    }
+  };
+
+  const columnas = columns(onSelectEecc);
+
+  console.log("estadoContable", estadoContable);
+
   return (
     <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg overflow-scroll h-full">
       <div className="flex mb-6">
@@ -48,11 +66,12 @@ export default function EstadosContables({ entidadId }: EstadosContablesProps) {
           <span className="ml-2 text-sm font-normal">Nuevo EECC</span>
         </Button>
       </div>
-      <DataTable data={estadosContables} columns={columns} />
+      <DataTable data={estadosContables} columns={columnas} />
       {isOpen && (
         <EstadoContableForm
           isOpen={isOpen}
           entidadId={entidadId}
+          estadoContable={estadoContable}
           onClose={() => setIsOpen(false)}
           onEstadoContableAdded={onEstadoContableAdded}
         />
