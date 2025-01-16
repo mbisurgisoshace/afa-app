@@ -51,8 +51,6 @@ export default function EstadosContables({ entidadId }: EstadosContablesProps) {
 
   const columnas = columns(onSelectEecc);
 
-  console.log("estadoContable", estadoContable);
-
   return (
     <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg overflow-scroll h-full">
       <div className="flex mb-6">
@@ -60,7 +58,10 @@ export default function EstadosContables({ entidadId }: EstadosContablesProps) {
           size={"sm"}
           className="ml-auto"
           variant={"tertiary"}
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setIsOpen(true);
+            setEstadoContable(undefined);
+          }}
         >
           <PlusCircledIcon />
           <span className="ml-2 text-sm font-normal">Nuevo EECC</span>
@@ -72,7 +73,10 @@ export default function EstadosContables({ entidadId }: EstadosContablesProps) {
           isOpen={isOpen}
           entidadId={entidadId}
           estadoContable={estadoContable}
-          onClose={() => setIsOpen(false)}
+          onClose={() => {
+            setIsOpen(false);
+            setEstadoContable(undefined);
+          }}
           onEstadoContableAdded={onEstadoContableAdded}
         />
       )}
