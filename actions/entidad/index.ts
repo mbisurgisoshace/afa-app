@@ -8,15 +8,20 @@ import NosisDataParser, {
   NosisDataResponse,
 } from "@/lib/nosis/NosisDataParser";
 import { TipoRelacion } from "@prisma/client";
+import { BcraDataResponse } from "@/lib/bcra/BcraDataParser";
 
 export const getTablas = async () => {
   const paises = await db.pais.findMany();
+  const oficios = await db.oficio.findMany();
   const industrias = await db.industria.findMany();
+  const profesiones = await db.profesion.findMany();
   const actividadesAfip = await db.actividadAfip.findMany();
 
   return {
     paises: paises.map((data) => data.pais),
+    oficios: oficios.map((data) => data.oficio),
     industrias: industrias.map((data) => data.industria),
+    profesiones: profesiones.map((data) => data.profesion),
     actividadesAfip: actividadesAfip.map((data) => data.actividadAfip),
   };
 };
@@ -132,5 +137,19 @@ export const getNosisData = async (entidadId: string) => {
 
       revalidatePath(`/entidades/${entidadId}`);
     }
+  }
+};
+
+export const getBcraData = async (entidadId: string) => {
+  const entidad = await db.entidad.findFirst({
+    where: { codigoEntidad: entidadId },
+  });
+
+  if (entidad) {
+    const identificador = entidad.dni || entidad.cuit;
+    const bcraResponse = await fetch(
+      `${process.env.BCRA_API_URL}/centraldedeudores/v1.0/Deudas/${identificador}}`
+    );
+    const parsedResponse: BcraDataResponse = await bcraResponse.json();
   }
 };

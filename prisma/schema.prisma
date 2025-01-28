@@ -344,6 +344,20 @@ model Industria {
   @@map("Industrias")
 }
 
+model Profesion {
+  id        Int    @id @default(autoincrement())
+  profesion String
+
+  @@map("Profesiones")
+}
+
+model Oficio {
+  id     Int    @id @default(autoincrement())
+  oficio String
+
+  @@map("Oficios")
+}
+
 model TablaStatus {
   id        Int      @id @default(autoincrement())
   tabla     String   @unique

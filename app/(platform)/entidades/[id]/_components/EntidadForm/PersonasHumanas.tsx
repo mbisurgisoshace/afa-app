@@ -46,10 +46,17 @@ import { representatesLegalesColumns } from "./columns";
 
 interface PersonasHumanasProps {
   paises: string[];
+  oficios: string[];
+  profesiones: string[];
 }
 
-export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
+export default function PersonasHumanas({
+  paises,
+  oficios,
+  profesiones,
+}: PersonasHumanasProps) {
   const form = useFormContext<z.infer<typeof EntidadSchema>>();
+
   return (
     <AccordionItem
       value="personas_humanas"
@@ -264,7 +271,7 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
 
             <FormField
               control={form.control}
-              name="paisNacimiento"
+              name="pais"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Pais de Nacimiento</FormLabel>
@@ -310,9 +317,9 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {paises.map((pais) => (
-                        <SelectItem key={pais} value={pais}>
-                          {pais}
+                      {profesiones.map((profesion) => (
+                        <SelectItem key={profesion} value={profesion}>
+                          {profesion}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -339,9 +346,9 @@ export default function PersonasHumanas({ paises }: PersonasHumanasProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {paises.map((pais) => (
-                        <SelectItem key={pais} value={pais}>
-                          {pais}
+                      {oficios.map((oficio) => (
+                        <SelectItem key={oficio} value={oficio}>
+                          {oficio}
                         </SelectItem>
                       ))}
                     </SelectContent>

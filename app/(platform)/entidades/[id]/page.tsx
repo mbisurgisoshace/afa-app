@@ -14,7 +14,8 @@ interface EntidadProps {
 export default async function Entidad({ params }: EntidadProps) {
   const entidad = await getEntidad(params.id);
 
-  const { paises, industrias, actividadesAfip } = await getTablas();
+  const { paises, oficios, industrias, profesiones, actividadesAfip } =
+    await getTablas();
 
   const getRiesgo = (score?: number | null) => {
     if (!score)
@@ -80,8 +81,14 @@ export default async function Entidad({ params }: EntidadProps) {
         <TabsContent value="informacion">
           {entidad && (
             <EntidadForm
-              tablas={{ paises, industrias, actividadesAfip }}
               entidad={entidad}
+              tablas={{
+                paises,
+                oficios,
+                industrias,
+                profesiones,
+                actividadesAfip,
+              }}
             />
           )}
         </TabsContent>

@@ -21,7 +21,6 @@ export interface NosisDataResponse {
     };
   };
 }
-
 export default class NosisDataParser {
   private peorSituacion: NosisTexto;
   private cantidadBancos: NosisEntero;

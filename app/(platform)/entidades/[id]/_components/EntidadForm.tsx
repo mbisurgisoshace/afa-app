@@ -1,6 +1,7 @@
 "use client";
 
 import { z } from "zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,12 +16,13 @@ import PaisesDondeOpera from "./EntidadForm/PaisesDondeOpera";
 import PersonasHumanas from "./EntidadForm/PersonasHumanas";
 import PersonasJuridicas from "./EntidadForm/PersonasJuridicas";
 import ConflictoIntereses from "./EntidadForm/ConflictoIntereses";
-import { useEffect } from "react";
 import Club from "./EntidadForm/Club";
 
 interface Tablas {
   paises: string[];
+  oficios: string[];
   industrias: string[];
+  profesiones: string[];
   actividadesAfip: string[];
 }
 
@@ -263,7 +265,11 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
           <InformacionBancaria paises={tablas.paises} />
           <PaisesDondeOpera paises={tablas.paises} />
           {form.watch().tipoDePersona === "HUMANA" && (
-            <PersonasHumanas paises={tablas.paises} />
+            <PersonasHumanas
+              paises={tablas.paises}
+              oficios={tablas.oficios}
+              profesiones={tablas.profesiones}
+            />
           )}
           {form.watch().tipoRelacion === "CLUB" && <Club />}
           {form.watch().tipoDePersona === "JURIDICA" && <PersonasJuridicas />}

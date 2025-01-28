@@ -53,7 +53,7 @@ export default function InformacionGeneral({
   actividadesAfip,
 }: InformacionGeneralProps) {
   const form = useFormContext<z.infer<typeof EntidadSchema>>();
-
+  console.log("industrias", industrias);
   return (
     <AccordionItem
       value="generales"
@@ -197,7 +197,7 @@ export default function InformacionGeneral({
               name="codigoActividadAfip"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Industria que corresponde la actividad</FormLabel>
+                  <FormLabel>Codigo de Actividad AFIP</FormLabel>
                   <Select
                     disabled
                     onValueChange={field.onChange}
