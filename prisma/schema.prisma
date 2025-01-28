@@ -111,6 +111,11 @@ enum EstadoCivil {
   CONCUBINO_A  @map("Concubino/a")
 }
 
+enum TipoPaisNoCooperante {
+  GREEN @map("Green")
+  BLACK @map("Black")
+}
+
 model User {
   id        String   @id @default(cuid())
   nombre    String
@@ -321,6 +326,14 @@ model PersonaTerrorista {
   comments     String?
 
   @@map("PersonasTerroristas")
+}
+
+model PaisNoCooperante {
+  id        Int                  @id @default(autoincrement())
+  pais      String
+  tipoLista TipoPaisNoCooperante
+
+  @@map("PaisesNoCooperantes")
 }
 
 model Pais {

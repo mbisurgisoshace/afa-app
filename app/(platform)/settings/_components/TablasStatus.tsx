@@ -52,7 +52,7 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
         </Button>
       </div>
 
-      <DottedSeparator className="my-4" />
+      {/* <DottedSeparator className="my-4" />
 
       <div className="flex flex-row items-center justify-between">
         <div>
@@ -67,7 +67,7 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
         <Button size={"xs"} disabled={isPending}>
           Importar
         </Button>
-      </div>
+      </div> */}
     </>
   );
 };

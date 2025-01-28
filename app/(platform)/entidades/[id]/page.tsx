@@ -6,6 +6,7 @@ import NosisTrigger from "./_components/NosisTrigger";
 import { getEntidad, getTablas } from "@/actions/entidad";
 import { CalcularRiesgo } from "./_components/CalcularRiesgo";
 import EstadosContables from "./_components/EstadosContables";
+import DetalleRiesgos from "./_components/DetalleRiesgos";
 
 interface EntidadProps {
   params: { id: string };
@@ -66,7 +67,7 @@ export default async function Entidad({ params }: EntidadProps) {
             <TabsList className="grid grid-cols-3">
               <TabsTrigger value="informacion">Información básica</TabsTrigger>
               <TabsTrigger value="eecc">Estados Contables</TabsTrigger>
-              <TabsTrigger value="riesgos">Detalle de riesgos</TabsTrigger>
+              <TabsTrigger value="riesgos">Detalle de Riesgos</TabsTrigger>
             </TabsList>
             <h2 className="flex items-center font-semibold text-lg text-muted-foreground gap-4">
               {razonSocial?.toUpperCase()}
@@ -96,14 +97,7 @@ export default async function Entidad({ params }: EntidadProps) {
           {entidad && <EstadosContables entidadId={entidad.id} />}
         </TabsContent>
         <TabsContent value="riesgos">
-          <CalcularRiesgo
-            razonSocial={razonSocial}
-            personasDeInteres={
-              entidad?.personasInteres.map(
-                (persona) => persona.nombreApellido || ""
-              ) || []
-            }
-          />
+          <DetalleRiesgos />
         </TabsContent>
       </Tabs>
     </div>
