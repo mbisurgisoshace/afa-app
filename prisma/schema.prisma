@@ -150,7 +150,7 @@ model Entidad {
   codigoActividadAfip                       String?
   tipoIndustria                             String?
   otraActividad                             String?
-  ingresosEnPesos                           Decimal?
+  ingresosEnPesos                           Decimal?            @db.Decimal(12, 2)
   fechaCierrePesos                          DateTime?
   tipoDePersona                             TipoEntidad?
   direccion                                 String?
@@ -177,9 +177,9 @@ model Entidad {
   oficinasExterior                          String[]
   tieneOperacionesExterior                  Boolean?
   operacionesExterior                       String[]
-  montoOperacionesExterior                  Decimal?
+  montoOperacionesExterior                  Decimal?            @db.Decimal(12, 2)
   fechaCierrePesosExterior                  DateTime?
-  porcentajeExportacionVsTotal              Decimal?
+  porcentajeExportacionVsTotal              Decimal?            @db.Decimal(12, 2)
   nombreCompleto                            String?
   nacionalidad                              String?
   tipoDocumento                             TipoDocumento?
@@ -226,14 +226,14 @@ model Entidad {
   updatedAt                                 DateTime            @updatedAt
   nosisPeorSituacion                        String?
   nosisCantidadBancos                       Int?
-  nosisMontoTotal                           Decimal?
+  nosisMontoTotal                           Decimal?            @db.Decimal(12, 2)
   nosisAntiguedadBCRA                       Int?
   nosisPeorSituacion12Meses                 String?
   nosisCantidadBancos12Meses                Int?
   nosisPerfilCumplimientoDeudor             Int?
   nosisEsMoroso                             Boolean?
   nosisCantidadSinFondosNoPagados6Meses     Int?
-  nosisMontoSinFondosNoPagados6Meses        Decimal?
+  nosisMontoSinFondosNoPagados6Meses        Decimal?            @db.Decimal(12, 2)
   nosisJuiciosCantidad12Meses               Int?
   nosisConcursosQuiebrasCantidad12Meses     Int?
   nosisScore                                Int?
@@ -263,7 +263,7 @@ model PersonaInteres {
   documento             String?
   telefono              String?
   email                 String?
-  porcentajeAccionario  Decimal?
+  porcentajeAccionario  Decimal?           @db.Decimal(12, 2)
   expuestaPoliticamente Boolean?
   esPepEnCaracterDe     String?
   archivoDDJJPep        String?
@@ -283,32 +283,32 @@ model EstadoContable {
   id                                     Int      @id @default(autoincrement())
   fechaDesde                             String
   fechaHasta                             String
-  cajaBancos                             Decimal  @default(0)
-  inversiones                            Decimal  @default(0)
-  cuentasPorCobrarAsociados              Decimal  @default(0)
-  cuentasCobrarTerceros                  Decimal  @default(0)
-  derechosRecibirServicios               Decimal  @default(0)
-  otrosCreditos                          Decimal  @default(0)
-  bienesParaConsumo                      Decimal  @default(0)
-  otrosActivos                           Decimal  @default(0)
-  inversionesNoCorrientes                Decimal  @default(0)
-  bienesDeUso                            Decimal  @default(0)
-  activosIntangibles                     Decimal  @default(0)
-  otrosActivosNoCorrientes               Decimal  @default(0)
-  deudas                                 Decimal  @default(0)
-  fondosConDestinoEspecifico             Decimal  @default(0)
-  previsiones                            Decimal  @default(0)
-  deudasNoCorrientes                     Decimal  @default(0)
-  fondosConDestinoEspecificoNoCorrientes Decimal  @default(0)
-  previsionesNoCorrientes                Decimal  @default(0)
-  capital                                Decimal  @default(0)
-  reservas                               Decimal  @default(0)
-  resultadosNoAsignados                  Decimal  @default(0)
-  resultadoDelEjercicio                  Decimal  @default(0)
-  recursosIngresos                       Decimal  @default(0)
-  gastosOperativos                       Decimal  @default(0)
-  resultadosFinancierosPorTenencia       Decimal  @default(0)
-  resultadosExtraordinarios              Decimal  @default(0)
+  cajaBancos                             Decimal  @default(0) @db.Decimal(12, 2)
+  inversiones                            Decimal  @default(0) @db.Decimal(12, 2)
+  cuentasPorCobrarAsociados              Decimal  @default(0) @db.Decimal(12, 2)
+  cuentasCobrarTerceros                  Decimal  @default(0) @db.Decimal(12, 2)
+  derechosRecibirServicios               Decimal  @default(0) @db.Decimal(12, 2)
+  otrosCreditos                          Decimal  @default(0) @db.Decimal(12, 2)
+  bienesParaConsumo                      Decimal  @default(0) @db.Decimal(12, 2)
+  otrosActivos                           Decimal  @default(0) @db.Decimal(12, 2)
+  inversionesNoCorrientes                Decimal  @default(0) @db.Decimal(12, 2)
+  bienesDeUso                            Decimal  @default(0) @db.Decimal(12, 2)
+  activosIntangibles                     Decimal  @default(0) @db.Decimal(12, 2)
+  otrosActivosNoCorrientes               Decimal  @default(0) @db.Decimal(12, 2)
+  deudas                                 Decimal  @default(0) @db.Decimal(12, 2)
+  fondosConDestinoEspecifico             Decimal  @default(0) @db.Decimal(12, 2)
+  previsiones                            Decimal  @default(0) @db.Decimal(12, 2)
+  deudasNoCorrientes                     Decimal  @default(0) @db.Decimal(12, 2)
+  fondosConDestinoEspecificoNoCorrientes Decimal  @default(0) @db.Decimal(12, 2)
+  previsionesNoCorrientes                Decimal  @default(0) @db.Decimal(12, 2)
+  capital                                Decimal  @default(0) @db.Decimal(12, 2)
+  reservas                               Decimal  @default(0) @db.Decimal(12, 2)
+  resultadosNoAsignados                  Decimal  @default(0) @db.Decimal(12, 2)
+  resultadoDelEjercicio                  Decimal  @default(0) @db.Decimal(12, 2)
+  recursosIngresos                       Decimal  @default(0) @db.Decimal(12, 2)
+  gastosOperativos                       Decimal  @default(0) @db.Decimal(12, 2)
+  resultadosFinancierosPorTenencia       Decimal  @default(0) @db.Decimal(12, 2)
+  resultadosExtraordinarios              Decimal  @default(0) @db.Decimal(12, 2)
   entidad                                Entidad  @relation(fields: [entidadId], references: [id], onDelete: Cascade)
   entidadId                              Int
   createdAt                              DateTime @default(now())
