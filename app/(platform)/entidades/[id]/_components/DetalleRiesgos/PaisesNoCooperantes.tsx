@@ -3,7 +3,7 @@ import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card";
 
 export default function PaisesNoCooperantes() {
   return (
-    <div className="w-[500px]">
+    <div className="w-[550px]">
       <Card>
         <CardHeader>
           <CardTitle>
