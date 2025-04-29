@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import {
-  TableIcon,
+  MailsIcon,
+  SettingsIcon,
   BriefcaseIcon,
   CircleUserIcon,
   MenuSquareIcon,
   LayoutDashboardIcon,
-  SettingsIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,18 @@ export default function SubNavbar() {
         <Link href="/dashboard" className="flex flex-row items-center gap-2">
           <LayoutDashboardIcon size={24} strokeWidth={1.5} />
           <span>Dashboard</span>
+        </Link>
+      </Button>
+
+      <Button
+        asChild
+        variant={
+          pathname === "/solicitudes" ? "navbarLinkSelected" : "navbarLink"
+        }
+      >
+        <Link href="/solicitudes" className="flex flex-row items-center gap-2">
+          <MailsIcon size={24} strokeWidth={1.5} />
+          <span>Solicitudes</span>
         </Link>
       </Button>
 

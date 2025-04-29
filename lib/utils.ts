@@ -4,6 +4,8 @@ import { type ClassValue, clsx } from "clsx";
 import { doubleMetaphone as metaphone } from "double-metaphone";
 
 import { Mapper } from "@/lib/jotform/mapper";
+import { emailClient } from "./mailtrap";
+import { Address } from "mailtrap";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -177,4 +179,20 @@ export function matchNames(name1: string, name2: string) {
 
   // return (combinedScore * 100).toFixed(2) + "%"; // Return match percentage
   return combinedScore * 100; // Return match percentage
+}
+
+export async function sendEmail(recipients: Address[], contactos: string[]) {
+  const sender = {
+    email: "compliance@clama360.com",
+    name: "Clama360",
+  };
+
+  await emailClient.send({
+    from: sender,
+    to: recipients,
+    template_uuid: process.env.SEND_REMINDER_TEMPLATE_ID!,
+    template_variables: {
+      personas: contactos.join(" / "),
+    },
+  });
 }

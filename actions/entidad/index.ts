@@ -3,12 +3,15 @@
 import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/db";
-import { SearchParams } from "@/types";
 import NosisDataParser, {
   NosisDataResponse,
 } from "@/lib/nosis/NosisDataParser";
-import { TipoRelacion } from "@prisma/client";
-import { BcraDataResponse } from "@/lib/bcra/BcraDataParser";
+import BcraDataParser, {
+  BcraDataResponse,
+  BcraResultChequesResponse,
+  SujetoObligadoResponse,
+} from "@/lib/bcra/BcraDataParser";
+import { SearchParams } from "@/types";
 
 export const getTablas = async () => {
   const paises = await db.pais.findMany();
@@ -150,6 +153,26 @@ export const getBcraData = async (entidadId: string) => {
     const bcraResponse = await fetch(
       `${process.env.BCRA_API_URL}/centraldedeudores/v1.0/Deudas/${identificador}}`
     );
+    const bcraHistoricoResponse = await fetch(
+      `${process.env.BCRA_API_URL}/centraldedeudores/v1.0/Deudas/Historicas/${identificador}}`
+    );
+    const bcraHistoricoChequesResponse = await fetch(
+      `${process.env.BCRA_API_URL}/centraldedeudores/v1.0/Deudas/ChequesRechazados/${identificador}}`
+    );
+
     const parsedResponse: BcraDataResponse = await bcraResponse.json();
+    const parsedHistoricoResponse: BcraDataResponse =
+      await bcraHistoricoResponse.json();
+    const parsedChequesResponse: BcraResultChequesResponse =
+      await bcraHistoricoChequesResponse.json();
+
+    const parsedSujetoObligadoResponse: SujetoObligadoResponse[] = [];
+
+    const result = new BcraDataParser(
+      parsedResponse,
+      parsedHistoricoResponse,
+      parsedChequesResponse,
+      parsedSujetoObligadoResponse
+    ).getParsedData();
   }
 };
