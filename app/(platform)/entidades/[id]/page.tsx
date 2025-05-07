@@ -7,6 +7,7 @@ import { getEntidad, getTablas } from "@/actions/entidad";
 import { CalcularRiesgo } from "./_components/CalcularRiesgo";
 import EstadosContables from "./_components/EstadosContables";
 import DetalleRiesgos from "./_components/DetalleRiesgos";
+import EnviarSolicitud from "./_components/EnviarSolicitud";
 
 interface EntidadProps {
   params: { id: string };
@@ -59,24 +60,32 @@ export default async function Entidad({ params }: EntidadProps) {
     (entidad?.razonSocial && entidad?.razonSocial.trim()) ||
     "";
 
+  const shouldRenderEECC =
+    entidad?.tipoDePersona && entidad.tipoDePersona !== "HUMANA";
+
   return (
     <div className="flex flex-row">
       <Tabs defaultValue="informacion" className="w-full">
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row items-center gap-4">
-            <TabsList className="grid grid-cols-3">
+            <TabsList
+              className={`grid grid-cols-${shouldRenderEECC ? "3" : "2"}`}
+            >
               <TabsTrigger value="informacion">Información básica</TabsTrigger>
-              <TabsTrigger value="eecc">Estados Contables</TabsTrigger>
+              {shouldRenderEECC && (
+                <TabsTrigger value="eecc">Estados Contables</TabsTrigger>
+              )}
               <TabsTrigger value="riesgos">Detalle de Riesgos</TabsTrigger>
             </TabsList>
             <h2 className="flex items-center font-semibold text-lg text-muted-foreground gap-4">
               {razonSocial?.toUpperCase()}
               <Badge variant={riesgo.variant as any}>{riesgo?.text}</Badge>
+              <EnviarSolicitud codigoEntidad={entidad?.codigoEntidad!} />
             </h2>
           </div>
           <NosisTrigger
             codigoEntidad={params.id}
-            fechaActualizacion={entidad?.nosisUltimaActualizacion}
+            fechaActualizacion={entidad?.riesgoUltimaActualizacion}
           />
         </div>
         <TabsContent value="informacion">

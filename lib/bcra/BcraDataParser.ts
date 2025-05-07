@@ -150,7 +150,7 @@ export default class BcraDataParser {
   private getRiesgoPeorSituacion(): string {
     let peorSituacion = 1;
 
-    this.bcraHistoricoResponse.results.periodos[0].entidades.forEach(
+    this.bcraHistoricoResponse.results?.periodos[0].entidades.forEach(
       (entidad) => {
         if (entidad.situacion > peorSituacion) {
           peorSituacion = entidad.situacion;
@@ -162,7 +162,7 @@ export default class BcraDataParser {
   }
 
   private getRiesgoMontoTotal(): number {
-    return this.bcraHistoricoResponse.results.periodos[0].entidades.reduce(
+    return this.bcraHistoricoResponse.results?.periodos[0].entidades.reduce(
       (total, entidad) => total + entidad.monto,
       0
     );
@@ -174,7 +174,7 @@ export default class BcraDataParser {
   }
 
   private getRiesgoEsMoroso(): boolean {
-    return this.bcraHistoricoResponse.results.periodos[0].entidades.some(
+    return this.bcraHistoricoResponse.results?.periodos[0].entidades.some(
       (entidad) => entidad.diasAtrasoPago > 0
     );
   }
@@ -182,7 +182,7 @@ export default class BcraDataParser {
   private getRiesgoPeorSituacion12Meses(): string {
     let peorSituacion = 1;
 
-    this.bcraHistoricoResponse.results.periodos.forEach((periodo) => {
+    this.bcraHistoricoResponse.results?.periodos.forEach((periodo) => {
       periodo.entidades.forEach((entidad) => {
         if (entidad.situacion > peorSituacion) {
           peorSituacion = entidad.situacion;
@@ -196,7 +196,7 @@ export default class BcraDataParser {
   private getRiesgoCantidadBancos12Meses(): number {
     let entidades: Map<string, any> = new Map();
 
-    this.bcraHistoricoResponse.results.periodos.forEach((periodo) => {
+    this.bcraHistoricoResponse.results?.periodos.forEach((periodo) => {
       periodo.entidades.forEach((entidad) => {
         if (entidad.situacion > 0 && !entidades.has(entidad.entidad)) {
           entidades.set(entidad.entidad, entidad);
@@ -215,7 +215,7 @@ export default class BcraDataParser {
   private getRiesgoJuiciosCantidad12Meses(): number {
     let entidades: Map<string, any> = new Map();
 
-    this.bcraHistoricoResponse.results.periodos.forEach((periodo) => {
+    this.bcraHistoricoResponse.results?.periodos.forEach((periodo) => {
       periodo.entidades.forEach((entidad) => {
         if (entidad.procesoJud && !entidades.has(entidad.entidad)) {
           entidades.set(entidad.entidad, entidad);
@@ -232,7 +232,7 @@ export default class BcraDataParser {
   }
 
   private getRiesgoCantidadSinFondosNoPagados6Meses(): number {
-    const causalSinFondo = this.chequesResponse.results.causales.find(
+    const causalSinFondo = this.chequesResponse.results?.causales.find(
       (causal) => causal.causal === "SIN FONDOS"
     );
 
@@ -244,7 +244,7 @@ export default class BcraDataParser {
   }
 
   private getRiesgoMontoSinFondosNoPagados6Meses(): number {
-    const causalSinFondo = this.chequesResponse.results.causales.find(
+    const causalSinFondo = this.chequesResponse.results?.causales.find(
       (causal) => causal.causal === "SIN FONDOS"
     );
 

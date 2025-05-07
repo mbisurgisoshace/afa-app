@@ -14,13 +14,13 @@ export const createSolicitud = async (codigoEntidad: string) => {
       compliancePersona2,
     } = entidad;
 
-    // await sendEmail(
-    //   [
-    //     { email: complianceEmail1!, name: compliancePersona1! },
-    //     { email: complianceEmail2!, name: compliancePersona2! },
-    //   ],
-    //   [compliancePersona1!, compliancePersona2!]
-    // );
+    await sendEmail(
+      [
+        { email: complianceEmail1!, name: compliancePersona1! },
+        { email: complianceEmail2!, name: compliancePersona2! },
+      ],
+      [compliancePersona1!, compliancePersona2!]
+    );
   }
 };
 

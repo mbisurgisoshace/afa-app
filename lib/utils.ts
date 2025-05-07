@@ -190,7 +190,7 @@ export async function sendEmail(recipients: Address[], contactos: string[]) {
   await emailClient.send({
     from: sender,
     to: recipients,
-    template_uuid: process.env.SEND_REMINDER_TEMPLATE_ID!,
+    template_uuid: process.env.SEND_SOLICITUD_TEMPLATE_ID!,
     template_variables: {
       personas: contactos.join(" / "),
     },

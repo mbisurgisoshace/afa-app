@@ -5,7 +5,8 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
 import { Button } from "@/components/ui/button";
-import { getNosisData } from "@/actions/entidad";
+import { getInfoFinancieraData, getNosisData } from "@/actions/entidad";
+import { toast } from "sonner";
 
 interface NosisTriggerProps {
   codigoEntidad: string;
@@ -29,6 +30,17 @@ export default function NosisTrigger({
     }
   };
 
+  const onGetInfoFinanciera = async () => {
+    setLoading(true);
+    try {
+      await getInfoFinancieraData(codigoEntidad);
+      toast.success("Información financiera obtenida correctamente.");
+    } catch (err) {
+      toast.error("Ha ocurrido un error al obtener la información financiera.");
+    }
+    setLoading(false);
+  };
+
   const formatFecha = (fecha: any) => {
     if (!fecha) return "";
 
@@ -37,8 +49,8 @@ export default function NosisTrigger({
 
   return (
     <div className="flex flex-col gap-2">
-      <Button onClick={onGetNosisData} size={"sm"} disabled={loading}>
-        Obtener Datos Nosis
+      <Button onClick={onGetInfoFinanciera} size={"sm"} disabled={loading}>
+        Informacion Financiera
       </Button>
       <span className="text-[10px] font-semibold text-gray-500">{`Ultima actualizacion: ${formatFecha(
         fechaActualizacion
