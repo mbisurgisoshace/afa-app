@@ -149,7 +149,7 @@ export const getInfoFinancieraData = async (entidadId: string) => {
   });
 
   if (entidad) {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     const identificador = entidad.dni || entidad.cuit;
 
     if (!identificador) throw new Error("La entidad no posee DNI o CUIT");
