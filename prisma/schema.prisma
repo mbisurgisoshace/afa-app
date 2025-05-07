@@ -13,6 +13,11 @@ enum UserRole {
   ADMIN
 }
 
+enum TipoReclamo {
+  MAIL     @map("Mail")
+  TELEFONO @map("Telefono")
+}
+
 enum TipoPersonaInteres {
   PRESIDENTE                     @map("Presidente")
   SOCIO_GERENTE                  @map("Socio Gerente")
@@ -276,8 +281,13 @@ model Entidad {
   riesgoEnlanceHomonimosEnBaseLaFt           String?
   riesgoPeorSituacion12MesesBcra             String?
   riesgoUltimaActualizacion                  DateTime?
+  compliancePersona1                         String?
+  compliancePersona2                         String?
+  complianceEmail1                           String?
+  complianceEmail2                           String?
 
   EstadoContable EstadoContable[]
+  PedidoEntidad  PedidoEntidad[]
 
   @@map("Entidades")
 }
@@ -342,6 +352,19 @@ model EstadoContable {
   updatedAt                              DateTime @updatedAt
 
   @@map("EstadosContables")
+}
+
+model PedidoEntidad {
+  id             Int         @id @default(autoincrement())
+  entidadId      Int
+  fecha          DateTime
+  fechaRespuesta DateTime?
+  tipoReclamo    TipoReclamo
+  entidad        Entidad     @relation(fields: [entidadId], references: [id], onDelete: Cascade)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@map("PedidosEntidades")
 }
 
 model PersonaTerrorista {

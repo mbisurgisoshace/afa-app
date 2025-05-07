@@ -53,7 +53,7 @@ export default function InformacionGeneral({
   actividadesAfip,
 }: InformacionGeneralProps) {
   const form = useFormContext<z.infer<typeof EntidadSchema>>();
-  console.log("industrias", industrias);
+
   return (
     <AccordionItem
       value="generales"
@@ -87,7 +87,11 @@ export default function InformacionGeneral({
                     <Input
                       disabled
                       {...field}
-                      value={format(field.value, "PPP", { locale: es })}
+                      value={
+                        (field.value &&
+                          format(field.value, "PPP", { locale: es })) ||
+                        ""
+                      }
                     />
                   </FormControl>
                   <FormMessage />

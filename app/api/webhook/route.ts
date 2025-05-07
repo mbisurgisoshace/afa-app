@@ -7,6 +7,7 @@ import { jotformParser } from "@/lib/jotform";
 import { createEntidad, upsertEntidad } from "@/actions/entidad";
 import { JotformResponseContent } from "@/lib/jotform/types";
 import { createSubmittedForm, processSubmittedForm } from "@/actions/jotform";
+import { updateSolicitudEntidad } from "@/actions/solicitud";
 
 const jotformClient = new Jotform(process.env.JOTFORM_API_KEY);
 
@@ -30,6 +31,8 @@ export async function POST(request: NextRequest) {
   });
 
   const formattedSubmission = jotformParser(submission);
+
+  await updateSolicitudEntidad(formattedSubmission.codigoEntidad);
 
   try {
     //await createEntidad(formattedSubmission);
