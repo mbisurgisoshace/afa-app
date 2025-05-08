@@ -156,6 +156,10 @@ export default function EstadoContableForm({
     }
   };
 
+  const isBalanceOk = (): boolean => {
+    return getTotalActivo() === getTotalPasivo();
+  };
+
   const fechaDesde = form.watch("fechaDesde");
   const fechaHasta = form.watch("fechaHasta");
 
@@ -455,6 +459,32 @@ export default function EstadoContableForm({
                     </div>
                   ))}
 
+                  <div
+                    key={"resultadoDelEjercicio"}
+                    className="w-full grid grid-cols-4 border-b py-0.5 items-center"
+                  >
+                    <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
+                      Resultado del Ejercicio
+                    </h4>
+                    <FormField
+                      control={form.control}
+                      name={"resultadoDelEjercicio"}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              disabled
+                              type="number"
+                              value={getResultado()}
+                              className="h-5 text-sm"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
                   <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
                     <h4 className="col-span-3 font-semibold text-sm text-[#070F3F]">
                       TOTAL DEL PATRIMONIO NETO
@@ -560,7 +590,7 @@ export default function EstadoContableForm({
               <Button
                 type="submit"
                 variant={"default"}
-                disabled={!fechaDesde || !fechaHasta}
+                disabled={!fechaDesde || !fechaHasta || !isBalanceOk()}
               >
                 Guardar
               </Button>

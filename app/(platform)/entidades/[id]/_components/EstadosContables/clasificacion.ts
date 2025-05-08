@@ -86,7 +86,7 @@ export const PATRIMONIO_NETO = [
   { id: "capital", label: "Capital" },
   { id: "reservas", label: "Reservas" },
   { id: "resultadosNoAsignados", label: "Resultados No Asignados" },
-  { id: "resultadoDelEjercicio", label: "Resultado del Ejercicio" },
+  // { id: "resultadoDelEjercicio", label: "Resultado del Ejercicio" },
 ];
 
 export const RESULTADO_ORDINARIO = [
