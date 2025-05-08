@@ -64,6 +64,22 @@ export function generateRandomPassword() {
   return password;
 }
 
+export function chunkArray<T>(array: T[], chunkSize: number): T[][] {
+  const result: T[][] = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    result.push(array.slice(i, i + chunkSize));
+  }
+  return result;
+}
+
+export function blobToData(blob: File) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (event) => resolve(event.target?.result);
+    reader.readAsArrayBuffer(blob);
+  });
+}
+
 // Levenshtein distance for fuzzy matching
 function levenshteinDistance(str1: string, str2: string) {
   const len1 = str1.length;

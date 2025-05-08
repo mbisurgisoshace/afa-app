@@ -1,18 +1,21 @@
 "use client";
 
-import * as XLSX from "xlsx";
-import { toast } from "sonner";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { ChangeEvent, useRef, useTransition } from "react";
+import { ChangeEvent, useRef, useState, useTransition } from "react";
+import { toast } from "sonner";
+import * as XLSX from "xlsx";
 
-import { Button } from "@/components/ui/button";
-import { updateTerroristas } from "@/actions/terroristas";
-import { DottedSeparator } from "@/components/DottedSeparator";
 import {
   CuitApocrifoData,
+  deleteCuitsApocrifos,
   updateCuitsApocrifos,
 } from "@/actions/cuitsApocrifos";
+import { Button } from "@/components/ui/button";
+import { blobToData, chunkArray } from "@/lib/utils";
+import { updateTablaStatus } from "@/actions/settings";
+import { updateTerroristas } from "@/actions/terroristas";
+import { DottedSeparator } from "@/components/DottedSeparator";
 
 interface TablasStatusProps {
   statuses: any[];
@@ -21,6 +24,7 @@ interface TablasStatusProps {
 export const TablasStatus = ({ statuses }: TablasStatusProps) => {
   const [isPending, startTransition] = useTransition();
   const cuitApocrifosFileRef = useRef<HTMLInputElement>(null);
+  const [cuitsApocrifosProcesados, setCuitsApocrifosProcesados] = useState("");
 
   const onUpdateListadoTerroristas = async () => {
     startTransition(async () => {
@@ -32,21 +36,28 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
   const onUpdateCuitApocrifos = async (e: ChangeEvent<HTMLInputElement>) => {
     startTransition(async () => {
       const file = e.target.files?.[0];
-      const reader = new FileReader();
 
       if (file) {
-        reader.onload = async (event) => {
-          const binaryString = event.target?.result;
-          const workbook = XLSX.read(binaryString, { type: "binary" });
-          const sheetName = workbook.SheetNames[2];
-          const worksheet = workbook.Sheets[sheetName];
-          const data: CuitApocrifoData[] = XLSX.utils.sheet_to_json(worksheet);
-          await updateCuitsApocrifos(data);
+        const result = await blobToData(file);
+        const binaryString = result;
 
-          toast.success("Listado de CUITs Apocrifos actualizado correctamente");
-        };
+        const workbook = XLSX.read(binaryString, { type: "binary" });
+        const sheetName = workbook.SheetNames[2];
+        const worksheet = workbook.Sheets[sheetName];
+        const data: CuitApocrifoData[] = XLSX.utils.sheet_to_json(worksheet);
+        const dataChunks = chunkArray(data, 1000);
 
-        reader.readAsArrayBuffer(file);
+        await deleteCuitsApocrifos();
+        let processed = 0;
+        for (const chunk of dataChunks) {
+          setCuitsApocrifosProcesados(`${processed} de ${data.length}`);
+          await updateCuitsApocrifos(chunk);
+          processed += chunk.length;
+        }
+
+        setCuitsApocrifosProcesados("");
+        await updateTablaStatus("cuit-apocrifos");
+        toast.success("Listado de CUITs Apocrifos actualizado correctamente");
       }
     });
   };
@@ -102,7 +113,11 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
           size={"xs"}
           disabled={isPending}
         >
-          Importar
+          {`${
+            cuitsApocrifosProcesados
+              ? `Importar (${cuitsApocrifosProcesados})`
+              : "Importar"
+          }`}
         </Button>
       </div>
       {/* <div className="flex flex-row items-center justify-between">

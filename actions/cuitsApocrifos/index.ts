@@ -12,6 +12,16 @@ export interface CuitApocrifoData {
   " Fecha Publicacion": string;
 }
 
+export const deleteCuitsApocrifos = async () => {
+  const session = await auth();
+
+  if (!session) {
+    return;
+  }
+
+  await db.cuitApocrifo.deleteMany();
+};
+
 export const updateCuitsApocrifos = async (
   cuitsApocrifosData: CuitApocrifoData[]
 ) => {
@@ -30,10 +40,7 @@ export const updateCuitsApocrifos = async (
     };
   });
 
-  await db.cuitApocrifo.deleteMany();
   await db.cuitApocrifo.createMany({
     data: cuitsApocrifos,
   });
-
-  await updateTablaStatus("cuit-apocrifos");
 };
