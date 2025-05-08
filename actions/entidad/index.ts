@@ -12,6 +12,7 @@ import BcraDataParser, {
   SujetoObligadoResponse,
 } from "@/lib/bcra/BcraDataParser";
 import { SearchParams } from "@/types";
+import { fetch as customFetch } from "@/lib/utils";
 
 export const getTablas = async () => {
   const paises = await db.pais.findMany();
@@ -149,36 +150,31 @@ export const getInfoFinancieraData = async (entidadId: string) => {
   });
 
   if (entidad) {
-    //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    const identificador = entidad.dni || entidad.cuit;
+    const identificador = entidad.dni || entidad.cuit?.replaceAll("-", "");
 
     if (!identificador) throw new Error("La entidad no posee DNI o CUIT");
 
-    const bcraResponse = await fetch(
+    const bcraResponse = await customFetch(
       `${process.env.BCRA_API_URL}/centraldedeudores/v1.0/Deudas/${identificador}`
     );
-    const bcraHistoricoResponse = await fetch(
+
+    const bcraHistoricoResponse = await customFetch(
       `${process.env.BCRA_API_URL}/centraldedeudores/v1.0/Deudas/Historicas/${identificador}`
     );
-    const bcraHistoricoChequesResponse = await fetch(
+    const bcraHistoricoChequesResponse = await customFetch(
       `${process.env.BCRA_API_URL}/centraldedeudores/v1.0/Deudas/ChequesRechazados/${identificador}`
     );
-    const sujetoObligadoResponse = await fetch(
+    const sujetoObligadoResponse = await customFetch(
       `${process.env.UIF_API_URL}/api/sujetoObligado/consulta/${identificador}`
     );
 
-    const parsedResponse: BcraDataResponse = await bcraResponse.json();
+    const parsedResponse: BcraDataResponse = bcraResponse?.data || {};
     const parsedHistoricoResponse: BcraDataResponse =
-      await bcraHistoricoResponse.json();
+      bcraHistoricoResponse?.data || {};
     const parsedChequesResponse: BcraResultChequesResponse =
-      await bcraHistoricoChequesResponse.json();
-
-    const parsedSujetoObligadoResponse: SujetoObligadoResponse[] = [];
-
-    console.log("parsedResponse", parsedResponse);
-    console.log("parsedHistoricoResponse", parsedHistoricoResponse);
-    console.log("parsedChequesResponse", parsedChequesResponse);
-    console.log("sujetoObligadoResponse", sujetoObligadoResponse);
+      bcraHistoricoChequesResponse?.data || {};
+    const parsedSujetoObligadoResponse: SujetoObligadoResponse[] =
+      sujetoObligadoResponse?.data || [];
 
     const result = new BcraDataParser(
       parsedResponse,
@@ -188,8 +184,6 @@ export const getInfoFinancieraData = async (entidadId: string) => {
     ).getParsedData();
 
     if (result) {
-      console.log("result", result);
-
       await db.entidad.update({
         where: { id: entidad.id },
         data: {

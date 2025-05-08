@@ -1,3 +1,5 @@
+import https from "https";
+import axios, { AxiosRequestConfig } from "axios";
 import { formatISO } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
@@ -195,4 +197,14 @@ export async function sendEmail(recipients: Address[], contactos: string[]) {
       personas: contactos.join(" / "),
     },
   });
+}
+
+export async function fetch(url: string, options?: AxiosRequestConfig) {
+  const agent = new https.Agent({ rejectUnauthorized: false });
+
+  try {
+    return await axios(url, { ...options, httpsAgent: agent });
+  } catch (error) {
+    console.log("error", error);
+  }
 }
