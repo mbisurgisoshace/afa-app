@@ -386,6 +386,16 @@ model PaisNoCooperante {
   @@map("PaisesNoCooperantes")
 }
 
+model CuitApocrifo {
+  id                     Int      @id @default(autoincrement())
+  cuit                   String   @unique
+  fechaCondicionApocrifo DateTime
+  fechaPublicacion       DateTime
+  descripcion            String?
+
+  @@map("CuitApocrifos")
+}
+
 model Pais {
   id   Int    @id @default(autoincrement())
   pais String
