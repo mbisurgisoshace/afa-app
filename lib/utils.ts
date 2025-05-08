@@ -80,6 +80,11 @@ export function blobToData(blob: File) {
   });
 }
 
+export function capitalizeFirstLetter(str: string): string {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
 // Levenshtein distance for fuzzy matching
 function levenshteinDistance(str1: string, str2: string) {
   const len1 = str1.length;

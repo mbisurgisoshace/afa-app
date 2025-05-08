@@ -16,6 +16,10 @@ import { blobToData, chunkArray } from "@/lib/utils";
 import { updateTablaStatus } from "@/actions/settings";
 import { updateTerroristas } from "@/actions/terroristas";
 import { DottedSeparator } from "@/components/DottedSeparator";
+import {
+  PaisNoCooperanteData,
+  updatePaisesNoCooperantes,
+} from "@/actions/paisesNoCooperantes";
 
 interface TablasStatusProps {
   statuses: any[];
@@ -24,12 +28,35 @@ interface TablasStatusProps {
 export const TablasStatus = ({ statuses }: TablasStatusProps) => {
   const [isPending, startTransition] = useTransition();
   const cuitApocrifosFileRef = useRef<HTMLInputElement>(null);
+  const paisesNoCooperantesFileRef = useRef<HTMLInputElement>(null);
   const [cuitsApocrifosProcesados, setCuitsApocrifosProcesados] = useState("");
 
   const onUpdateListadoTerroristas = async () => {
     startTransition(async () => {
       await updateTerroristas();
       toast.success("Listado de Terroristas actualizado correctamente");
+    });
+  };
+
+  const onUpdatePaisesNoCooperantes = async (
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    startTransition(async () => {
+      const file = e.target.files?.[0];
+
+      if (file) {
+        const result = await blobToData(file);
+        const binaryString = result;
+        const workbook = XLSX.read(binaryString, { type: "binary" });
+        const sheetName = workbook.SheetNames[2];
+        const worksheet = workbook.Sheets[sheetName];
+        const data: PaisNoCooperanteData[] =
+          XLSX.utils.sheet_to_json(worksheet);
+        await updatePaisesNoCooperantes(data);
+        toast.success(
+          "Listado de Paises No Cooperantes actualizado correctamente"
+        );
+      }
     });
   };
 
@@ -93,6 +120,36 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
 
       <div className="flex flex-row items-center justify-between">
         <div>
+          <h4 className="font-semibold text-[#070F3F]">
+            Listado de Paises No Cooperantes
+          </h4>
+          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${formatFecha(
+            statuses.find((status) => status.tabla === "paises-no-cooperantes")
+              ?.updatedAt
+          )}`}</span>
+        </div>
+        <input
+          hidden
+          type="file"
+          accept=".xlsx, .xls"
+          ref={paisesNoCooperantesFileRef}
+          onChange={onUpdatePaisesNoCooperantes}
+        />
+        <Button
+          onClick={() => {
+            paisesNoCooperantesFileRef.current?.click();
+          }}
+          size={"xs"}
+          disabled={isPending}
+        >
+          Importar
+        </Button>
+      </div>
+
+      <DottedSeparator className="my-4" />
+
+      <div className="flex flex-row items-center justify-between">
+        <div>
           <h4 className="font-semibold text-[#070F3F]">CUITs Apocrifos</h4>
           <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${formatFecha(
             statuses.find((status) => status.tabla === "cuit-apocrifos")
@@ -120,20 +177,6 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
           }`}
         </Button>
       </div>
-      {/* <div className="flex flex-row items-center justify-between">
-        <div>
-          <h4 className="font-semibold text-[#070F3F]">
-            Listado de Paises No Cooperantes
-          </h4>
-          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${formatFecha(
-            statuses.find((status) => status.tabla === "paises-no-cooperantes")
-              ?.updatedAt
-          )}`}</span>
-        </div>
-        <Button size={"xs"} disabled={isPending}>
-          Importar
-        </Button>
-      </div> */}
     </>
   );
 };
