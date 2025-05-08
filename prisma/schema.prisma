@@ -396,6 +396,19 @@ model CuitApocrifo {
   @@map("CuitApocrifos")
 }
 
+model SujetoObligadoSancionado {
+  id                 Int     @id @default(autoincrement())
+  cuit               String?
+  tipoSujetoObligado String
+  razonSocial        String
+  actoSancionatorio  String
+  anio               Int
+  estadoProcesal     String
+  observaciones      String?
+
+  @@map("SujetosObligadosSancionados")
+}
+
 model Pais {
   id   Int    @id @default(autoincrement())
   pais String

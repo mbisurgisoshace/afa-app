@@ -20,6 +20,10 @@ import {
   PaisNoCooperanteData,
   updatePaisesNoCooperantes,
 } from "@/actions/paisesNoCooperantes";
+import {
+  SujetoSancionadoData,
+  updateSujetosSancionados,
+} from "@/actions/sujetosSancionados";
 
 interface TablasStatusProps {
   statuses: any[];
@@ -29,6 +33,7 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
   const [isPending, startTransition] = useTransition();
   const cuitApocrifosFileRef = useRef<HTMLInputElement>(null);
   const paisesNoCooperantesFileRef = useRef<HTMLInputElement>(null);
+  const sujetosObligadosSancionadosFileRef = useRef<HTMLInputElement>(null);
   const [cuitsApocrifosProcesados, setCuitsApocrifosProcesados] = useState("");
 
   const onUpdateListadoTerroristas = async () => {
@@ -85,6 +90,28 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
         setCuitsApocrifosProcesados("");
         await updateTablaStatus("cuit-apocrifos");
         toast.success("Listado de CUITs Apocrifos actualizado correctamente");
+      }
+    });
+  };
+
+  const onUpdateSujetosObligadosSancionados = async (
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    startTransition(async () => {
+      const file = e.target.files?.[0];
+
+      if (file) {
+        const result = await blobToData(file);
+        const binaryString = result;
+        const workbook = XLSX.read(binaryString, { type: "binary" });
+        const sheetName = workbook.SheetNames[2];
+        const worksheet = workbook.Sheets[sheetName];
+        const data: SujetoSancionadoData[] =
+          XLSX.utils.sheet_to_json(worksheet);
+        await updateSujetosSancionados(data);
+        toast.success(
+          "Listado de Sujetos Obligados Sancionados actualizado correctamente"
+        );
       }
     });
   };
@@ -175,6 +202,37 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
               ? `Importar (${cuitsApocrifosProcesados})`
               : "Importar"
           }`}
+        </Button>
+      </div>
+
+      <DottedSeparator className="my-4" />
+
+      <div className="flex flex-row items-center justify-between">
+        <div>
+          <h4 className="font-semibold text-[#070F3F]">
+            Sujetos Obligados Sancionados
+          </h4>
+          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${formatFecha(
+            statuses.find(
+              (status) => status.tabla === "sujetos-obligados-sancionados"
+            )?.updatedAt
+          )}`}</span>
+        </div>
+        <input
+          hidden
+          type="file"
+          accept=".xlsx, .xls"
+          ref={sujetosObligadosSancionadosFileRef}
+          onChange={onUpdateSujetosObligadosSancionados}
+        />
+        <Button
+          onClick={() => {
+            sujetosObligadosSancionadosFileRef.current?.click();
+          }}
+          size={"xs"}
+          disabled={isPending}
+        >
+          Importar
         </Button>
       </div>
     </>

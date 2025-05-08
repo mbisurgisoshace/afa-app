@@ -76,7 +76,7 @@ export default function SubNavbar() {
         >
           <Link href="/settings" className="flex flex-row items-center gap-2">
             <SettingsIcon size={24} strokeWidth={1.5} />
-            <span>Settings</span>
+            <span>Tablas</span>
           </Link>
         </Button>
       )}
