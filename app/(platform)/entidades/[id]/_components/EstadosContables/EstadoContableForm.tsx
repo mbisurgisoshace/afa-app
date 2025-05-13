@@ -171,7 +171,10 @@ export default function EstadoContableForm({
   };
 
   const isBalanceOk = (): boolean => {
-    return getTotalActivo() === getTotalPasivo();
+    return (
+      parseFloat(getTotalActivo().toFixed(2)) ===
+      parseFloat(getTotalPasivo().toFixed(2))
+    );
   };
 
   const fechaDesde = form.watch("fechaDesde");

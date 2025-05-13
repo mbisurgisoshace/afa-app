@@ -93,9 +93,12 @@ export default function useTotales(
   };
 
   const getResultado = () => {
-    return (
-      getTotalResultadosOrdinarios() +
-      parseFloat(form.watch("resultadosExtraordinarios"))
+    return parseFloat(
+      (
+        getTotalResultadosOrdinarios() +
+        parseFloat(form.watch("resultadosExtraordinarios")) -
+        parseFloat(form.watch("impuestoGanancias"))
+      ).toFixed(2)
     );
   };
 
