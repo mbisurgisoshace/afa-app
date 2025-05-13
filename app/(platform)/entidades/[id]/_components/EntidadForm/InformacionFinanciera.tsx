@@ -129,7 +129,7 @@ export default function InformacionFinanciera() {
               name="riesgoCantidadBancos12Meses"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cantidad bancos - Últ. 12 Meses</FormLabel>
+                  <FormLabel>Cantidad Entidades</FormLabel>
                   <FormControl>
                     <Input disabled {...field} />
                   </FormControl>
@@ -163,7 +163,7 @@ export default function InformacionFinanciera() {
               name="riesgoEsMoroso"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Es moroso</FormLabel>
+                  <FormLabel>Dias Atraso Pago</FormLabel>
                   <FormControl>
                     <Input disabled {...field} />
                   </FormControl>
@@ -177,9 +177,7 @@ export default function InformacionFinanciera() {
               name="riesgoCantidadSinFondosNoPagados6Meses"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Cantidad sin fondos, no pagados - Últ. 6 Meses
-                  </FormLabel>
+                  <FormLabel>Cantidad Cheques Rechazados</FormLabel>
                   <FormControl>
                     <Input disabled {...field} />
                   </FormControl>
@@ -195,9 +193,7 @@ export default function InformacionFinanciera() {
               name="riesgoMontoSinFondosNoPagados6Meses"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Monto sin fondos, no pagados - Últ. 6 Meses
-                  </FormLabel>
+                  <FormLabel>Monto Cheques Rechazados</FormLabel>
                   <FormControl>
                     <Input disabled {...field} />
                   </FormControl>
@@ -253,20 +249,6 @@ export default function InformacionFinanciera() {
                         )} -ml-6`}
                       />
                     </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="riesgoFacturacionEstimada"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Facturación estimada</FormLabel>
-                  <FormControl>
-                    <Input disabled {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -337,26 +319,6 @@ export default function InformacionFinanciera() {
           <div className="w-fill grid grid-cols-3 gap-3">
             <FormField
               control={form.control}
-              name="riesgoPeorSituacionCon10Porciento12Mesas"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Peor situación (con 10%) - Últ. 12 meses
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled
-                      {...field}
-                      value={peorSituacionValue(field.value)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="riesgoSectorActividadPrincipalDelEmpleador"
               render={({ field }) => (
                 <FormItem>
@@ -397,60 +359,6 @@ export default function InformacionFinanciera() {
                   </FormLabel>
                   <FormControl>
                     <Input disabled {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="riesgoCantidadHomonimosEnBaseLaFt"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Homónimos en base LA/FT según Razón Social o Nombre y
-                    apellido.
-                  </FormLabel>
-                  <FormControl>
-                    <Input disabled {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="riesgoEnlanceHomonimosEnBaseLaFt"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Enlace homónimos en base LA/FT según Razón Social o Nombre y
-                    apellido.
-                  </FormLabel>
-                  <FormControl>
-                    <Input disabled {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="w-fill grid grid-cols-3 gap-3">
-            <FormField
-              control={form.control}
-              name="riesgoPeorSituacion12MesesBcra"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Peor situación - Últ. 12 Meses BCRA.</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled
-                      {...field}
-                      value={peorSituacionValue(field.value)}
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
