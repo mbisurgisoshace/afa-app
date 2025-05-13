@@ -77,7 +77,10 @@ export default function useTotales(
       (acc, resultado) => {
         let value = parseFloat(form.watch(resultado.id as any));
 
-        if (resultado.id === "gastosOperativos") {
+        if (
+          resultado.id === "gastosOperativos" ||
+          resultado.id === "costoDeVenta"
+        ) {
           value = value * -1;
         }
 

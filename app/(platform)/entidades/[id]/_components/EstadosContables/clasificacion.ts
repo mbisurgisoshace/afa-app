@@ -5,31 +5,19 @@ export const ACTIVO_CORRIENTE = [
   },
   {
     id: "inversiones",
-    label: "Inversiones",
+    label: "Inversiones Temporarias",
   },
   {
-    id: "cuentasPorCobrarAsociados",
-    label: "Cuentas por Cobrar Asociados",
+    id: "cuentasCobrar",
+    label: "Cuentas a Cobrar",
   },
   {
-    id: "cuentasCobrarTerceros",
-    label: "Cuentas a Cobrar a Terceros",
-  },
-  {
-    id: "derechosRecibirServicios",
-    label: "Derechos a Recibir Servicios",
-  },
-  {
-    id: "otrosCreditos",
-    label: "Otros Creditos",
-  },
-  {
-    id: "bienesParaConsumo",
-    label: "Bienes para Consumo",
+    id: "bienesDeCambio",
+    label: "Bienes de Cambio",
   },
   {
     id: "otrosActivos",
-    label: "Otros Activos",
+    label: "Otros Activos Corrientes",
   },
 ];
 
@@ -55,11 +43,23 @@ export const ACTIVO_NO_CORRIENTE = [
 export const PASIVO_CORRIENTE = [
   {
     id: "deudas",
-    label: "Deudas",
+    label: "Deudas Comerciales",
   },
   {
-    id: "fondosConDestinoEspecifico",
-    label: "Fondos con Destino Especifico",
+    id: "remuneracionesCargasSociales",
+    label: "Remuneraciones y Cargas Sociales",
+  },
+  {
+    id: "cargasFiscales",
+    label: "Cargas Fiscales",
+  },
+  {
+    id: "deudasBancariasFinancieras",
+    label: "Deudas Bancarias y Financieras",
+  },
+  {
+    id: "otrasDeudas",
+    label: "Otras Deudas",
   },
   {
     id: "previsiones",
@@ -73,8 +73,12 @@ export const PASIVO_NO_CORRIENTE = [
     label: "Deudas No Corrientes",
   },
   {
-    id: "fondosConDestinoEspecificoNoCorrientes",
-    label: "Fondos con Destino Especifico No Ctes",
+    id: "deudasBancariasFinancierasNoCorrientes",
+    label: "Deudas Bancarias y Financieras No Corrientes",
+  },
+  {
+    id: "otrasDeudasNoCorrientes",
+    label: "Otras Deudas No Corrientes",
   },
   {
     id: "previsionesNoCorrientes",
@@ -90,10 +94,19 @@ export const PATRIMONIO_NETO = [
 ];
 
 export const RESULTADO_ORDINARIO = [
-  { id: "recursosIngresos", label: "Recursos e Ingresos" },
+  { id: "recursosIngresos", label: "Ventas, Recursos e Ingresos" },
+  { id: "costoDeVenta", label: "Costo de Venta" },
   { id: "gastosOperativos", label: "Gastos Operativos" },
   {
     id: "resultadosFinancierosPorTenencia",
     label: "Resultados Financieros y Por Tenencia",
+  },
+  {
+    id: "otrosIngresosEgresos",
+    label: "Otros Ingresos y Egresos",
+  },
+  {
+    id: "area",
+    label: "AREA",
   },
 ];

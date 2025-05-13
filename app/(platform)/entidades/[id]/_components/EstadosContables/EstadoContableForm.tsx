@@ -64,33 +64,39 @@ export default function EstadoContableForm({
         : undefined,
       cajaBancos: estadoContable?.cajaBancos || 0,
       inversiones: estadoContable?.inversiones || 0,
-      cuentasPorCobrarAsociados: estadoContable?.cuentasPorCobrarAsociados || 0,
-      cuentasCobrarTerceros: estadoContable?.cuentasCobrarTerceros || 0,
-      derechosRecibirServicios: estadoContable?.derechosRecibirServicios || 0,
-      otrosCreditos: estadoContable?.otrosCreditos || 0,
-      bienesParaConsumo: estadoContable?.bienesParaConsumo || 0,
+      cuentasCobrar: estadoContable?.cuentasCobrar || 0,
+      bienesDeCambio: estadoContable?.bienesDeCambio || 0,
       otrosActivos: estadoContable?.otrosActivos || 0,
       inversionesNoCorrientes: estadoContable?.inversionesNoCorrientes || 0,
       bienesDeUso: estadoContable?.bienesDeUso || 0,
       activosIntangibles: estadoContable?.activosIntangibles || 0,
       otrosActivosNoCorrientes: estadoContable?.otrosActivosNoCorrientes || 0,
       deudas: estadoContable?.deudas || 0,
-      fondosConDestinoEspecifico:
-        estadoContable?.fondosConDestinoEspecifico || 0,
+      remuneracionesCargasSociales:
+        estadoContable?.remuneracionesCargasSociales || 0,
+      cargasFiscales: estadoContable?.cargasFiscales || 0,
+      deudasBancariasFinancieras:
+        estadoContable?.deudasBancariasFinancieras || 0,
+      otrasDeudas: estadoContable?.otrasDeudas || 0,
       previsiones: estadoContable?.previsiones || 0,
       deudasNoCorrientes: estadoContable?.deudasNoCorrientes || 0,
-      fondosConDestinoEspecificoNoCorrientes:
-        estadoContable?.fondosConDestinoEspecificoNoCorrientes || 0,
+      otrasDeudasNoCorrientes: estadoContable?.otrasDeudasNoCorrientes || 0,
+      deudasBancariasFinancierasNoCorrientes:
+        estadoContable?.deudasBancariasFinancierasNoCorrientes || 0,
       previsionesNoCorrientes: estadoContable?.previsionesNoCorrientes || 0,
       capital: estadoContable?.capital || 0,
       reservas: estadoContable?.reservas || 0,
       resultadosNoAsignados: estadoContable?.resultadosNoAsignados || 0,
       resultadoDelEjercicio: estadoContable?.resultadoDelEjercicio || 0,
       recursosIngresos: estadoContable?.recursosIngresos || 0,
+      costoDeVenta: estadoContable?.costoDeVenta || 0,
       gastosOperativos: estadoContable?.gastosOperativos || 0,
       resultadosFinancierosPorTenencia:
         estadoContable?.resultadosFinancierosPorTenencia || 0,
+      otrosIngresosEgresos: estadoContable?.otrosIngresosEgresos || 0,
+      area: estadoContable?.area || 0,
       resultadosExtraordinarios: estadoContable?.resultadosExtraordinarios || 0,
+      impuestoGanancias: estadoContable?.impuestoGanancias || 0,
     },
   });
 
@@ -103,6 +109,7 @@ export default function EstadoContableForm({
     getTotalPasivoNoCorriente,
     getTotalPatrimonioNeto,
     getResultado,
+    getTotalResultadosOrdinarios,
   } = useTotales(form);
 
   const onSubmit = async (values: z.infer<typeof EstadoContableSchema>) => {
@@ -112,24 +119,27 @@ export default function EstadoContableForm({
         fechaHasta: format(values.fechaHasta, "dd/MM/yyyy"),
         cajaBancos: parseFloat(values.cajaBancos),
         inversiones: parseFloat(values.inversiones),
-        cuentasPorCobrarAsociados: parseFloat(values.cuentasPorCobrarAsociados),
-        cuentasCobrarTerceros: parseFloat(values.cuentasCobrarTerceros),
-        derechosRecibirServicios: parseFloat(values.derechosRecibirServicios),
-        otrosCreditos: parseFloat(values.otrosCreditos),
-        bienesParaConsumo: parseFloat(values.bienesParaConsumo),
+        cuentasCobrar: parseFloat(values.cuentasCobrar),
+        bienesDeCambio: parseFloat(values.bienesDeCambio),
         otrosActivos: parseFloat(values.otrosActivos),
         inversionesNoCorrientes: parseFloat(values.inversionesNoCorrientes),
         bienesDeUso: parseFloat(values.bienesDeUso),
         activosIntangibles: parseFloat(values.activosIntangibles),
         otrosActivosNoCorrientes: parseFloat(values.otrosActivosNoCorrientes),
         deudas: parseFloat(values.deudas),
-        fondosConDestinoEspecifico: parseFloat(
-          values.fondosConDestinoEspecifico
+        remuneracionesCargasSociales: parseFloat(
+          values.remuneracionesCargasSociales
         ),
+        cargasFiscales: parseFloat(values.cargasFiscales),
+        deudasBancariasFinancieras: parseFloat(
+          values.deudasBancariasFinancieras
+        ),
+        otrasDeudas: parseFloat(values.otrasDeudas),
         previsiones: parseFloat(values.previsiones),
         deudasNoCorrientes: parseFloat(values.deudasNoCorrientes),
-        fondosConDestinoEspecificoNoCorrientes: parseFloat(
-          values.fondosConDestinoEspecificoNoCorrientes
+        otrasDeudasNoCorrientes: parseFloat(values.otrasDeudasNoCorrientes),
+        deudasBancariasFinancierasNoCorrientes: parseFloat(
+          values.deudasBancariasFinancierasNoCorrientes
         ),
         previsionesNoCorrientes: parseFloat(values.previsionesNoCorrientes),
         capital: parseFloat(values.capital),
@@ -137,11 +147,15 @@ export default function EstadoContableForm({
         resultadosNoAsignados: parseFloat(values.resultadosNoAsignados),
         resultadoDelEjercicio: parseFloat(values.resultadoDelEjercicio),
         recursosIngresos: parseFloat(values.recursosIngresos),
+        costoDeVenta: parseFloat(values.costoDeVenta),
         gastosOperativos: parseFloat(values.gastosOperativos),
         resultadosFinancierosPorTenencia: parseFloat(
           values.resultadosFinancierosPorTenencia
         ),
+        otrosIngresosEgresos: parseFloat(values.otrosIngresosEgresos),
+        area: parseFloat(values.area),
         resultadosExtraordinarios: parseFloat(values.resultadosExtraordinarios),
+        impuestoGanancias: parseFloat(values.impuestoGanancias),
       };
 
       if (estadoContable) {
@@ -263,7 +277,7 @@ export default function EstadoContableForm({
                       ACTIVO
                     </h4>
                     <h4 className="text-center font-semibold text-sm text-gray-500">
-                      $
+                      En miles de $
                     </h4>
                   </div>
                   {ACTIVO_CORRIENTE.map((activo) => (
@@ -344,6 +358,113 @@ export default function EstadoContableForm({
                       {numeral(getTotalActivo()).format("$0,0.00")}
                     </h4>
                   </div>
+
+                  <div className="w-full mt-6">
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="flex flex-col">
+                        {/* <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
+                          <h4 className="col-span-3 font-semibold text-[#070F3F]">
+                            RESULTADOS ORDINARIOS
+                          </h4>
+                          <h4 className="text-center font-semibold text-[#070F3F]">
+                            $
+                          </h4>
+                        </div> */}
+
+                        {RESULTADO_ORDINARIO.map((resultado) => (
+                          <div
+                            key={resultado.id}
+                            className="w-full grid grid-cols-4 border-b py-0.5 items-center"
+                          >
+                            <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
+                              {resultado.label}
+                            </h4>
+                            <FormField
+                              control={form.control}
+                              name={resultado.id as any}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      className="h-5 text-sm"
+                                    />
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
+                          <h4 className="col-span-3 font-semibold text-sm text-[#070F3F]">
+                            RESULTADO ORDINARIO
+                          </h4>
+                          <h4 className="text-center font-semibold text-sm text-[#070F3F] h-5">
+                            {numeral(getTotalResultadosOrdinarios()).format(
+                              "$0,0.00"
+                            )}
+                          </h4>
+                        </div>
+
+                        <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
+                          <h4 className="col-span-3 font-semibold text-sm text-[#070F3F]">
+                            RESULTADOS EXTRAORDINARIOS
+                          </h4>
+                          <h4 className="text-center font-semibold text-sm text-[#070F3F]">
+                            <FormField
+                              control={form.control}
+                              name={"resultadosExtraordinarios"}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      className="h-5 text-sm"
+                                    />
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+                          </h4>
+                        </div>
+
+                        <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
+                          <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
+                            Impuesto a las Ganancias
+                          </h4>
+                          <h4 className="text-center font-normal text-sm text-[#070F3F]">
+                            <FormField
+                              control={form.control}
+                              name={"impuestoGanancias"}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      className="h-5 text-sm"
+                                    />
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+                          </h4>
+                        </div>
+
+                        <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
+                          <h4 className="text-center col-span-3 font-semibold text-sm text-gray-500">
+                            RESULTADO DEL EJERCICIO
+                          </h4>
+                          <h4 className="text-center font-semibold text-sm text-gray-500 h-5">
+                            {numeral(getResultado()).format("$0,0.00")}
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex flex-col">
@@ -352,7 +473,7 @@ export default function EstadoContableForm({
                       PASIVO
                     </h4>
                     <h4 className="text-center font-semibold text-sm text-gray-500">
-                      $
+                      En miles de $
                     </h4>
                   </div>
 
@@ -502,88 +623,24 @@ export default function EstadoContableForm({
                       {numeral(getTotalPasivo()).format("$0,0.00")}
                     </h4>
                   </div>
-                </div>
-              </div>
-            </div>
 
-            <div>
-              <h3 className="mt-2 mb-2 text-xl font-semibold text-primary">
-                Estado de Resultados
-              </h3>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col">
-                  <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
-                    <h4 className="col-span-3 font-semibold text-[#070F3F]">
-                      RESULTADOS ORDINARIOS
-                    </h4>
-                    <h4 className="text-center font-semibold text-[#070F3F]">
-                      $
-                    </h4>
-                  </div>
-
-                  {RESULTADO_ORDINARIO.map((resultado) => (
-                    <div
-                      key={resultado.id}
-                      className="w-full grid grid-cols-4 border-b py-0.5 items-center"
+                  <DialogFooter className="mt-auto">
+                    <Button variant={"secondary"} onClick={onClose}>
+                      Cancelar
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant={"default"}
+                      disabled={!fechaDesde || !fechaHasta || !isBalanceOk()}
                     >
-                      <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
-                        {resultado.label}
-                      </h4>
-                      <FormField
-                        control={form.control}
-                        name={resultado.id as any}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                type="number"
-                                className="h-5 text-sm"
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  ))}
-
-                  <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
-                    <h4 className="col-span-3 font-semibold text-sm text-[#070F3F]">
-                      RESULTADOS EXTRAORDINARIOS
-                    </h4>
-                    <h4 className="text-center font-semibold text-sm text-[#070F3F]">
-                      <FormField
-                        control={form.control}
-                        name={"resultadosExtraordinarios"}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                type="number"
-                                className="h-5 text-sm"
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                    </h4>
-                  </div>
-
-                  <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
-                    <h4 className="text-center col-span-3 font-semibold text-sm text-gray-500">
-                      RESULTADO DEL EJERCICIO
-                    </h4>
-                    <h4 className="text-center font-semibold text-sm text-gray-500 h-5">
-                      {numeral(getResultado()).format("$0,0.00")}
-                    </h4>
-                  </div>
+                      Guardar
+                    </Button>
+                  </DialogFooter>
                 </div>
               </div>
             </div>
 
-            <DialogFooter>
+            {/* <DialogFooter>
               <Button variant={"secondary"} onClick={onClose}>
                 Cancelar
               </Button>
@@ -594,7 +651,7 @@ export default function EstadoContableForm({
               >
                 Guardar
               </Button>
-            </DialogFooter>
+            </DialogFooter> */}
           </form>
         </Form>
       </DialogContent>
