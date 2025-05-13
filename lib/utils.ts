@@ -204,7 +204,11 @@ export function matchNames(name1: string, name2: string) {
   return combinedScore * 100; // Return match percentage
 }
 
-export async function sendEmail(recipients: Address[], contactos: string[]) {
+export async function sendEmail(
+  recipients: Address[],
+  contactos: string[],
+  jotformLink: string
+) {
   const sender = {
     email: "compliance@clama360.com",
     name: "Clama360",
@@ -215,6 +219,7 @@ export async function sendEmail(recipients: Address[], contactos: string[]) {
     to: recipients,
     template_uuid: process.env.SEND_SOLICITUD_TEMPLATE_ID!,
     template_variables: {
+      link: jotformLink,
       personas: contactos.join(" / "),
     },
   });
