@@ -145,7 +145,7 @@ export default function EstadoContableForm({
         capital: parseFloat(values.capital),
         reservas: parseFloat(values.reservas),
         resultadosNoAsignados: parseFloat(values.resultadosNoAsignados),
-        resultadoDelEjercicio: parseFloat(values.resultadoDelEjercicio),
+        resultadoDelEjercicio: getResultado(),
         recursosIngresos: parseFloat(values.recursosIngresos),
         costoDeVenta: parseFloat(values.costoDeVenta),
         gastosOperativos: parseFloat(values.gastosOperativos),
@@ -583,7 +583,7 @@ export default function EstadoContableForm({
                     </div>
                   ))}
 
-                  <div
+                  {/* <div
                     key={"resultadoDelEjercicio"}
                     className="w-full grid grid-cols-4 border-b py-0.5 items-center"
                   >
@@ -607,7 +607,7 @@ export default function EstadoContableForm({
                         </FormItem>
                       )}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
                     <h4 className="col-span-3 font-semibold text-sm text-[#070F3F]">

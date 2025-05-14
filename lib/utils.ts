@@ -1,13 +1,14 @@
 import https from "https";
-import axios, { AxiosRequestConfig } from "axios";
+import { Address } from "mailtrap";
 import { formatISO } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
+import axios, { AxiosRequestConfig } from "axios";
 import { doubleMetaphone as metaphone } from "double-metaphone";
 
-import { Mapper } from "@/lib/jotform/mapper";
 import { emailClient } from "./mailtrap";
-import { Address } from "mailtrap";
+import { Mapper } from "@/lib/jotform/mapper";
+import { EstadoContable } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -233,4 +234,116 @@ export async function fetch(url: string, options?: AxiosRequestConfig) {
   } catch (error) {
     console.log("error", error);
   }
+}
+
+export function getIndicadoresFinancieros(eecc: EstadoContable) {
+  const liquidezCorriente = calcLiquidezCorriente(eecc);
+  const endeudamientoTotal = calcEndeudamientoTotal(eecc);
+  const solvencia = calcSolvencia(eecc);
+  const roe = calcRoe(eecc);
+  const roa = calcRoa(eecc);
+
+  return { liquidezCorriente, endeudamientoTotal, solvencia, roe, roa };
+}
+
+export function calcLiquidezCorriente(eecc: EstadoContable) {
+  const activoCorriente = calcActivoCorriente(eecc);
+  const pasivoCorriente = calcPasivoCorriente(eecc);
+  return activoCorriente / pasivoCorriente;
+}
+
+export function calcEndeudamientoTotal(eecc: EstadoContable) {
+  const pasivoTotal = calcPasivoTotal(eecc);
+  const activoTotal = calcActivoTotal(eecc);
+  return pasivoTotal / activoTotal;
+}
+
+export function calcSolvencia(eecc: EstadoContable) {
+  const patrimonioNeto = calcPatrimonioNeto(eecc);
+  const activoTotal = calcActivoTotal(eecc);
+  return patrimonioNeto / activoTotal;
+}
+
+export function calcRoe(eecc: EstadoContable) {
+  console.log("eecc", eecc);
+
+  const patrimonioNeto = calcPatrimonioNeto(eecc);
+  console.log("patrimonioNeto", patrimonioNeto);
+
+  const resultadoOrdinario = calcResultadoOrdinario(eecc);
+  console.log("resultadoOrdinario", resultadoOrdinario);
+
+  return resultadoOrdinario / patrimonioNeto;
+}
+
+export function calcRoa(eecc: EstadoContable) {
+  const activoTotal = calcActivoTotal(eecc);
+  const resultadoOrdinario = calcResultadoOrdinario(eecc);
+  return resultadoOrdinario / activoTotal;
+}
+
+export function calcActivoCorriente(eecc: EstadoContable) {
+  return (
+    eecc.cajaBancos.toNumber() +
+    eecc.inversiones.toNumber() +
+    eecc.cuentasCobrar.toNumber() +
+    eecc.bienesDeCambio.toNumber() +
+    eecc.otrosActivos.toNumber()
+  );
+}
+
+export function calcActivoNoCorriente(eecc: EstadoContable) {
+  return (
+    eecc.inversionesNoCorrientes.toNumber() +
+    eecc.bienesDeUso.toNumber() +
+    eecc.activosIntangibles.toNumber() +
+    eecc.otrosActivosNoCorrientes.toNumber()
+  );
+}
+
+export function calcActivoTotal(eecc: EstadoContable) {
+  const activoCorriente = calcActivoCorriente(eecc);
+  const activoNoCorriente = calcActivoNoCorriente(eecc);
+  return activoCorriente + activoNoCorriente;
+}
+
+export function calcPasivoCorriente(eecc: EstadoContable) {
+  return (
+    eecc.deudas.toNumber() +
+    eecc.remuneracionesCargasSociales.toNumber() +
+    eecc.cargasFiscales.toNumber() +
+    eecc.deudasBancariasFinancieras.toNumber() +
+    eecc.otrasDeudas.toNumber() +
+    eecc.previsiones.toNumber()
+  );
+}
+
+export function calcPasivoNoCorriente(eecc: EstadoContable) {
+  return (
+    eecc.deudasNoCorrientes.toNumber() +
+    eecc.deudasBancariasFinancierasNoCorrientes.toNumber() +
+    eecc.otrasDeudasNoCorrientes.toNumber() +
+    eecc.previsionesNoCorrientes.toNumber()
+  );
+}
+
+export function calcPasivoTotal(eecc: EstadoContable) {
+  const pasivoCorriente = calcPasivoCorriente(eecc);
+  const pasivoNoCorriente = calcPasivoNoCorriente(eecc);
+  return pasivoCorriente + pasivoNoCorriente;
+}
+
+export function calcPatrimonioNeto(eecc: EstadoContable) {
+  return (
+    eecc.capital.toNumber() +
+    eecc.reservas.toNumber() +
+    eecc.resultadosNoAsignados.toNumber()
+  );
+}
+
+export function calcResultadoOrdinario(eecc: EstadoContable) {
+  return (
+    eecc.resultadoDelEjercicio.toNumber() -
+    eecc.resultadosExtraordinarios.toNumber()
+  );
 }
