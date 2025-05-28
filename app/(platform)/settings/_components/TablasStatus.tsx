@@ -1,29 +1,30 @@
 "use client";
 
+import * as XLSX from "xlsx";
+import { toast } from "sonner";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { ChangeEvent, useRef, useState, useTransition } from "react";
-import { toast } from "sonner";
-import * as XLSX from "xlsx";
 
 import {
   CuitApocrifoData,
   deleteCuitsApocrifos,
   updateCuitsApocrifos,
 } from "@/actions/cuitsApocrifos";
-import { Button } from "@/components/ui/button";
-import { blobToData, chunkArray } from "@/lib/utils";
-import { updateTablaStatus } from "@/actions/settings";
-import { updateTerroristas } from "@/actions/terroristas";
-import { DottedSeparator } from "@/components/DottedSeparator";
-import {
-  PaisNoCooperanteData,
-  updatePaisesNoCooperantes,
-} from "@/actions/paisesNoCooperantes";
 import {
   SujetoSancionadoData,
   updateSujetosSancionados,
 } from "@/actions/sujetosSancionados";
+import {
+  PaisNoCooperanteData,
+  updatePaisesNoCooperantes,
+} from "@/actions/paisesNoCooperantes";
+import { Button } from "@/components/ui/button";
+import { blobToData, chunkArray } from "@/lib/utils";
+import { updateTablaStatus } from "@/actions/settings";
+import { updateTerroristas } from "@/actions/terroristas";
+import { EntidadData, updateMasiva } from "@/actions/entidad/updateMasiva";
+import { DottedSeparator } from "@/components/DottedSeparator";
 
 interface TablasStatusProps {
   statuses: any[];
@@ -31,6 +32,7 @@ interface TablasStatusProps {
 
 export const TablasStatus = ({ statuses }: TablasStatusProps) => {
   const [isPending, startTransition] = useTransition();
+  const entidadesFileRef = useRef<HTMLInputElement>(null);
   const cuitApocrifosFileRef = useRef<HTMLInputElement>(null);
   const paisesNoCooperantesFileRef = useRef<HTMLInputElement>(null);
   const sujetosObligadosSancionadosFileRef = useRef<HTMLInputElement>(null);
@@ -112,6 +114,24 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
         toast.success(
           "Listado de Sujetos Obligados Sancionados actualizado correctamente"
         );
+      }
+    });
+  };
+
+  const onUpdateEntidades = async (e: ChangeEvent<HTMLInputElement>) => {
+    startTransition(async () => {
+      const file = e.target.files?.[0];
+
+      if (file) {
+        const result = await blobToData(file);
+        const binaryString = result;
+        const workbook = XLSX.read(binaryString, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const data: EntidadData[] = XLSX.utils.sheet_to_json(worksheet);
+        await updateMasiva(data);
+
+        toast.success("Listado de Entidades actualizado correctamente");
       }
     });
   };
@@ -228,6 +248,31 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
         <Button
           onClick={() => {
             sujetosObligadosSancionadosFileRef.current?.click();
+          }}
+          size={"xs"}
+          disabled={isPending}
+        >
+          Importar
+        </Button>
+      </div>
+
+      <DottedSeparator className="my-4" />
+
+      <div className="flex flex-row items-center justify-between">
+        <div>
+          <h4 className="font-semibold text-[#070F3F]">Entidades</h4>
+          <span className="text-[12px] font-semibold text-gray-500">-</span>
+        </div>
+        <input
+          hidden
+          type="file"
+          accept=".xlsx, .xls"
+          ref={entidadesFileRef}
+          onChange={onUpdateEntidades}
+        />
+        <Button
+          onClick={() => {
+            entidadesFileRef.current?.click();
           }}
           size={"xs"}
           disabled={isPending}

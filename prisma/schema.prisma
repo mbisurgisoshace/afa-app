@@ -283,8 +283,10 @@ model Entidad {
   riesgoUltimaActualizacion                  DateTime?
   compliancePersona1                         String?
   compliancePersona2                         String?
+  compliancePersona3                         String?
   complianceEmail1                           String?
   complianceEmail2                           String?
+  complianceEmail3                           String?
 
   EstadoContable EstadoContable[]
   PedidoEntidad  PedidoEntidad[]

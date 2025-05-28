@@ -71,9 +71,11 @@ export const jotformParser = (
         ) {
           formattedFormSubmission[jotformElement.name] = formattedWidgetAnswer;
         } else {
-          formattedFormSubmission.personasInteres.push(
-            ...formattedWidgetAnswer
-          );
+          if (formattedWidgetAnswer) {
+            formattedFormSubmission.personasInteres.push(
+              ...formattedWidgetAnswer
+            );
+          }
         }
 
         return;

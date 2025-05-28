@@ -22,6 +22,7 @@ export const procesarFormulario = async (submittedForm: SubmittedForm) => {
   const submission = (await jotformClient.submission.get(
     submissionId.toString()!
   )) as Response<JotformResponseContent>;
+
   const formattedSubmission = jotformParser(submission);
 
   try {
