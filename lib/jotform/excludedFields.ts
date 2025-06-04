@@ -3,6 +3,7 @@ export const EXCLUDED_FIELDS = [
   "input14",
   "cargaDe",
   "enviar",
+  "tipoRelacion274",
   "separadorDe41",
   "ltpgtltspanStylecolor",
   "lth3gtltspanStylecolor",
