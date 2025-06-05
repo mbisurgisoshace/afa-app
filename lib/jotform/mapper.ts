@@ -114,4 +114,5 @@ export const tipoPersonaInteresDbMapper = {
   Secretario: TipoPersonaInteres.SECRETARIO,
   Vicepresidente: TipoPersonaInteres.VICEPRESIDENTE,
   Tesorero: TipoPersonaInteres.TESORERO,
+  Vocal: TipoPersonaInteres.VOCAL,
 };
