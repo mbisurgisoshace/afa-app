@@ -199,7 +199,6 @@ model Entidad {
   oficio                                     String?
   expuestaPoliticamente                      Boolean?
   esPepEnCaracterDe                          String?
-  archivoDDJJPep                             String?
   cuit                                       String?
   conflictoInteresEmpleadosAfa               Boolean?
   descripcionConflictoInteresEmpleadosAfa    String?
@@ -212,50 +211,20 @@ model Entidad {
   fechaConstitucionSociedad                  DateTime?
   fechaInscripcionRpc                        DateTime?
   datosInscripcionRegistrales                String?
-  archivoEstatuto                            String?
   cotizaEnBolsa                              Boolean?
   dondeCotiza                                String[]
   esSujetoObligado                           Boolean?
   razonSujetoObligado                        String?
   tieneProgramaPrevencion                    Boolean?
-  archivoProgramaPrevencion                  String?
   tieneProgramaIntegridad                    Boolean?
-  archivoProgramaIntegridad                  String?
   personasInteres                            PersonaInteres[]
   categoriaClub                              String?
   tieneVinculosEstado                        Boolean?
   vinculosOrganismos                         String[]
   conflictoInteresAfa                        Boolean?
   descripcionConflictoAfa                    String[]
-  archivoFormularioDDJJ                      String?
   createdAt                                  DateTime            @default(now())
   updatedAt                                  DateTime            @updatedAt
-  nosisPeorSituacion                         String?
-  nosisCantidadBancos                        Int?
-  nosisMontoTotal                            Decimal?            @db.Decimal(12, 2)
-  nosisAntiguedadBCRA                        Int?
-  nosisPeorSituacion12Meses                  String?
-  nosisCantidadBancos12Meses                 Int?
-  nosisPerfilCumplimientoDeudor              Int?
-  nosisEsMoroso                              Boolean?
-  nosisCantidadSinFondosNoPagados6Meses      Int?
-  nosisMontoSinFondosNoPagados6Meses         Decimal?            @db.Decimal(12, 2)
-  nosisJuiciosCantidad12Meses                Int?
-  nosisConcursosQuiebrasCantidad12Meses      Int?
-  nosisScore                                 Int?
-  nosisFacturacionEstimada                   Int?
-  nosisProveedorEstado                       String?
-  nosisFacturasApocrifas                     Boolean?
-  nosisDeudasFiscales                        Boolean?
-  nosisPedidoQuebrasCantidad12Meses          Int?
-  nosisPeorSituacionCon10Porciento12Mesas    String?
-  nosisSectorActividadPrincipalDelEmpleador  String?
-  nosisSujetoObligado                        String?
-  nosisPersonaExpuestaPoliticamente          String?
-  nosisCantidadHomonimosEnBaseLaFt           Int?
-  nosisEnlanceHomonimosEnBaseLaFt            String?
-  nosisPeorSituacion12MesesBcra              String?
-  nosisUltimaActualizacion                   DateTime?
   riesgoPeorSituacion                        String?
   riesgoCantidadBancos                       Int?
   riesgoMontoTotal                           Decimal?            @db.Decimal(12, 2)
@@ -306,8 +275,6 @@ model PersonaInteres {
   porcentajeAccionario  Decimal?           @db.Decimal(12, 2)
   expuestaPoliticamente Boolean?
   esPepEnCaracterDe     String?
-  archivoDDJJPep        String?
-  archivoPoder          String?
   cargoEnAfa            String?
   fechaCargoEnAfa       DateTime?
   tipoInteresAfa        String?
