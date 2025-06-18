@@ -5,18 +5,17 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Accordion } from "@/components/ui/accordion";
-import Nosis from "./EntidadForm/Nosis";
+import Club from "./EntidadForm/Club";
 import { EntidadSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
 import { EntidadWithPersonasInteres } from "@/types";
-import InformacionGeneral from "./EntidadForm/InformacionGeneral";
-import InformacionBancaria from "./EntidadForm/InformacionBancaria";
-import PaisesDondeOpera from "./EntidadForm/PaisesDondeOpera";
+import { Accordion } from "@/components/ui/accordion";
 import PersonasHumanas from "./EntidadForm/PersonasHumanas";
+import PaisesDondeOpera from "./EntidadForm/PaisesDondeOpera";
 import PersonasJuridicas from "./EntidadForm/PersonasJuridicas";
 import ConflictoIntereses from "./EntidadForm/ConflictoIntereses";
-import Club from "./EntidadForm/Club";
+import InformacionGeneral from "./EntidadForm/InformacionGeneral";
+import InformacionBancaria from "./EntidadForm/InformacionBancaria";
 import InformacionFinanciera from "./EntidadForm/InformacionFinanciera";
 
 interface Tablas {
