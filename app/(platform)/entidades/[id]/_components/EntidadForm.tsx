@@ -106,39 +106,6 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
         : "no",
       personasInteres: entidad.personasInteres,
       categoriaClub: entidad.categoriaClub,
-      nosisPeorSituacion: entidad.nosisPeorSituacion,
-      nosisCantidadBancos: entidad.nosisCantidadBancos,
-      nosisMontoTotal: entidad.nosisMontoTotal,
-      nosisAntiguedadBCRA: entidad.nosisAntiguedadBCRA,
-      nosisPeorSituacion12Meses: entidad.nosisPeorSituacion12Meses,
-      nosisCantidadBancos12Meses: entidad.nosisCantidadBancos12Meses,
-      nosisPerfilCumplimientoDeudor: entidad.nosisPerfilCumplimientoDeudor,
-      nosisEsMoroso: entidad.nosisEsMoroso ? "si" : "no",
-      nosisCantidadSinFondosNoPagados6Meses:
-        entidad.nosisCantidadSinFondosNoPagados6Meses,
-      nosisMontoSinFondosNoPagados6Meses:
-        entidad.nosisMontoSinFondosNoPagados6Meses,
-      nosisJuiciosCantidad12Meses: entidad.nosisJuiciosCantidad12Meses,
-      nosisConcursosQuiebrasCantidad12Meses:
-        entidad.nosisConcursosQuiebrasCantidad12Meses,
-      nosisScore: entidad.nosisScore,
-      nosisFacturacionEstimada: entidad.nosisFacturacionEstimada,
-      nosisProveedorEstado: entidad.nosisProveedorEstado,
-      nosisFacturasApocrifas: entidad.nosisFacturasApocrifas ? "si" : "no",
-      nosisDeudasFiscales: entidad.nosisDeudasFiscales ? "si" : "no",
-      nosisPedidoQuebrasCantidad12Meses:
-        entidad.nosisPedidoQuebrasCantidad12Meses,
-      nosisPeorSituacionCon10Porciento12Mesas:
-        entidad.nosisPeorSituacionCon10Porciento12Mesas,
-      nosisSectorActividadPrincipalDelEmpleador:
-        entidad.nosisSectorActividadPrincipalDelEmpleador,
-      nosisSujetoObligado: entidad.nosisSujetoObligado,
-      nosisPersonaExpuestaPoliticamente:
-        entidad.nosisPersonaExpuestaPoliticamente,
-      nosisCantidadHomonimosEnBaseLaFt:
-        entidad.nosisCantidadHomonimosEnBaseLaFt,
-      nosisEnlanceHomonimosEnBaseLaFt: entidad.nosisEnlanceHomonimosEnBaseLaFt,
-      nosisPeorSituacion12MesesBcra: entidad.nosisPeorSituacion12MesesBcra,
       riesgoPeorSituacion: entidad.riesgoPeorSituacion,
       riesgoCantidadBancos: entidad.riesgoCantidadBancos,
       riesgoMontoTotal: entidad.riesgoMontoTotal,
@@ -248,39 +215,6 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
         : "no",
       personasInteres: entidad.personasInteres,
       categoriaClub: entidad.categoriaClub,
-      nosisPeorSituacion: entidad.nosisPeorSituacion,
-      nosisCantidadBancos: entidad.nosisCantidadBancos,
-      nosisMontoTotal: entidad.nosisMontoTotal,
-      nosisAntiguedadBCRA: entidad.nosisAntiguedadBCRA,
-      nosisPeorSituacion12Meses: entidad.nosisPeorSituacion12Meses,
-      nosisCantidadBancos12Meses: entidad.nosisCantidadBancos12Meses,
-      nosisPerfilCumplimientoDeudor: entidad.nosisPerfilCumplimientoDeudor,
-      nosisEsMoroso: entidad.nosisEsMoroso ? "si" : "no",
-      nosisCantidadSinFondosNoPagados6Meses:
-        entidad.nosisCantidadSinFondosNoPagados6Meses,
-      nosisMontoSinFondosNoPagados6Meses:
-        entidad.nosisMontoSinFondosNoPagados6Meses,
-      nosisJuiciosCantidad12Meses: entidad.nosisJuiciosCantidad12Meses,
-      nosisConcursosQuiebrasCantidad12Meses:
-        entidad.nosisConcursosQuiebrasCantidad12Meses,
-      nosisScore: entidad.nosisScore,
-      nosisFacturacionEstimada: entidad.nosisFacturacionEstimada,
-      nosisProveedorEstado: entidad.nosisProveedorEstado,
-      nosisFacturasApocrifas: entidad.nosisFacturasApocrifas ? "si" : "no",
-      nosisDeudasFiscales: entidad.nosisDeudasFiscales ? "si" : "no",
-      nosisPedidoQuebrasCantidad12Meses:
-        entidad.nosisPedidoQuebrasCantidad12Meses,
-      nosisPeorSituacionCon10Porciento12Mesas:
-        entidad.nosisPeorSituacionCon10Porciento12Mesas,
-      nosisSectorActividadPrincipalDelEmpleador:
-        entidad.nosisSectorActividadPrincipalDelEmpleador,
-      nosisSujetoObligado: entidad.nosisSujetoObligado,
-      nosisPersonaExpuestaPoliticamente:
-        entidad.nosisPersonaExpuestaPoliticamente,
-      nosisCantidadHomonimosEnBaseLaFt:
-        entidad.nosisCantidadHomonimosEnBaseLaFt,
-      nosisEnlanceHomonimosEnBaseLaFt: entidad.nosisEnlanceHomonimosEnBaseLaFt,
-      nosisPeorSituacion12MesesBcra: entidad.nosisPeorSituacion12MesesBcra,
       riesgoPeorSituacion: entidad.riesgoPeorSituacion,
       riesgoCantidadBancos: entidad.riesgoCantidadBancos,
       riesgoMontoTotal: entidad.riesgoMontoTotal,
