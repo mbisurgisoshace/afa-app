@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
 import { Button } from "@/components/ui/button";
-import { getInfoFinancieraData, getNosisData } from "@/actions/entidad";
+import { getInfoFinancieraData } from "@/actions/entidad";
 
 interface NosisTriggerProps {
   codigoEntidad: string;
@@ -22,7 +22,7 @@ export default function NosisTrigger({
   const onGetNosisData = async () => {
     setLoading(true);
     try {
-      await getNosisData(codigoEntidad);
+      //await getNosisData(codigoEntidad);
     } catch (err) {
       console.log(err);
     } finally {

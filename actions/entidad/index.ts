@@ -116,34 +116,6 @@ export const getEntidades = async (searchParams: SearchParams) => {
   });
 };
 
-export const getNosisData = async (entidadId: string) => {
-  const entidad = await db.entidad.findFirst({
-    where: { codigoEntidad: entidadId },
-  });
-
-  if (entidad) {
-    const identificador = entidad.dni || entidad.cuit;
-    const nosisResponse = await fetch(
-      `${process.env.NOSIS_API_URL}variables?usuario=${process.env.NOSIS_API_USUARIO}&token=${process.env.NOSIS_API_TOKEN}&documento=${identificador}&VR=1&format=json`
-    );
-    const parsedResponse: NosisDataResponse = await nosisResponse.json();
-
-    if (parsedResponse.Contenido.Datos) {
-      const result = new NosisDataParser(parsedResponse).getParsedData();
-
-      await db.entidad.update({
-        where: { id: entidad.id },
-        data: {
-          ...result,
-          nosisUltimaActualizacion: new Date(),
-        },
-      });
-
-      revalidatePath(`/entidades/${entidadId}`);
-    }
-  }
-};
-
 export const getInfoFinancieraData = async (entidadId: string) => {
   const entidad = await db.entidad.findFirst({
     where: { codigoEntidad: entidadId },

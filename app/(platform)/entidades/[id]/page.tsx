@@ -53,7 +53,7 @@ export default async function Entidad({ params }: EntidadProps) {
     }
   };
 
-  const riesgo = getRiesgo(entidad?.nosisScore);
+  const riesgo = getRiesgo(entidad?.riesgoScore);
 
   const razonSocial =
     (entidad?.nombreCompleto && entidad?.nombreCompleto.trim()) ||
