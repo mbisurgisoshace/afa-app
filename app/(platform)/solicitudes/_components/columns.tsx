@@ -4,22 +4,32 @@ import Link from "next/link";
 import { ChevronRightIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { Entidad } from "@prisma/client";
+import { Entidad, PedidoEntidad, Prisma } from "@prisma/client";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
-export const columns: ColumnDef<Entidad>[] = [
+export const columns: ColumnDef<any>[] = [
   {
-    accessorKey: "codigoEntidad",
+    id: "codigoEntidad",
     header: "Codigo",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-4 justify-between">
+          {row.original.entidad.codigoEntidad}
+        </div>
+      );
+    },
   },
   {
     size: 400,
     id: "nombreCompleto",
     filterFn: (row, columnId, filterValue) => {
-      const codigo = row.original.codigoEntidad;
+      const codigo = row.original.entidad.codigoEntidad;
       const razonSocial =
-        (row.original.nombreCompleto && row.original.nombreCompleto.trim()) ||
-        (row.original.razonSocial && row.original.razonSocial.trim());
+        (row.original.entidad.nombreCompleto &&
+          row.original.entidad.nombreCompleto.trim()) ||
+        (row.original.entidad.razonSocial &&
+          row.original.entidad.razonSocial.trim());
 
       return (
         !!razonSocial?.toLowerCase().includes(filterValue.toLowerCase()) ||
@@ -30,8 +40,10 @@ export const columns: ColumnDef<Entidad>[] = [
     cell: ({ row }) => {
       const formulario = row.original;
       const razonSocial =
-        (row.original.nombreCompleto && row.original.nombreCompleto.trim()) ||
-        (row.original.razonSocial && row.original.razonSocial.trim());
+        (row.original.entidad.nombreCompleto &&
+          row.original.entidad.nombreCompleto.trim()) ||
+        (row.original.entidad.razonSocial &&
+          row.original.entidad.razonSocial.trim());
 
       return (
         <div className="flex items-center gap-4 justify-between">
@@ -41,16 +53,32 @@ export const columns: ColumnDef<Entidad>[] = [
     },
   },
   {
-    accessorKey: "tipo",
+    accessorKey: "tipoReclamo",
     header: "Tipo",
     filterFn: (row, columnId, filterValue) => {
       return filterValue
         .map((value: string) => value.toLowerCase())
-        .includes(row.original.tipoRelacion?.toLowerCase());
+        .includes(row.original.tipoReclamo?.toLowerCase());
     },
     cell: ({ row }) => (
-      <div className="">{row.original.tipoRelacion?.replace("_", " ")}</div>
+      <div className="">{row.original.tipoReclamo?.replace("_", " ")}</div>
     ),
+  },
+  {
+    accessorKey: "estado",
+    header: "Estado",
+    cell: ({ row }) => {
+      const estado = row.original.estado;
+      return (
+        <div
+          className={`capitalize ${
+            estado === "activo" ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          <Badge variant={"destructive"}>Pendiente</Badge>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "acciones",

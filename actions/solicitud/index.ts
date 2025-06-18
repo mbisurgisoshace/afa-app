@@ -6,6 +6,32 @@ import { db } from "@/lib/db";
 import { sendEmail } from "@/lib/utils";
 import { TipoReclamo } from "@prisma/client";
 
+export const getSolicitudesPendientes = async () => {
+  const solicitudes = await db.pedidoEntidad.findMany({
+    where: {
+      fechaRespuesta: null,
+    },
+    select: {
+      id: true,
+      entidad: {
+        select: {
+          codigoEntidad: true,
+          razonSocial: true,
+          nombreCompleto: true,
+        },
+      },
+      fecha: true,
+      tipoReclamo: true,
+      fechaRespuesta: true,
+    },
+    orderBy: {
+      fecha: "desc",
+    },
+  });
+
+  return solicitudes;
+};
+
 export const getSolicitudesByTipo = async (tipoReclamo: TipoReclamo) => {
   const endDate = endOfMonth(new Date());
   const startDate = startOfMonth(new Date());
