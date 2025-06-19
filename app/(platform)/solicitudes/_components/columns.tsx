@@ -5,8 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 
 import { Entidad } from "@prisma/client";
+import { EntidadWithSolicitudes } from "@/types";
 
-export const columns: ColumnDef<Entidad>[] = [
+export const columns: ColumnDef<EntidadWithSolicitudes>[] = [
   {
     id: "codigoEntidad",
     header: "Codigo",

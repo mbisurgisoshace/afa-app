@@ -1,17 +1,17 @@
-import { SearchParams } from "@/types";
 import { columns } from "./_components/columns";
-import { getEntidades } from "@/actions/entidad";
 import { DataTable } from "@/components/DataTable/index";
 import { renderSubComponent } from "./_components/Subrows";
 import { FiltersToolbar } from "./_components/FiltersToolbar";
 import { getSolicitudesPendientes } from "@/actions/solicitud";
+import { EntidadWithSolicitudes, SearchParams } from "@/types";
 
 interface EntidadesProps {
   searchParams: SearchParams;
 }
 
 export default async function Solicitudes({ searchParams }: EntidadesProps) {
-  const solicitudes = await getSolicitudesPendientes();
+  const solicitudes =
+    (await getSolicitudesPendientes()) as EntidadWithSolicitudes[];
 
   return (
     <div className="w-full max-w-[1196px] m-auto flex flex-col h-full">
