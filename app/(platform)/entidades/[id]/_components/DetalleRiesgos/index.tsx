@@ -67,6 +67,7 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
               size={24}
               className={`${
                 (ultimoRiesgoTerrorismo &&
+                  //@ts-ignore
                   ultimoRiesgoTerrorismo.porcentajeCoincidencia > 70 &&
                   "text-destructive") ||
                 "text-muted-foreground"

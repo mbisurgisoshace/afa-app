@@ -31,6 +31,7 @@ export default async function Entidad({ params }: EntidadProps) {
     return (
       (ultimoRiesgoGeografico && ultimoRiesgoGeografico.riesgoso) ||
       (ultimoRiesgoTerrorista &&
+        //@ts-ignore
         ultimoRiesgoTerrorista.porcentajeCoincidencia > 70)
     );
   };
