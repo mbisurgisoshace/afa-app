@@ -11,8 +11,13 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { EntidadWithSolicitudes } from "@/types";
 
-export const renderSubComponent = ({ row }: { row: Row<any> }) => {
+export const renderSubComponent = ({
+  row,
+}: {
+  row: Row<EntidadWithSolicitudes>;
+}) => {
   return (
     <Table>
       <TableHeader>

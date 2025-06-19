@@ -1,14 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 
-import { Entidad, PedidoEntidad, Prisma } from "@prisma/client";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Entidad } from "@prisma/client";
 
-export const columns: ColumnDef<any>[] = [
+export const columns: ColumnDef<Entidad>[] = [
   {
     id: "codigoEntidad",
     header: "Codigo",

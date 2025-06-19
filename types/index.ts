@@ -8,6 +8,14 @@ export type EntidadWithPersonasInteres = Prisma.EntidadGetPayload<
   typeof entidadWithPersonasInteres
 >;
 
+const entidadWithSolicitudes = Prisma.validator<Prisma.EntidadArgs>()({
+  include: { solicitudes: true },
+});
+
+export type EntidadWithSolicitudes = Prisma.EntidadGetPayload<
+  typeof entidadWithSolicitudes
+>;
+
 export type SearchParams = {
   page: string;
   tipo: string;
