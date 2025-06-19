@@ -2,8 +2,9 @@ import { SearchParams } from "@/types";
 import { columns } from "./_components/columns";
 import { getEntidades } from "@/actions/entidad";
 import { DataTable } from "@/components/DataTable/index";
+import { renderSubComponent } from "./_components/Subrows";
+import { FiltersToolbar } from "./_components/FiltersToolbar";
 import { getSolicitudesPendientes } from "@/actions/solicitud";
-//import { FiltersToolbar } from "./_components/FiltersToolbar";
 
 interface EntidadesProps {
   searchParams: SearchParams;
@@ -21,9 +22,10 @@ export default async function Solicitudes({ searchParams }: EntidadesProps) {
       </div>
       <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg overflow-scroll h-full">
         <DataTable
-          data={solicitudes}
           columns={columns}
-          //filteringTool={FiltersToolbar}
+          data={solicitudes}
+          filteringTool={FiltersToolbar}
+          renderSubComponent={renderSubComponent}
         />
       </div>
     </div>

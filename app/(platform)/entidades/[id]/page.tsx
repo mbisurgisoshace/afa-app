@@ -106,7 +106,7 @@ export default async function Entidad({ params }: EntidadProps) {
           {entidad && <EstadosContables entidadId={entidad.id} />}
         </TabsContent>
         <TabsContent value="riesgos">
-          <DetalleRiesgos />
+          {entidad && <DetalleRiesgos entidadId={entidad.id} />}
         </TabsContent>
       </Tabs>
     </div>

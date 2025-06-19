@@ -1,12 +1,13 @@
 "use client";
 
 import {
+  Row,
   ColumnDef,
   flexRender,
   useReactTable,
   getCoreRowModel,
   Table as ITable,
-  getFilteredRowModel,
+  getExpandedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -25,18 +26,24 @@ export interface FilteringToolsProps<TData> {
 interface DataTableProps<TData, TValue> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
+  getRowCanExpand?: (row: Row<TData>) => boolean;
   filterTool?: (props: FilteringToolsProps<TData>) => JSX.Element;
+  renderSubComponent?: (props: { row: Row<TData> }) => React.ReactElement;
 }
 
 export function DataTable<TData, TValue>({
   data,
   columns,
   filterTool,
+  renderSubComponent,
+  getRowCanExpand = () => false,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
+    getRowCanExpand,
     getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
     //getFilteredRowModel: getFilteredRowModel(),
   });
 

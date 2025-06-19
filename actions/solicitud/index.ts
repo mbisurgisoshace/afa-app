@@ -7,25 +7,52 @@ import { sendEmail } from "@/lib/utils";
 import { TipoReclamo } from "@prisma/client";
 
 export const getSolicitudesPendientes = async () => {
-  const solicitudes = await db.pedidoEntidad.findMany({
+  // const solicitudes = await db.pedidoEntidad.findMany({
+  //   where: {
+  //     fechaRespuesta: null,
+  //   },
+  //   select: {
+  //     id: true,
+  //     entidad: {
+  //       select: {
+  //         codigoEntidad: true,
+  //         razonSocial: true,
+  //         nombreCompleto: true,
+  //       },
+  //     },
+  //     fecha: true,
+  //     tipoReclamo: true,
+  //     fechaRespuesta: true,
+  //   },
+  //   orderBy: {
+  //     fecha: "desc",
+  //   },
+  // });
+  const solicitudes = await db.entidad.findMany({
     where: {
-      fechaRespuesta: null,
+      solicitudes: {
+        some: {
+          fechaRespuesta: null,
+        },
+      },
     },
     select: {
       id: true,
-      entidad: {
+      tipoRelacion: true,
+      codigoEntidad: true,
+      razonSocial: true,
+      nombreCompleto: true,
+      solicitudes: {
+        where: {
+          fechaRespuesta: null,
+        },
         select: {
-          codigoEntidad: true,
-          razonSocial: true,
-          nombreCompleto: true,
+          id: true,
+          fecha: true,
+          tipoReclamo: true,
+          fechaRespuesta: true,
         },
       },
-      fecha: true,
-      tipoReclamo: true,
-      fechaRespuesta: true,
-    },
-    orderBy: {
-      fecha: "desc",
     },
   });
 

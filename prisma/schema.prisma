@@ -258,8 +258,8 @@ model Entidad {
   complianceEmail2                           String?
   complianceEmail3                           String?
 
-  EstadoContable EstadoContable[]
-  PedidoEntidad  PedidoEntidad[]
+  estadosContables EstadoContable[]
+  solicitudes      PedidoEntidad[]
 
   @@map("Entidades")
 }
