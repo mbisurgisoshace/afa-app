@@ -1,16 +1,19 @@
 "use client";
 
 import { toast } from "sonner";
-import { useTransition } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Terrorismo from "./Terrorismo";
-import PaisesNoCooperantes from "./PaisesNoCooperantes";
-import { Button } from "@/components/ui/button";
-import { DottedSeparator } from "@/components/DottedSeparator";
+import { format } from "date-fns";
+import { useCallback, useEffect, useState, useTransition } from "react";
+
 import {
   calcularRiesgoGeografico,
   calcularRiesgoTerrorismo,
+  getUltimoRiesgoGeografico,
+  getUltimoRiesgoTerrorismo,
 } from "@/actions/riesgos";
+import { Button } from "@/components/ui/button";
+import { DottedSeparator } from "@/components/DottedSeparator";
+import { RiesgoGeografico, RiesgoTerrorista } from "@prisma/client";
+import { MessageSquareWarningIcon } from "lucide-react";
 
 interface DetalleRiesgosProps {
   entidadId: number;
@@ -18,6 +21,25 @@ interface DetalleRiesgosProps {
 
 export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
   const [isPending, startTransition] = useTransition();
+  const [ultimoRiesgoTerrorismo, setUltimoRiesgoTerrorismo] =
+    useState<RiesgoTerrorista | null>();
+  const [ultimoRiesgoGeografico, setUltimoRiesgoGeografico] =
+    useState<RiesgoGeografico | null>();
+
+  const fetchRiesgoTerrorismo = useCallback(async () => {
+    const riesgoTerrorismo = await getUltimoRiesgoTerrorismo(entidadId);
+    setUltimoRiesgoTerrorismo(riesgoTerrorismo);
+  }, [entidadId]);
+
+  const fetchRiesgoGeografico = useCallback(async () => {
+    const riesgoGeografico = await getUltimoRiesgoGeografico(entidadId);
+    setUltimoRiesgoGeografico(riesgoGeografico);
+  }, [entidadId]);
+
+  useEffect(() => {
+    fetchRiesgoTerrorismo();
+    fetchRiesgoGeografico();
+  }, [entidadId, fetchRiesgoTerrorismo, fetchRiesgoGeografico]);
 
   const onCotejarRiesgoTerrorismo = async () => {
     startTransition(async () => {
@@ -39,10 +61,23 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
     <div className="w-full border border-[#DEDEDE] p-6 bg-white rounded-lg">
       <div className="flex flex-row items-center justify-between">
         <div>
-          <h4 className="font-semibold text-[#070F3F]">
+          <h4 className="font-semibold text-[#070F3F] flex items-center gap-2">
             Riesgo de Lavado de Activos y Financiamiento del Terrorismo
+            <MessageSquareWarningIcon
+              size={24}
+              className={`${
+                (ultimoRiesgoTerrorismo &&
+                  ultimoRiesgoTerrorismo.porcentajeCoincidencia > 70 &&
+                  "text-destructive") ||
+                "text-muted-foreground"
+              }`}
+            />
           </h4>
-          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: `}</span>
+          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${
+            ultimoRiesgoTerrorismo
+              ? `${format(ultimoRiesgoTerrorismo.createdAt, "dd/MM/yyyy")}`
+              : ""
+          }`}</span>
         </div>
         <Button
           onClick={onCotejarRiesgoTerrorismo}
@@ -57,8 +92,23 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
 
       <div className="flex flex-row items-center justify-between">
         <div>
-          <h4 className="font-semibold text-[#070F3F]">Riesgo Geografico</h4>
-          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: `}</span>
+          <h4 className="font-semibold text-[#070F3F] flex items-center gap-2">
+            Riesgo Geografico
+            <MessageSquareWarningIcon
+              size={24}
+              className={`${
+                (ultimoRiesgoGeografico &&
+                  ultimoRiesgoGeografico.riesgoso &&
+                  "text-destructive") ||
+                "text-muted-foreground"
+              }`}
+            />
+          </h4>
+          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${
+            ultimoRiesgoGeografico
+              ? `${format(ultimoRiesgoGeografico.createdAt, "dd/MM/yyyy")}`
+              : ""
+          }`}</span>
         </div>
         <Button
           onClick={onCotejarRiesgoGeografico}
@@ -68,69 +118,6 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
           Cotejar
         </Button>
       </div>
-      {/* <Tabs defaultValue="riesgos" className="w-full">
-        <div className="flex flex-row justify-between items-center">
-          <div className="flex flex-row items-center gap-4">
-            <TabsList className="grid grid-cols-3 bg-transparent">
-              <TabsTrigger
-                value="riesgos"
-                className="
-                border-b-2
-                font-normal
-                rounded-none 
-                border-b-muted-foreground
-                data-[state=active]:border-b-2
-                data-[state=active]:shadow-none 
-                data-[state=active]:text-primary
-                data-[state=active]:bg-transparent 
-                data-[state=active]:border-b-primary
-                "
-              >
-                Matriz de Riesgo
-              </TabsTrigger>
-              <TabsTrigger
-                value="terrorismo"
-                className="
-                border-b-2
-                font-normal
-                rounded-none 
-                border-b-muted-foreground
-                data-[state=active]:border-b-2
-                data-[state=active]:shadow-none 
-                data-[state=active]:text-primary
-                data-[state=active]:bg-transparent 
-                data-[state=active]:border-b-primary
-                "
-              >
-                Terrorismo
-              </TabsTrigger>
-              <TabsTrigger
-                value="paisesNoCooperantes"
-                className="
-                border-b-2
-                font-normal
-                rounded-none 
-                border-b-muted-foreground
-                data-[state=active]:border-b-2
-                data-[state=active]:shadow-none 
-                data-[state=active]:text-primary
-                data-[state=active]:bg-transparent 
-                data-[state=active]:border-b-primary
-                "
-              >
-                Paises No Cooperantes
-              </TabsTrigger>
-            </TabsList>
-          </div>
-        </div>
-        <TabsContent value="riesgos"></TabsContent>
-        <TabsContent value="terrorismo">
-          <Terrorismo />
-        </TabsContent>
-        <TabsContent value="paisesNoCooperantes">
-          <PaisesNoCooperantes />
-        </TabsContent>
-      </Tabs> */}
     </div>
   );
 }

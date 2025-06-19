@@ -8,6 +8,11 @@ import { CalcularRiesgo } from "./_components/CalcularRiesgo";
 import EstadosContables from "./_components/EstadosContables";
 import DetalleRiesgos from "./_components/DetalleRiesgos";
 import EnviarSolicitud from "./_components/EnviarSolicitud";
+import {
+  getUltimoRiesgoGeografico,
+  getUltimoRiesgoTerrorismo,
+} from "@/actions/riesgos";
+import { MessageSquareWarningIcon } from "lucide-react";
 
 interface EntidadProps {
   params: { id: string };
@@ -15,9 +20,20 @@ interface EntidadProps {
 
 export default async function Entidad({ params }: EntidadProps) {
   const entidad = await getEntidad(params.id);
+  const ultimoRiesgoGeografico = await getUltimoRiesgoGeografico(entidad!.id);
+  const ultimoRiesgoTerrorista = await getUltimoRiesgoTerrorismo(entidad!.id);
 
   const { paises, oficios, industrias, profesiones, actividadesAfip } =
     await getTablas();
+
+  const esRiesgoso = () => {
+    if (!entidad) return false;
+    return (
+      (ultimoRiesgoGeografico && ultimoRiesgoGeografico.riesgoso) ||
+      (ultimoRiesgoTerrorista &&
+        ultimoRiesgoTerrorista.porcentajeCoincidencia > 70)
+    );
+  };
 
   const getRiesgo = (score?: number | null) => {
     if (!score)
@@ -81,6 +97,12 @@ export default async function Entidad({ params }: EntidadProps) {
               {razonSocial?.toUpperCase()}
               <Badge variant={riesgo.variant as any}>{riesgo?.text}</Badge>
               <EnviarSolicitud codigoEntidad={entidad?.codigoEntidad!} />
+              {esRiesgoso() && (
+                <MessageSquareWarningIcon
+                  size={24}
+                  className="text-destructive"
+                />
+              )}
             </h2>
           </div>
           <NosisTrigger

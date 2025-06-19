@@ -1,8 +1,28 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
+
 import { matchNames } from "@/lib/utils";
 import { PersonaTerrorista } from "@prisma/client";
+
+export const getUltimoRiesgoTerrorismo = async (entidadId: number) => {
+  const ultimoRiesgoTerrorismo = await db.riesgoTerrorista.findFirst({
+    where: { entidadId },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return ultimoRiesgoTerrorismo;
+};
+
+export const getUltimoRiesgoGeografico = async (entidadId: number) => {
+  const ultimoRiesgoGeografico = await db.riesgoGeografico.findFirst({
+    where: { entidadId },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return ultimoRiesgoGeografico;
+};
 
 export const calcularRiesgoTerrorismo = async (entidadId: number) => {
   const entidad = await db.entidad.findUnique({
@@ -35,7 +55,14 @@ export const calcularRiesgoTerrorismo = async (entidadId: number) => {
     }
   }
 
-  console.log("Mayor porcentaje de coincidencia:", mayorPorcentajeCoincidencia);
+  await db.riesgoTerrorista.create({
+    data: {
+      entidadId: entidad.id,
+      porcentajeCoincidencia: mayorPorcentajeCoincidencia,
+    },
+  });
+
+  revalidatePath(`/entidades/${entidad.codigoEntidad}`);
 };
 
 export const calcularRiesgoGeografico = async (entidadId: number) => {
@@ -92,7 +119,14 @@ export const calcularRiesgoGeografico = async (entidadId: number) => {
     riesgoGeografico = true;
   }
 
-  console.log("Riesgo geográfico:", riesgoGeografico);
+  await db.riesgoGeografico.create({
+    data: {
+      entidadId: entidad.id,
+      riesgoso: riesgoGeografico,
+    },
+  });
+
+  revalidatePath(`/entidades/${entidad.codigoEntidad}`);
 };
 
 const getMayorPorcentajeCoincidencia = (
