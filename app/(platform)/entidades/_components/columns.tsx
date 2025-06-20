@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRightIcon } from "lucide-react";
+import { BookmarkCheckIcon, ChevronRightIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Entidad } from "@prisma/client";
@@ -11,6 +11,35 @@ export const columns: ColumnDef<Entidad>[] = [
   {
     accessorKey: "codigoEntidad",
     header: "Codigo",
+    filterFn: (row, columnId, filterValue) => {
+      const { fecha } = row.original;
+
+      if (
+        filterValue.includes("Completos") &&
+        filterValue.includes("Incompletos")
+      ) {
+        return true;
+      }
+
+      if (filterValue.includes("Completos")) {
+        return !!fecha;
+      }
+
+      if (filterValue.includes("Incompletos")) {
+        return !fecha;
+      }
+
+      return true;
+    },
+    cell: ({ row }) => {
+      const { codigoEntidad, fecha } = row.original;
+      return (
+        <div className="flex items-center gap-3">
+          <span className="w-[75px]">{codigoEntidad}</span>
+          {fecha && <BookmarkCheckIcon size={18} className="text-green-600" />}
+        </div>
+      );
+    },
   },
   {
     size: 400,

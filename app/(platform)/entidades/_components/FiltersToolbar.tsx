@@ -14,6 +14,11 @@ const opcionesTipo = [
   { value: "Agente_Comercial", label: "Agente Comercial" },
 ];
 
+const opcionesDatos = [
+  { value: "Completos", label: "Completos" },
+  { value: "Incompletos", label: "Incompletos" },
+];
+
 interface FiltersToolbarProps<TData> {
   table: Table<TData>;
 }
@@ -42,6 +47,13 @@ export function FiltersToolbar<TData>({ table }: FiltersToolbarProps<TData>) {
             column={table.getColumn("tipo")}
             title="Tipo"
             options={opcionesTipo}
+          />
+        )}
+        {table.getColumn("codigoEntidad") && (
+          <DataTableFacetedFilter
+            column={table.getColumn("codigoEntidad")}
+            title="Datos"
+            options={opcionesDatos}
           />
         )}
         {/* {table.getColumn("priority") && (
