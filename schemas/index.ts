@@ -76,6 +76,8 @@ export const EntidadSchema = z.object({
   datosInscripcionRegistrales: z.any(),
   cotizaEnBolsa: z.any(),
   dondeCotiza: z.any(),
+  tieneProgramaPrevencion: z.any(),
+  tieneProgramaIntegridad: z.any(),
   nombreCompleto: z.any(),
   nacionalidad: z.any(),
   tipoDocumento: z.any(),

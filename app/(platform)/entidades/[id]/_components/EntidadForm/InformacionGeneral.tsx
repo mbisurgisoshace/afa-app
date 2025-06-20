@@ -201,7 +201,7 @@ export default function InformacionGeneral({
               name="codigoActividadAfip"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Codigo de Actividad AFIP</FormLabel>
+                  <FormLabel>Codigo y Descripcion de Actividad AFIP</FormLabel>
                   <Select
                     disabled
                     onValueChange={field.onChange}

@@ -32,9 +32,77 @@ export default function ConflictoIntereses() {
       value="conflictos_interes"
       className="bg-white border border-[#DEDEDE] px-6 py-2 rounded-xl"
     >
-      <AccordionTrigger>Conflictos de Interes</AccordionTrigger>
+      <AccordionTrigger>
+        Programas de Prevencion y Conflictos de Interes
+      </AccordionTrigger>
       <AccordionContent>
         <div className="flex flex-col gap-8">
+          <div className="w-fill grid grid-cols-3 gap-3">
+            <FormField
+              control={form.control}
+              name="tieneProgramaPrevencion"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Tiene Programa de Prevencion</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      disabled
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="si" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Si</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="no" />
+                        </FormControl>
+                        <FormLabel className="font-normal">No</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="w-fill grid grid-cols-3 gap-3">
+            <FormField
+              control={form.control}
+              name="tieneProgramaIntegridad"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Tiene Programa de Integridad</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      disabled
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="si" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Si</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="no" />
+                        </FormControl>
+                        <FormLabel className="font-normal">No</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <div className="w-fill grid grid-cols-3 gap-3">
             <FormField
               control={form.control}
