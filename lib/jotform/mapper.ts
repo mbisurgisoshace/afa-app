@@ -44,6 +44,7 @@ export const condicionIvaDbMapper = {
 };
 
 export const tipoEntidadDbMapper = {
+  Club: TipoEntidad.CLUB,
   Humana: TipoEntidad.HUMANA,
   Juridica: TipoEntidad.JURIDICA,
   "Organismo Publico": TipoEntidad.ORGANISMO_PUBLICO,

@@ -81,7 +81,15 @@ export default async function Entidad({ params }: EntidadProps) {
     entidad?.tipoDePersona && entidad.tipoDePersona !== "HUMANA";
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-col gap-2">
+      <h2 className="flex items-center font-semibold text-lg text-muted-foreground gap-4">
+        {razonSocial?.toUpperCase()}
+        <Badge variant={riesgo.variant as any}>{riesgo?.text}</Badge>
+        <EnviarSolicitud codigoEntidad={entidad?.codigoEntidad!} />
+        {esRiesgoso() && (
+          <MessageSquareWarningIcon size={24} className="text-destructive" />
+        )}
+      </h2>
       <Tabs defaultValue="informacion" className="w-full">
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row items-center gap-4">
@@ -94,17 +102,6 @@ export default async function Entidad({ params }: EntidadProps) {
               )}
               <TabsTrigger value="riesgos">Detalle de Riesgos</TabsTrigger>
             </TabsList>
-            <h2 className="flex items-center font-semibold text-lg text-muted-foreground gap-4">
-              {razonSocial?.toUpperCase()}
-              <Badge variant={riesgo.variant as any}>{riesgo?.text}</Badge>
-              <EnviarSolicitud codigoEntidad={entidad?.codigoEntidad!} />
-              {esRiesgoso() && (
-                <MessageSquareWarningIcon
-                  size={24}
-                  className="text-destructive"
-                />
-              )}
-            </h2>
           </div>
           <NosisTrigger
             codigoEntidad={params.id}
