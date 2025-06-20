@@ -242,8 +242,23 @@ export function getIndicadoresFinancieros(eecc: EstadoContable) {
   const solvencia = calcSolvencia(eecc);
   const roe = calcRoe(eecc);
   const roa = calcRoa(eecc);
+  const rentabilidadSobreIngresos = calcRentabilidadSobreIngresos(eecc);
 
-  return { liquidezCorriente, endeudamientoTotal, solvencia, roe, roa };
+  return {
+    liquidezCorriente,
+    endeudamientoTotal,
+    solvencia,
+    roe,
+    roa,
+    rentabilidadSobreIngresos,
+  };
+}
+
+export function calcRentabilidadSobreIngresos(eecc: EstadoContable) {
+  // Resultado NETO (mismo para roe y roa) / Ingresos
+  const ingresos = eecc.recursosIngresos.toNumber();
+  const resultadoOrdinario = calcResultadoOrdinario(eecc);
+  return resultadoOrdinario / ingresos;
 }
 
 export function calcLiquidezCorriente(eecc: EstadoContable) {
@@ -265,13 +280,8 @@ export function calcSolvencia(eecc: EstadoContable) {
 }
 
 export function calcRoe(eecc: EstadoContable) {
-  console.log("eecc", eecc);
-
   const patrimonioNeto = calcPatrimonioNeto(eecc);
-  console.log("patrimonioNeto", patrimonioNeto);
-
   const resultadoOrdinario = calcResultadoOrdinario(eecc);
-  console.log("resultadoOrdinario", resultadoOrdinario);
 
   return resultadoOrdinario / patrimonioNeto;
 }

@@ -353,16 +353,17 @@ model EstadoContable {
 }
 
 model IndicadorFinanciero {
-  id                 Int            @id @default(autoincrement())
-  liquidezCorriente  Decimal        @default(0) @db.Decimal(12, 2)
-  endeudamientoTotal Decimal        @default(0) @db.Decimal(12, 2)
-  solvencia          Decimal        @default(0) @db.Decimal(12, 2)
-  roe                Decimal        @default(0) @db.Decimal(12, 2)
-  roa                Decimal        @default(0) @db.Decimal(12, 2)
-  eecc               EstadoContable @relation(fields: [eeccId], references: [id], onDelete: Cascade)
-  eeccId             Int            @unique
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  id                        Int            @id @default(autoincrement())
+  liquidezCorriente         Decimal        @default(0) @db.Decimal(12, 2)
+  endeudamientoTotal        Decimal        @default(0) @db.Decimal(12, 2)
+  solvencia                 Decimal        @default(0) @db.Decimal(12, 2)
+  roe                       Decimal        @default(0) @db.Decimal(12, 2)
+  roa                       Decimal        @default(0) @db.Decimal(12, 2)
+  rentabilidadSobreIngresos Decimal        @default(0) @db.Decimal(12, 2)
+  eecc                      EstadoContable @relation(fields: [eeccId], references: [id], onDelete: Cascade)
+  eeccId                    Int            @unique
+  createdAt                 DateTime       @default(now())
+  updatedAt                 DateTime       @updatedAt
 
   @@map("IndicadoresFinancieros")
 }
@@ -423,36 +424,41 @@ model SujetoObligadoSancionado {
 }
 
 model Pais {
-  id   Int    @id @default(autoincrement())
-  pais String
+  id               Int      @id @default(autoincrement())
+  pais             String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
 
   @@map("Paises")
 }
 
 model ActividadAfip {
-  id            Int    @id @default(autoincrement())
-  actividadAfip String
+  id               Int      @id @default(autoincrement())
+  actividadAfip    String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
 
   @@map("ActividadesAfip")
 }
 
 model Industria {
-  id        Int    @id @default(autoincrement())
-  industria String
+  id               Int      @id @default(autoincrement())
+  industria        String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
 
   @@map("Industrias")
 }
 
 model Profesion {
-  id        Int    @id @default(autoincrement())
-  profesion String
+  id               Int      @id @default(autoincrement())
+  profesion        String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
 
   @@map("Profesiones")
 }
 
 model Oficio {
-  id     Int    @id @default(autoincrement())
-  oficio String
+  id               Int      @id @default(autoincrement())
+  oficio           String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
 
   @@map("Oficios")
 }

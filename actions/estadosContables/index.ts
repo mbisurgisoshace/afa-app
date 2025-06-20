@@ -51,8 +51,14 @@ export const upsertIndicadorFinanciero = async (eeccId: number) => {
   });
 
   if (eecc) {
-    const { liquidezCorriente, endeudamientoTotal, solvencia, roe, roa } =
-      getIndicadoresFinancieros(eecc);
+    const {
+      liquidezCorriente,
+      endeudamientoTotal,
+      solvencia,
+      roe,
+      roa,
+      rentabilidadSobreIngresos,
+    } = getIndicadoresFinancieros(eecc);
 
     await db.indicadorFinanciero.upsert({
       where: {
@@ -64,6 +70,7 @@ export const upsertIndicadorFinanciero = async (eeccId: number) => {
         solvencia,
         roe,
         roa,
+        rentabilidadSobreIngresos,
       },
       create: {
         eeccId: eeccId,
@@ -72,6 +79,7 @@ export const upsertIndicadorFinanciero = async (eeccId: number) => {
         solvencia,
         roe,
         roa,
+        rentabilidadSobreIngresos,
       },
     });
   }
