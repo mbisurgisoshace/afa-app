@@ -275,7 +275,8 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
             entidadesFileRef.current?.click();
           }}
           size={"xs"}
-          disabled={isPending}
+          //disabled={isPending}
+          disabled
         >
           Importar
         </Button>
