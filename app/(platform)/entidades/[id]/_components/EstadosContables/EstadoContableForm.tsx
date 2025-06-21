@@ -14,7 +14,12 @@ import { Button } from "@/components/ui/button";
 import { EstadoContable } from "@prisma/client";
 import { EstadoContableSchema } from "@/schemas";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Dialog, DialogFooter, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogFooter,
+  DialogContent,
+  DialogClose,
+} from "@/components/ui/dialog";
 
 import {
   PATRIMONIO_NETO,
@@ -184,8 +189,8 @@ export default function EstadoContableForm({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <DialogContent className="sm:max-w-[1340px]">
+        <DialogContent className="sm:max-w-[1340px]">
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogTitle />
             <div>
               <div className="flex gap-9 items-center mb-1">
@@ -606,9 +611,11 @@ export default function EstadoContableForm({
                   </div>
 
                   <DialogFooter className="mt-auto">
-                    <Button variant={"secondary"} onClick={onClose}>
-                      Cancelar
-                    </Button>
+                    <DialogClose asChild>
+                      <Button variant={"secondary"} onClick={onClose}>
+                        Cancelar
+                      </Button>
+                    </DialogClose>
                     <Button
                       type="submit"
                       variant={"default"}
@@ -620,8 +627,8 @@ export default function EstadoContableForm({
                 </div>
               </div>
             </div>
-          </DialogContent>
-        </form>
+          </form>
+        </DialogContent>
       </Form>
     </Dialog>
   );
