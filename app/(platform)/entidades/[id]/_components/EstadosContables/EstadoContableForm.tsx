@@ -37,6 +37,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popoverDialog";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 interface EstadoContableFormProps {
   isOpen: boolean;
@@ -182,9 +183,10 @@ export default function EstadoContableForm({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[1340px]">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <DialogContent className="sm:max-w-[1340px]">
+            <DialogTitle />
             <div>
               <div className="flex gap-9 items-center mb-1">
                 <h3 className="text-xl font-semibold text-primary">
@@ -223,6 +225,7 @@ export default function EstadoContableForm({
                             locale={es}
                             mode="single"
                             selected={field.value}
+                            captionLayout="dropdown"
                             onSelect={field.onChange}
                           />
                         </PopoverContent>
@@ -264,6 +267,7 @@ export default function EstadoContableForm({
                             locale={es}
                             mode="single"
                             selected={field.value}
+                            captionLayout="dropdown"
                             onSelect={field.onChange}
                           />
                         </PopoverContent>
@@ -583,32 +587,6 @@ export default function EstadoContableForm({
                     </div>
                   ))}
 
-                  {/* <div
-                    key={"resultadoDelEjercicio"}
-                    className="w-full grid grid-cols-4 border-b py-0.5 items-center"
-                  >
-                    <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
-                      Resultado del Ejercicio
-                    </h4>
-                    <FormField
-                      control={form.control}
-                      name={"resultadoDelEjercicio"}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              disabled
-                              type="number"
-                              value={getResultado()}
-                              className="h-5 text-sm"
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div> */}
-
                   <div className="w-full grid grid-cols-4 border-b py-0.5 items-center">
                     <h4 className="col-span-3 font-semibold text-sm text-[#070F3F]">
                       TOTAL DEL PATRIMONIO NETO
@@ -642,22 +620,9 @@ export default function EstadoContableForm({
                 </div>
               </div>
             </div>
-
-            {/* <DialogFooter>
-              <Button variant={"secondary"} onClick={onClose}>
-                Cancelar
-              </Button>
-              <Button
-                type="submit"
-                variant={"default"}
-                disabled={!fechaDesde || !fechaHasta || !isBalanceOk()}
-              >
-                Guardar
-              </Button>
-            </DialogFooter> */}
-          </form>
-        </Form>
-      </DialogContent>
+          </DialogContent>
+        </form>
+      </Form>
     </Dialog>
   );
 }
