@@ -43,6 +43,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popoverDialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import MoneyInput from "@/components/MoneyInput";
 
 interface EstadoContableFormProps {
   isOpen: boolean;
@@ -300,7 +301,7 @@ export default function EstadoContableForm({
                       <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
                         {activo.label}
                       </h4>
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name={activo.id as any}
                         render={({ field }) => (
@@ -314,7 +315,8 @@ export default function EstadoContableForm({
                             </FormControl>
                           </FormItem>
                         )}
-                      />
+                      /> */}
+                      <MoneyInput form={form} name={activo.id} />
                     </div>
                   ))}
 
@@ -335,7 +337,7 @@ export default function EstadoContableForm({
                       <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
                         {activo.label}
                       </h4>
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name={activo.id as any}
                         render={({ field }) => (
@@ -349,7 +351,8 @@ export default function EstadoContableForm({
                             </FormControl>
                           </FormItem>
                         )}
-                      />
+                      /> */}
+                      <MoneyInput form={form} name={activo.id} />
                     </div>
                   ))}
 
@@ -391,7 +394,7 @@ export default function EstadoContableForm({
                             <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
                               {resultado.label}
                             </h4>
-                            <FormField
+                            {/* <FormField
                               control={form.control}
                               name={resultado.id as any}
                               render={({ field }) => (
@@ -405,7 +408,8 @@ export default function EstadoContableForm({
                                   </FormControl>
                                 </FormItem>
                               )}
-                            />
+                            /> */}
+                            <MoneyInput form={form} name={resultado.id} />
                           </div>
                         ))}
 
@@ -425,7 +429,7 @@ export default function EstadoContableForm({
                             RESULTADOS EXTRAORDINARIOS
                           </h4>
                           <h4 className="text-center font-semibold text-sm text-[#070F3F]">
-                            <FormField
+                            {/* <FormField
                               control={form.control}
                               name={"resultadosExtraordinarios"}
                               render={({ field }) => (
@@ -439,6 +443,10 @@ export default function EstadoContableForm({
                                   </FormControl>
                                 </FormItem>
                               )}
+                            /> */}
+                            <MoneyInput
+                              form={form}
+                              name={"resultadosExtraordinarios"}
                             />
                           </h4>
                         </div>
@@ -448,7 +456,7 @@ export default function EstadoContableForm({
                             Impuesto a las Ganancias
                           </h4>
                           <h4 className="text-center font-normal text-sm text-[#070F3F]">
-                            <FormField
+                            {/* <FormField
                               control={form.control}
                               name={"impuestoGanancias"}
                               render={({ field }) => (
@@ -462,6 +470,10 @@ export default function EstadoContableForm({
                                   </FormControl>
                                 </FormItem>
                               )}
+                            /> */}
+                            <MoneyInput
+                              form={form}
+                              name={"impuestoGanancias"}
                             />
                           </h4>
                         </div>
@@ -497,7 +509,7 @@ export default function EstadoContableForm({
                       <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
                         {pasivo.label}
                       </h4>
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name={pasivo.id as any}
                         render={({ field }) => (
@@ -511,7 +523,8 @@ export default function EstadoContableForm({
                             </FormControl>
                           </FormItem>
                         )}
-                      />
+                      /> */}
+                      <MoneyInput form={form} name={pasivo.id} />
                     </div>
                   ))}
 
@@ -532,7 +545,7 @@ export default function EstadoContableForm({
                       <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
                         {pasivo.label}
                       </h4>
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name={pasivo.id as any}
                         render={({ field }) => (
@@ -546,7 +559,8 @@ export default function EstadoContableForm({
                             </FormControl>
                           </FormItem>
                         )}
-                      />
+                      /> */}
+                      <MoneyInput form={form} name={pasivo.id} />
                     </div>
                   ))}
 
@@ -574,7 +588,7 @@ export default function EstadoContableForm({
                       <h4 className="col-span-3 font-normal text-sm text-[#070F3F]">
                         {patrimonioNeto.label}
                       </h4>
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name={patrimonioNeto.id as any}
                         render={({ field }) => (
@@ -588,7 +602,8 @@ export default function EstadoContableForm({
                             </FormControl>
                           </FormItem>
                         )}
-                      />
+                      /> */}
+                      <MoneyInput form={form} name={patrimonioNeto.id} />
                     </div>
                   ))}
 
