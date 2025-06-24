@@ -47,6 +47,7 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
       toast.success(
         "Cotejo de Riesgo de Lavado de Activos y Financiamiento del Terrorismo realizado correctamente"
       );
+      fetchRiesgoTerrorismo();
     });
   };
 
@@ -54,6 +55,7 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
     startTransition(async () => {
       await calcularRiesgoGeografico(entidadId);
       toast.success("Cotejo de Riesgo Geografico realizado correctamente");
+      fetchRiesgoGeografico();
     });
   };
 

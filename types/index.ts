@@ -16,6 +16,14 @@ export type EntidadWithSolicitudes = Prisma.EntidadGetPayload<
   typeof entidadWithSolicitudes
 >;
 
+const indicadoresWithEECC = Prisma.validator<Prisma.IndicadorFinancieroArgs>()({
+  include: { eecc: true },
+});
+
+export type IndicadoresWithEECC = Prisma.IndicadorFinancieroGetPayload<
+  typeof indicadoresWithEECC
+>;
+
 export type SearchParams = {
   page: string;
   tipo: string;

@@ -1,18 +1,18 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MessageSquareWarningIcon } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import EntidadForm from "./_components/EntidadForm";
-import NosisTrigger from "./_components/NosisTrigger";
-import { getEntidad, getTablas } from "@/actions/entidad";
-import { CalcularRiesgo } from "./_components/CalcularRiesgo";
-import EstadosContables from "./_components/EstadosContables";
-import DetalleRiesgos from "./_components/DetalleRiesgos";
-import EnviarSolicitud from "./_components/EnviarSolicitud";
 import {
   getUltimoRiesgoGeografico,
   getUltimoRiesgoTerrorismo,
 } from "@/actions/riesgos";
-import { MessageSquareWarningIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import EntidadForm from "./_components/EntidadForm";
+import NosisTrigger from "./_components/NosisTrigger";
+import { getEntidad, getTablas } from "@/actions/entidad";
+import DetalleRiesgos from "./_components/DetalleRiesgos";
+import EnviarSolicitud from "./_components/EnviarSolicitud";
+import EstadosContables from "./_components/EstadosContables";
+import IndicadoresFinancieros from "./_components/IndicadoresFinancieros";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface EntidadProps {
   params: { id: string };
@@ -94,12 +94,15 @@ export default async function Entidad({ params }: EntidadProps) {
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row items-center gap-4">
             <TabsList
-              className={`grid grid-cols-${shouldRenderEECC ? "3" : "2"}`}
+              className={`grid grid-cols-${shouldRenderEECC ? "4" : "3"}`}
             >
               <TabsTrigger value="informacion">Información básica</TabsTrigger>
               {shouldRenderEECC && (
                 <TabsTrigger value="eecc">Estados Contables</TabsTrigger>
               )}
+              <TabsTrigger value="indicadores">
+                Indicadores Financieros
+              </TabsTrigger>
               <TabsTrigger value="riesgos">Detalle de Riesgos</TabsTrigger>
             </TabsList>
           </div>
@@ -124,6 +127,9 @@ export default async function Entidad({ params }: EntidadProps) {
         </TabsContent>
         <TabsContent value="eecc">
           {entidad && <EstadosContables entidadId={entidad.id} />}
+        </TabsContent>
+        <TabsContent value="indicadores">
+          {entidad && <IndicadoresFinancieros entidadId={entidad.id} />}
         </TabsContent>
         <TabsContent value="riesgos">
           {entidad && <DetalleRiesgos entidadId={entidad.id} />}

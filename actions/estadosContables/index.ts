@@ -84,3 +84,21 @@ export const upsertIndicadorFinanciero = async (eeccId: number) => {
     });
   }
 };
+
+export const getUltimosIndicadores = async (entidadId: number) => {
+  return await db.indicadorFinanciero.findFirst({
+    where: {
+      eecc: {
+        entidadId,
+      },
+    },
+    orderBy: {
+      eecc: {
+        fechaHasta: "desc",
+      },
+    },
+    include: {
+      eecc: true,
+    },
+  });
+};
