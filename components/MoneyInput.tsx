@@ -25,14 +25,24 @@ export default function MoneyInput(props: TextInputProps) {
     : "";
 
   const [value, setValue] = useReducer((_: any, next: string) => {
-    const digits = next.replace(/\D/g, "");
-    return moneyFormatter.format(Number(digits) / 100);
+    // const digits = next.replace(/\D/g, "");
+    // return moneyFormatter.format(Number(digits) / 100);
+    const cleaned = next.replace(/[^0-9-]/g, ""); // permite el "-" solo
+    const negative = cleaned.startsWith("-");
+    const digits = cleaned.replace(/\D/g, "");
+    const number = Number(digits) / 100;
+    return moneyFormatter.format(negative ? -number : number);
   }, initialValue);
 
   function handleChange(realChangeFn: Function, formattedValue: string) {
-    const digits = formattedValue.replace(/\D/g, "");
+    // const digits = formattedValue.replace(/\D/g, "");
+    // const realValue = Number(digits) / 100;
+    // realChangeFn(realValue);
+    const cleaned = formattedValue.replace(/[^0-9-]/g, "");
+    const negative = cleaned.startsWith("-");
+    const digits = cleaned.replace(/\D/g, "");
     const realValue = Number(digits) / 100;
-    realChangeFn(realValue);
+    realChangeFn(negative ? -realValue : realValue);
   }
 
   return (

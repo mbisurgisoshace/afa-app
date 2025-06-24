@@ -2,8 +2,8 @@
 
 import { z } from "zod";
 import numeral from "numeral";
-import { format, parse } from "date-fns";
 import { es } from "date-fns/locale";
+import { format, parse } from "date-fns";
 import { useForm } from "react-hook-form";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -344,7 +344,16 @@ export default function EstadoContableForm({
                           <FormItem>
                             <FormControl>
                               <Input
-                                {...field}
+                                {...registerWithMask(
+                                  activo.id as any,
+                                  "currency",
+                                  {
+                                    locale: "es-AR",
+                                    prefix: "$",
+                                    decimalScale: 2,
+                                    fixedDecimalScale: true,
+                                  }
+                                )}
                                 type="number"
                                 className="h-5 text-sm"
                               />
