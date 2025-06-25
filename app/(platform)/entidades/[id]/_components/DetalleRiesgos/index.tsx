@@ -5,14 +5,23 @@ import { format } from "date-fns";
 import { useCallback, useEffect, useState, useTransition } from "react";
 
 import {
+  calcularRiesgoCuitApocrifo,
   calcularRiesgoGeografico,
+  calcularRiesgoSujetoSancionado,
   calcularRiesgoTerrorismo,
+  getUltimoRiesgoCuitApocrifo,
   getUltimoRiesgoGeografico,
+  getUltimoRiesgoSujetoSancionado,
   getUltimoRiesgoTerrorismo,
 } from "@/actions/riesgos";
 import { Button } from "@/components/ui/button";
 import { DottedSeparator } from "@/components/DottedSeparator";
-import { RiesgoGeografico, RiesgoTerrorista } from "@prisma/client";
+import {
+  RiesgoCuitApocrifo,
+  RiesgoGeografico,
+  RiesgoSujetosSancionados,
+  RiesgoTerrorista,
+} from "@prisma/client";
 import { MessageSquareWarningIcon } from "lucide-react";
 
 interface DetalleRiesgosProps {
@@ -25,6 +34,10 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
     useState<RiesgoTerrorista | null>();
   const [ultimoRiesgoGeografico, setUltimoRiesgoGeografico] =
     useState<RiesgoGeografico | null>();
+  const [ultimoRiesgoCuitApocrifo, setUltimoRiesgoCuitApocrifo] =
+    useState<RiesgoCuitApocrifo | null>();
+  const [ultimoRiesgoSujetoSancionado, setUltimoRiesgoSujetoSancionado] =
+    useState<RiesgoSujetosSancionados | null>();
 
   const fetchRiesgoTerrorismo = useCallback(async () => {
     const riesgoTerrorismo = await getUltimoRiesgoTerrorismo(entidadId);
@@ -36,10 +49,30 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
     setUltimoRiesgoGeografico(riesgoGeografico);
   }, [entidadId]);
 
+  const fetchRiesgoCuitApocrifo = useCallback(async () => {
+    const riesgoCuitApocrifo = await getUltimoRiesgoCuitApocrifo(entidadId);
+    setUltimoRiesgoCuitApocrifo(riesgoCuitApocrifo);
+  }, [entidadId]);
+
+  const fetchRiesgoSujetoSancionado = useCallback(async () => {
+    const riesgoSujetoSancionado = await getUltimoRiesgoSujetoSancionado(
+      entidadId
+    );
+    setUltimoRiesgoSujetoSancionado(riesgoSujetoSancionado);
+  }, [entidadId]);
+
   useEffect(() => {
     fetchRiesgoTerrorismo();
     fetchRiesgoGeografico();
-  }, [entidadId, fetchRiesgoTerrorismo, fetchRiesgoGeografico]);
+    fetchRiesgoCuitApocrifo();
+    fetchRiesgoSujetoSancionado();
+  }, [
+    entidadId,
+    fetchRiesgoTerrorismo,
+    fetchRiesgoGeografico,
+    fetchRiesgoCuitApocrifo,
+    fetchRiesgoSujetoSancionado,
+  ]);
 
   const onCotejarRiesgoTerrorismo = async () => {
     startTransition(async () => {
@@ -56,6 +89,24 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
       await calcularRiesgoGeografico(entidadId);
       toast.success("Cotejo de Riesgo Geografico realizado correctamente");
       fetchRiesgoGeografico();
+    });
+  };
+
+  const onCotejarRiesgoCuitApocrifo = async () => {
+    startTransition(async () => {
+      await calcularRiesgoCuitApocrifo(entidadId);
+      toast.success("Cotejo de Riesgo Apocrifo realizado correctamente");
+      fetchRiesgoCuitApocrifo();
+    });
+  };
+
+  const onCotejarRiesgoSujetoSancionado = async () => {
+    startTransition(async () => {
+      await calcularRiesgoSujetoSancionado(entidadId);
+      toast.success(
+        "Cotejo de Riesgo Sujeto Obligado Sancionado realizado correctamente"
+      );
+      fetchRiesgoSujetoSancionado();
     });
   };
 
@@ -115,6 +166,71 @@ export default function DetalleRiesgos({ entidadId }: DetalleRiesgosProps) {
         </div>
         <Button
           onClick={onCotejarRiesgoGeografico}
+          size={"xs"}
+          disabled={isPending}
+        >
+          Cotejar
+        </Button>
+      </div>
+
+      <DottedSeparator className="my-4" />
+
+      <div className="flex flex-row items-center justify-between">
+        <div>
+          <h4 className="font-semibold text-[#070F3F] flex items-center gap-2">
+            Riesgo Sujeto Sancionado
+            <MessageSquareWarningIcon
+              size={24}
+              className={`${
+                (ultimoRiesgoSujetoSancionado &&
+                  ultimoRiesgoSujetoSancionado.riesgoso &&
+                  "text-destructive") ||
+                "text-muted-foreground"
+              }`}
+            />
+          </h4>
+          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${
+            ultimoRiesgoSujetoSancionado
+              ? `${format(
+                  ultimoRiesgoSujetoSancionado.createdAt,
+                  "dd/MM/yyyy"
+                )}`
+              : ""
+          }`}</span>
+        </div>
+        <Button
+          onClick={onCotejarRiesgoSujetoSancionado}
+          size={"xs"}
+          disabled={isPending}
+        >
+          Cotejar
+        </Button>
+      </div>
+
+      <DottedSeparator className="my-4" />
+
+      <div className="flex flex-row items-center justify-between">
+        <div>
+          <h4 className="font-semibold text-[#070F3F] flex items-center gap-2">
+            Riesgo Cuit Apocrifo
+            <MessageSquareWarningIcon
+              size={24}
+              className={`${
+                (ultimoRiesgoCuitApocrifo &&
+                  ultimoRiesgoCuitApocrifo.riesgoso &&
+                  "text-destructive") ||
+                "text-muted-foreground"
+              }`}
+            />
+          </h4>
+          <span className="text-[12px] font-semibold text-gray-500">{`Ultima actualizacion: ${
+            ultimoRiesgoCuitApocrifo
+              ? `${format(ultimoRiesgoCuitApocrifo.createdAt, "dd/MM/yyyy")}`
+              : ""
+          }`}</span>
+        </div>
+        <Button
+          onClick={onCotejarRiesgoCuitApocrifo}
           size={"xs"}
           disabled={isPending}
         >

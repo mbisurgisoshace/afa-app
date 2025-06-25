@@ -258,10 +258,12 @@ model Entidad {
   complianceEmail2                           String?
   complianceEmail3                           String?
 
-  estadosContables   EstadoContable[]
-  solicitudes        PedidoEntidad[]
-  riesgosGeograficos RiesgoGeografico[]
-  riesgosTerroristas RiesgoTerrorista[]
+  estadosContables          EstadoContable[]
+  solicitudes               PedidoEntidad[]
+  riesgosGeograficos        RiesgoGeografico[]
+  riesgosTerroristas        RiesgoTerrorista[]
+  riesgosSujetosSancionados RiesgoSujetosSancionados[]
+  riesgosCuitApocrifo       RiesgoCuitApocrifo[]
 
   @@map("Entidades")
 }
@@ -306,6 +308,26 @@ model RiesgoTerrorista {
   entidad                Entidad  @relation(fields: [entidadId], references: [id], onDelete: Cascade)
 
   @@map("RiesgosTerroristas")
+}
+
+model RiesgoSujetosSancionados {
+  id        Int      @id @default(autoincrement())
+  entidadId Int
+  riesgoso  Boolean
+  createdAt DateTime @default(now())
+  entidad   Entidad  @relation(fields: [entidadId], references: [id], onDelete: Cascade)
+
+  @@map("RiesgosSujetosSancionados")
+}
+
+model RiesgoCuitApocrifo {
+  id        Int      @id @default(autoincrement())
+  entidadId Int
+  riesgoso  Boolean
+  createdAt DateTime @default(now())
+  entidad   Entidad  @relation(fields: [entidadId], references: [id], onDelete: Cascade)
+
+  @@map("RiesgosCuitApocrifo")
 }
 
 model EstadoContable {

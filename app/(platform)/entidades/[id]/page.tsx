@@ -1,7 +1,9 @@
 import { MessageSquareWarningIcon } from "lucide-react";
 
 import {
+  getUltimoRiesgoCuitApocrifo,
   getUltimoRiesgoGeografico,
+  getUltimoRiesgoSujetoSancionado,
   getUltimoRiesgoTerrorismo,
 } from "@/actions/riesgos";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +24,12 @@ export default async function Entidad({ params }: EntidadProps) {
   const entidad = await getEntidad(params.id);
   const ultimoRiesgoGeografico = await getUltimoRiesgoGeografico(entidad!.id);
   const ultimoRiesgoTerrorista = await getUltimoRiesgoTerrorismo(entidad!.id);
+  const ultimoRiesgoCuitApocrifo = await getUltimoRiesgoCuitApocrifo(
+    entidad!.id
+  );
+  const ultimoRiesgoSujetoSancionado = await getUltimoRiesgoSujetoSancionado(
+    entidad!.id
+  );
 
   const { paises, oficios, industrias, profesiones, actividadesAfip } =
     await getTablas();
@@ -32,7 +40,9 @@ export default async function Entidad({ params }: EntidadProps) {
       (ultimoRiesgoGeografico && ultimoRiesgoGeografico.riesgoso) ||
       (ultimoRiesgoTerrorista &&
         //@ts-ignore
-        ultimoRiesgoTerrorista.porcentajeCoincidencia > 70)
+        ultimoRiesgoTerrorista.porcentajeCoincidencia > 70) ||
+      (ultimoRiesgoCuitApocrifo && ultimoRiesgoCuitApocrifo.riesgoso) ||
+      (ultimoRiesgoSujetoSancionado && ultimoRiesgoSujetoSancionado.riesgoso)
     );
   };
 

@@ -24,6 +24,25 @@ export const getUltimoRiesgoGeografico = async (entidadId: number) => {
   return ultimoRiesgoGeografico;
 };
 
+export const getUltimoRiesgoSujetoSancionado = async (entidadId: number) => {
+  const ultimoRiesgoSujetoSancionado =
+    await db.riesgoSujetosSancionados.findFirst({
+      where: { entidadId },
+      orderBy: { createdAt: "desc" },
+    });
+
+  return ultimoRiesgoSujetoSancionado;
+};
+
+export const getUltimoRiesgoCuitApocrifo = async (entidadId: number) => {
+  const ultimoRiesgoCuitApocrifo = await db.riesgoCuitApocrifo.findFirst({
+    where: { entidadId },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return ultimoRiesgoCuitApocrifo;
+};
+
 export const calcularRiesgoTerrorismo = async (entidadId: number) => {
   const entidad = await db.entidad.findUnique({
     where: { id: entidadId },
@@ -123,6 +142,102 @@ export const calcularRiesgoGeografico = async (entidadId: number) => {
     data: {
       entidadId: entidad.id,
       riesgoso: riesgoGeografico,
+    },
+  });
+
+  revalidatePath(`/entidades/${entidad.codigoEntidad}`);
+};
+
+export const calcularRiesgoCuitApocrifo = async (entidadId: number) => {
+  const entidad = await db.entidad.findUnique({
+    where: { id: entidadId },
+    include: {
+      personasInteres: true,
+    },
+  });
+
+  if (!entidad) {
+    throw new Error("Entidad no encontrada");
+  }
+
+  const cuitApocrifo = await db.cuitApocrifo.findMany({});
+
+  let riesgoCuitApocrifo = false;
+
+  if (
+    cuitApocrifo.some(
+      (sujeto) =>
+        sujeto.cuit?.replaceAll(/-/g, "").replaceAll(" ", "") ===
+        entidad.cuit?.replaceAll(/-/g, "".replaceAll(" ", ""))
+    )
+  ) {
+    riesgoCuitApocrifo = true;
+  }
+
+  entidad.personasInteres.forEach((persona) => {
+    if (
+      cuitApocrifo.some(
+        (sujeto) =>
+          sujeto.cuit?.replaceAll(/-/g, "").replaceAll(" ", "") ===
+          persona.documento?.replaceAll(/-/g, "").replaceAll(" ", "")
+      )
+    ) {
+      riesgoCuitApocrifo = true;
+    }
+  });
+
+  await db.riesgoCuitApocrifo.create({
+    data: {
+      entidadId: entidad.id,
+      riesgoso: riesgoCuitApocrifo,
+    },
+  });
+
+  revalidatePath(`/entidades/${entidad.codigoEntidad}`);
+};
+
+export const calcularRiesgoSujetoSancionado = async (entidadId: number) => {
+  const entidad = await db.entidad.findUnique({
+    where: { id: entidadId },
+    include: {
+      personasInteres: true,
+    },
+  });
+
+  if (!entidad) {
+    throw new Error("Entidad no encontrada");
+  }
+
+  const sujetosSancionados = await db.sujetoObligadoSancionado.findMany({});
+
+  let riesgoSujetoSancionado = false;
+
+  if (
+    sujetosSancionados.some(
+      (sujeto) =>
+        sujeto.cuit?.replaceAll(/-/g, "").replaceAll(" ", "") ===
+        entidad.cuit?.replaceAll(/-/g, "".replaceAll(" ", ""))
+    )
+  ) {
+    riesgoSujetoSancionado = true;
+  }
+
+  entidad.personasInteres.forEach((persona) => {
+    if (
+      sujetosSancionados.some(
+        (sujeto) =>
+          sujeto.cuit?.replaceAll(/-/g, "").replaceAll(" ", "") ===
+          persona.documento?.replaceAll(/-/g, "").replaceAll(" ", "")
+      )
+    ) {
+      riesgoSujetoSancionado = true;
+    }
+  });
+
+  await db.riesgoSujetosSancionados.create({
+    data: {
+      entidadId: entidad.id,
+      riesgoso: riesgoSujetoSancionado,
     },
   });
 
