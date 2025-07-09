@@ -94,11 +94,15 @@ export const createSolicitud = async (codigoEntidad: string) => {
 
   if (entidad) {
     const {
+      razonSocial,
+      nombreCompleto,
       complianceEmail1,
       complianceEmail2,
       compliancePersona1,
       compliancePersona2,
     } = entidad;
+
+    let sujeto = razonSocial || nombreCompleto || "";
 
     const primerDigitoCodigoEntidad = parseInt(codigoEntidad[0], 10);
     const jotformBaseUrl =
@@ -112,7 +116,7 @@ export const createSolicitud = async (codigoEntidad: string) => {
         { email: complianceEmail1!, name: compliancePersona1! },
         { email: complianceEmail2!, name: compliancePersona2! },
       ],
-      [compliancePersona1!, compliancePersona2!],
+      [sujeto],
       jotformLink
     );
 
