@@ -206,22 +206,28 @@ export function matchNames(name1: string, name2: string) {
 }
 
 export async function sendEmail(
+  templateId: string,
   recipients: Address[],
-  contactos: string[],
-  jotformLink: string
+  // contactos: string[],
+  // jotformLink: string
+  templateVariables: any
 ) {
   const sender = {
     email: "compliance@clama360.com",
     name: "Clama360",
   };
 
+  //process.env.SEND_SOLICITUD_TEMPLATE_ID!
+
   await emailClient.send({
     from: sender,
     to: recipients,
-    template_uuid: process.env.SEND_SOLICITUD_TEMPLATE_ID!,
+    // template_uuid: process.env.SEND_SOLICITUD_TEMPLATE_ID!,
+    template_uuid: templateId,
     template_variables: {
-      link: jotformLink,
-      personas: contactos.join(" / "),
+      // link: jotformLink,
+      // personas: contactos.join(" / "),
+      ...templateVariables,
     },
   });
 }

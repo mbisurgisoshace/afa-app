@@ -1,9 +1,9 @@
 "use client";
 
 import { toast } from "sonner";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { createSolicitud } from "@/actions/solicitud";
-import { useState } from "react";
 
 export default function EnviarSolicitud({
   codigoEntidad,
