@@ -485,6 +485,69 @@ model Oficio {
   @@map("Oficios")
 }
 
+model TipoActividadRiesgo {
+  id               Int      @id @default(autoincrement())
+  tipoActividad    String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("TiposActividadesRiesgo")
+}
+
+model TipoPersonaRiesgo {
+  id               Int      @id @default(autoincrement())
+  tipoPersona      String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("TiposPersonasRiesgo")
+}
+
+model TipoSocietarioRiesgo {
+  id               Int      @id @default(autoincrement())
+  tipoSocietario   String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("TiposSocietariosRiesgo")
+}
+
+model RelacionExportacion {
+  id               Int      @id @default(autoincrement())
+  desde            Decimal? @db.Decimal(12, 2)
+  hasta            Decimal? @db.Decimal(12, 2)
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("RelacionesExportacion")
+}
+
+model RangoChequesRechazadosRiesgo {
+  id               Int      @id @default(autoincrement())
+  desdeCantidad    Decimal? @db.Decimal(12, 2)
+  hastaCantidad    Decimal? @db.Decimal(12, 2)
+  desdeImporte     Decimal? @db.Decimal(12, 2)
+  hastaImporte     Decimal? @db.Decimal(12, 2)
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("RangosChequesRechazadosRiesgo")
+}
+
+model GrupoRiesgo {
+  id                Int           @id @default(autoincrement())
+  grupo             String
+  ponderacionRiesgo Decimal?      @db.Decimal(12, 2)
+  CampoRiesgo       CampoRiesgo[]
+
+  @@map("GruposRiesgo")
+}
+
+model CampoRiesgo {
+  id                Int         @id @default(autoincrement())
+  grupoRiesgoId     Int
+  campo             String
+  ponderacionRiesgo Decimal?    @db.Decimal(12, 2)
+  grupoRiesgo       GrupoRiesgo @relation(fields: [grupoRiesgoId], references: [id], onDelete: Cascade)
+
+  @@map("CamposRiesgo")
+}
+
 model TablaStatus {
   id        Int      @id @default(autoincrement())
   tabla     String   @unique
