@@ -81,6 +81,7 @@ export const EntidadSchema = z.object({
   nombreCompleto: z.any(),
   nacionalidad: z.any(),
   tipoDocumento: z.any(),
+  decJuradaBeneficiarios: z.any(),
   dni: z.any(),
   cuit: z.any(),
   tipoDocumentoAfip: z.any(),

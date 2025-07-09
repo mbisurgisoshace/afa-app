@@ -222,6 +222,7 @@ model Entidad {
   tieneVinculosEstado                        Boolean?
   vinculosOrganismos                         String[]
   conflictoInteresAfa                        Boolean?
+  decJuradaBeneficiarios                     Boolean?
   descripcionConflictoAfa                    String[]
   createdAt                                  DateTime            @default(now())
   updatedAt                                  DateTime            @updatedAt

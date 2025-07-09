@@ -47,6 +47,7 @@ export const jotformParser = (
     })
     .forEach((key) => {
       const jotformElement = jotformResponse.content.answers[key];
+
       const formattedAnswer = extractAnswer(jotformElement);
 
       if (jotformElement.name === "dondeCotiza" && !isArray(formattedAnswer)) {
