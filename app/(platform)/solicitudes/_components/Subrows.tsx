@@ -22,16 +22,16 @@ export const renderSubComponent = ({
 }: {
   row: Row<EntidadWithSolicitudes>;
 }) => {
-  const onEnviarRecordatorioSolicitud = async () => {
-    try {
-      await createRecordatorioSolicitud(row.original.codigoEntidad);
-      toast.success("Recordatorio de solicitud enviado correctamente.");
-    } catch (err) {
-      toast.error(
-        "Ha ocurrido un error al enviar el recordatorio de solicitud via mail."
-      );
-    }
-  };
+  // const onEnviarRecordatorioSolicitud = async () => {
+  //   try {
+  //     await createRecordatorioSolicitud(row.original.codigoEntidad);
+  //     toast.success("Recordatorio de solicitud enviado correctamente.");
+  //   } catch (err) {
+  //     toast.error(
+  //       "Ha ocurrido un error al enviar el recordatorio de solicitud via mail."
+  //     );
+  //   }
+  // };
 
   return (
     <Table>
@@ -44,7 +44,7 @@ export const renderSubComponent = ({
             Fecha de Reclamo
           </TableHead>
           <TableHead className="text-white text-xs h-7">Estado</TableHead>
-          <TableHead className="text-white text-xs h-7"></TableHead>
+          {/* <TableHead className="text-white text-xs h-7"></TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -59,7 +59,7 @@ export const renderSubComponent = ({
             <TableCell className="text-xs h-7">
               <Badge variant={"destructive"}>Pendiente</Badge>
             </TableCell>
-            <TableCell className="text-xs h-7 flex">
+            {/* <TableCell className="text-xs h-7 flex">
               <Button
                 size={"xs"}
                 variant={"outline"}
@@ -68,7 +68,7 @@ export const renderSubComponent = ({
               >
                 Enviar recordatorio
               </Button>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>

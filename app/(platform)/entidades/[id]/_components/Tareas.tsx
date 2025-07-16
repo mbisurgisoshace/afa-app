@@ -18,11 +18,15 @@ import {
 import { MailWarningIcon } from "lucide-react";
 
 export default function Tareas({
+  children,
   codigoEntidad,
+  align = "start",
   solicitudesPendientes,
 }: {
   codigoEntidad: string;
+  children?: React.ReactNode;
   solicitudesPendientes: boolean;
+  align?: "end" | "start" | "center";
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -53,9 +57,9 @@ export default function Tareas({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size={"xs"}>Tareas</Button>
+        {children || <Button size={"xs"}>Tareas</Button>}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-60" align="start">
+      <DropdownMenuContent className="w-60" align={align}>
         <DropdownMenuLabel>Envios de Mail</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={onEnviarSolicitud} disabled={loading}>

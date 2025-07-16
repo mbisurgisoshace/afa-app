@@ -14,6 +14,11 @@ const opcionesTipo = [
   { value: "Agente_Comercial", label: "Agente Comercial" },
 ];
 
+const opcionesRespuestaFueraDePlazo = [
+  { value: "Si", label: "Si" },
+  { value: "No", label: "No" },
+];
+
 interface FiltersToolbarProps<TData> {
   table: Table<TData>;
 }
@@ -29,6 +34,13 @@ export function FiltersToolbar<TData>({ table }: FiltersToolbarProps<TData>) {
             column={table.getColumn("tipo")}
             title="Tipo"
             options={opcionesTipo}
+          />
+        )}
+        {table.getColumn("respuestaFueraDePlazo") && (
+          <DataTableFacetedFilter
+            column={table.getColumn("respuestaFueraDePlazo")}
+            title="Respuesta fuera de plazo"
+            options={opcionesRespuestaFueraDePlazo}
           />
         )}
         {isFiltered && (
