@@ -121,7 +121,6 @@ export const createSolicitud = async (codigoEntidad: string) => {
         { email: complianceEmail1!, name: compliancePersona1! },
         { email: complianceEmail2!, name: compliancePersona2! },
       ],
-      "Solicitud de Registro de Entidad",
       {
         formulario,
         link: jotformLink,
@@ -184,7 +183,6 @@ export const createRecordatorioSolicitud = async (codigoEntidad: string) => {
         { email: complianceEmail1!, name: compliancePersona1! },
         { email: complianceEmail2!, name: compliancePersona2! },
       ],
-      "Recordatorio de Solicitud",
       {
         formulario,
         link: jotformLink,
