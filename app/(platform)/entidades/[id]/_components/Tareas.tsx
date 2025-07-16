@@ -21,9 +21,13 @@ export default function Tareas({
   children,
   codigoEntidad,
   align = "start",
+  solicitud = true,
+  recordatorio = true,
   solicitudesPendientes,
 }: {
+  solicitud?: boolean;
   codigoEntidad: string;
+  recordatorio?: boolean;
   children?: React.ReactNode;
   solicitudesPendientes: boolean;
   align?: "end" | "start" | "center";
@@ -62,19 +66,23 @@ export default function Tareas({
       <DropdownMenuContent className="w-60" align={align}>
         <DropdownMenuLabel>Envios de Mail</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={onEnviarSolicitud} disabled={loading}>
-            Solicitud inicial
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={onEnviarRecordatorioSolicitud}
-            disabled={loading || !solicitudesPendientes}
-            className="flex items-center justify-between"
-          >
-            Recordatorio de solicitud
-            {solicitudesPendientes && (
-              <MailWarningIcon size={18} className="text-destructive" />
-            )}
-          </DropdownMenuItem>
+          {solicitud && (
+            <DropdownMenuItem onClick={onEnviarSolicitud} disabled={loading}>
+              Solicitud inicial
+            </DropdownMenuItem>
+          )}
+          {recordatorio && (
+            <DropdownMenuItem
+              onClick={onEnviarRecordatorioSolicitud}
+              disabled={loading || !solicitudesPendientes}
+              className="flex items-center justify-between"
+            >
+              Recordatorio de solicitud
+              {solicitudesPendientes && (
+                <MailWarningIcon size={18} className="text-destructive" />
+              )}
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

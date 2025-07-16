@@ -121,6 +121,7 @@ export const columns: ColumnDef<EntidadWithSolicitudes>[] = [
         <div className="flex items-center gap-4 text-primary justify-evenly">
           <Tareas
             align="center"
+            solicitud={false}
             solicitudesPendientes
             codigoEntidad={codigoEntidad}
           >
