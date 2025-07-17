@@ -442,6 +442,7 @@ model SujetoObligadoSancionado {
   anio               Int
   estadoProcesal     String
   observaciones      String?
+  motivo             String?
 
   @@map("SujetosObligadosSancionados")
 }
@@ -452,6 +453,22 @@ model Pais {
   valoracionRiesgo Decimal? @db.Decimal(12, 2)
 
   @@map("Paises")
+}
+
+model Bolsa {
+  id               Int      @id @default(autoincrement())
+  bolsa            String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("Bolsas")
+}
+
+model RazonSujetoObligado {
+  id               Int      @id @default(autoincrement())
+  razonSujeto      String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("RazonesSujetoObligados")
 }
 
 model ActividadAfip {
