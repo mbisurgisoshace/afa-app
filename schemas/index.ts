@@ -119,13 +119,9 @@ export const EntidadSchema = z.object({
   riesgoFacturasApocrifas: z.any(),
   riesgoDeudasFiscales: z.any(),
   riesgoPedidoQuebrasCantidad12Meses: z.any(),
-  riesgoPeorSituacionCon10Porciento12Mesas: z.any(),
   riesgoSectorActividadPrincipalDelEmpleador: z.any(),
   riesgoSujetoObligado: z.any(),
   riesgoPersonaExpuestaPoliticamente: z.any(),
-  riesgoCantidadHomonimosEnBaseLaFt: z.any(),
-  riesgoEnlanceHomonimosEnBaseLaFt: z.any(),
-  riesgoPeorSituacion12MesesBcra: z.any(),
   riesgoUltimaActualizacion: z.any(),
 });
 

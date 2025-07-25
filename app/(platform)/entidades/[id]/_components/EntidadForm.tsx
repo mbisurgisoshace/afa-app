@@ -111,10 +111,8 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       riesgoPeorSituacion: entidad.riesgoPeorSituacion,
       riesgoCantidadBancos: entidad.riesgoCantidadBancos,
       riesgoMontoTotal: entidad.riesgoMontoTotal,
-      riesgoAntiguedadBCRA: entidad.riesgoAntiguedadBCRA,
       riesgoPeorSituacion12Meses: entidad.riesgoPeorSituacion12Meses,
       riesgoCantidadBancos12Meses: entidad.riesgoCantidadBancos12Meses,
-      riesgoPerfilCumplimientoDeudor: entidad.riesgoPerfilCumplimientoDeudor,
       riesgoEsMoroso: entidad.riesgoEsMoroso ? "si" : "no",
       riesgoCantidadSinFondosNoPagados6Meses:
         entidad.riesgoCantidadSinFondosNoPagados6Meses,
@@ -130,18 +128,7 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       riesgoDeudasFiscales: entidad.riesgoDeudasFiscales ? "si" : "no",
       riesgoPedidoQuebrasCantidad12Meses:
         entidad.riesgoPedidoQuebrasCantidad12Meses,
-      riesgoPeorSituacionCon10Porciento12Mesas:
-        entidad.riesgoPeorSituacionCon10Porciento12Mesas,
-      riesgoSectorActividadPrincipalDelEmpleador:
-        entidad.riesgoSectorActividadPrincipalDelEmpleador,
       riesgoSujetoObligado: entidad.riesgoSujetoObligado,
-      riesgoPersonaExpuestaPoliticamente:
-        entidad.riesgoPersonaExpuestaPoliticamente,
-      riesgoCantidadHomonimosEnBaseLaFt:
-        entidad.riesgoCantidadHomonimosEnBaseLaFt,
-      riesgoEnlanceHomonimosEnBaseLaFt:
-        entidad.riesgoEnlanceHomonimosEnBaseLaFt,
-      riesgoPeorSituacion12MesesBcra: entidad.riesgoPeorSituacion12MesesBcra,
     },
   });
 
@@ -223,10 +210,8 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       riesgoPeorSituacion: entidad.riesgoPeorSituacion,
       riesgoCantidadBancos: entidad.riesgoCantidadBancos,
       riesgoMontoTotal: entidad.riesgoMontoTotal,
-      riesgoAntiguedadBCRA: entidad.riesgoAntiguedadBCRA,
       riesgoPeorSituacion12Meses: entidad.riesgoPeorSituacion12Meses,
       riesgoCantidadBancos12Meses: entidad.riesgoCantidadBancos12Meses,
-      riesgoPerfilCumplimientoDeudor: entidad.riesgoPerfilCumplimientoDeudor,
       riesgoEsMoroso: entidad.riesgoEsMoroso ? "si" : "no",
       riesgoCantidadSinFondosNoPagados6Meses:
         entidad.riesgoCantidadSinFondosNoPagados6Meses,
@@ -242,20 +227,9 @@ export default function EntidadForm({ tablas, entidad }: EntidadFormProps) {
       riesgoDeudasFiscales: entidad.riesgoDeudasFiscales ? "si" : "no",
       riesgoPedidoQuebrasCantidad12Meses:
         entidad.riesgoPedidoQuebrasCantidad12Meses,
-      riesgoPeorSituacionCon10Porciento12Mesas:
-        entidad.riesgoPeorSituacionCon10Porciento12Mesas,
-      riesgoSectorActividadPrincipalDelEmpleador:
-        entidad.riesgoSectorActividadPrincipalDelEmpleador,
       riesgoSujetoObligado: entidad.riesgoSujetoObligado
         ? "posible sujeto obligado"
         : "no",
-      riesgoPersonaExpuestaPoliticamente:
-        entidad.riesgoPersonaExpuestaPoliticamente,
-      riesgoCantidadHomonimosEnBaseLaFt:
-        entidad.riesgoCantidadHomonimosEnBaseLaFt,
-      riesgoEnlanceHomonimosEnBaseLaFt:
-        entidad.riesgoEnlanceHomonimosEnBaseLaFt,
-      riesgoPeorSituacion12MesesBcra: entidad.riesgoPeorSituacion12MesesBcra,
     });
   }, [form, entidad]);
 
