@@ -249,6 +249,7 @@ export function getIndicadoresFinancieros(eecc: EstadoContable) {
   const roe = calcRoe(eecc);
   const roa = calcRoa(eecc);
   const rentabilidadSobreIngresos = calcRentabilidadSobreIngresos(eecc);
+  const porcentajeCargasFiscales = calcPorcentajeCargasFiscales(eecc);
 
   return {
     liquidezCorriente,
@@ -256,8 +257,18 @@ export function getIndicadoresFinancieros(eecc: EstadoContable) {
     solvencia,
     roe,
     roa,
+    porcentajeCargasFiscales,
     rentabilidadSobreIngresos,
   };
+}
+
+export function calcPorcentajeCargasFiscales(eecc: EstadoContable) {
+  const cargasFiscales = eecc.cargasFiscales.toNumber();
+  const patrimonioNeto = calcPatrimonioNeto(eecc);
+
+  if (cargasFiscales === 0) return 0;
+
+  return (cargasFiscales / patrimonioNeto) * 100;
 }
 
 export function calcRentabilidadSobreIngresos(eecc: EstadoContable) {

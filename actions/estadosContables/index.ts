@@ -57,6 +57,7 @@ export const upsertIndicadorFinanciero = async (eeccId: number) => {
       solvencia,
       roe,
       roa,
+      porcentajeCargasFiscales,
       rentabilidadSobreIngresos,
     } = getIndicadoresFinancieros(eecc);
 
@@ -70,6 +71,7 @@ export const upsertIndicadorFinanciero = async (eeccId: number) => {
         solvencia,
         roe,
         roa,
+        porcentajeCargasFiscales,
         rentabilidadSobreIngresos,
       },
       create: {
@@ -79,6 +81,7 @@ export const upsertIndicadorFinanciero = async (eeccId: number) => {
         solvencia,
         roe,
         roa,
+        porcentajeCargasFiscales,
         rentabilidadSobreIngresos,
       },
     });

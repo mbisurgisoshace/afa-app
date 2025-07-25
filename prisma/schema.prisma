@@ -147,117 +147,117 @@ model SubmittedForm {
 }
 
 model Entidad {
-  id                                         Int                 @id @default(autoincrement())
-  codigoEntidad                              String              @unique
-  fecha                                      DateTime?
-  tipoRelacion                               TipoRelacion?
-  tipoActividad                              TipoActividad?
-  condicionIva                               CondicionIva?
-  codigoActividadAfip                        String?
-  tipoIndustria                              String?
-  otraActividad                              String?
-  ingresosEnPesos                            Decimal?            @db.Decimal(15, 2)
-  fechaCierrePesos                           DateTime?
-  tipoDePersona                              TipoEntidad?
-  direccion                                  String?
-  ciudad                                     String?
-  estado                                     String?
-  codigoPostal                               String?
-  pais                                       String?
-  telefono                                   String?
-  email                                      String?
-  contactoAfa                                String?
-  bancoCuentaBancaria                        String?
-  titularCuentaBancaria                      String?
-  sucursalCuentaBancaria                     String?
-  numeroCuentaBancaria                       String?
-  tipoCuentaBancaria                         TipoCuentaBancaria?
-  cbu                                        String?
-  alias                                      String?
-  cuentaEnExterior                           Boolean?
-  paisCuentaExterior                         String?
-  iban                                       String?
-  swift                                      String?
-  bancoCorresponsal                          String?
-  tieneOficinasExterior                      Boolean?
-  oficinasExterior                           String[]
-  tieneOperacionesExterior                   Boolean?
-  operacionesExterior                        String[]
-  montoOperacionesExterior                   Decimal?            @db.Decimal(15, 2)
-  fechaCierrePesosExterior                   DateTime?
-  porcentajeExportacionVsTotal               Decimal?            @db.Decimal(15, 2)
-  nombreCompleto                             String?
-  nacionalidad                               String?
-  tipoDocumento                              TipoDocumento?
-  dni                                        String?
-  tipoDocumentoAfip                          TipoDocumentoAfip?
-  sexo                                       Sexo?
-  estadoCivil                                EstadoCivil?
-  fechaNacimiento                            DateTime?
-  paisNacimiento                             String?
-  profesion                                  String?
-  oficio                                     String?
-  expuestaPoliticamente                      Boolean?
-  esPepEnCaracterDe                          String?
-  cuit                                       String?
-  conflictoInteresEmpleadosAfa               Boolean?
-  descripcionConflictoInteresEmpleadosAfa    String?
-  empleadoActualExAfa                        Boolean?
-  exEmpleadoActualAfa                        Boolean?
-  familiarComunAfaEntidad                    Boolean?
-  personalConInteresEconomicoAfa             Boolean?
-  razonSocial                                String?
-  tipoSocietario                             TipoSocietario?
-  fechaConstitucionSociedad                  DateTime?
-  fechaInscripcionRpc                        DateTime?
-  datosInscripcionRegistrales                String?
-  cotizaEnBolsa                              Boolean?
-  dondeCotiza                                String[]
-  esSujetoObligado                           Boolean?
-  razonSujetoObligado                        String?
-  tieneProgramaPrevencion                    Boolean?
-  tieneProgramaIntegridad                    Boolean?
-  personasInteres                            PersonaInteres[]
-  categoriaClub                              String?
-  tieneVinculosEstado                        Boolean?
-  vinculosOrganismos                         String[]
-  conflictoInteresAfa                        Boolean?
-  decJuradaBeneficiarios                     Boolean?
-  descripcionConflictoAfa                    String[]
-  createdAt                                  DateTime            @default(now())
-  updatedAt                                  DateTime            @updatedAt
-  riesgoPeorSituacion                        String?
-  riesgoCantidadBancos                       Int?
-  riesgoMontoTotal                           Decimal?            @db.Decimal(15, 2)
-  riesgoAntiguedadBCRA                       Int?
-  riesgoPeorSituacion12Meses                 String?
-  riesgoCantidadBancos12Meses                Int?
-  riesgoPerfilCumplimientoDeudor             Int?
-  riesgoEsMoroso                             Boolean?
-  riesgoCantidadSinFondosNoPagados6Meses     Int?
-  riesgoMontoSinFondosNoPagados6Meses        Decimal?            @db.Decimal(15, 2)
-  riesgoJuiciosCantidad12Meses               Int?
-  riesgoConcursosQuiebrasCantidad12Meses     Int?
-  riesgoScore                                Int?
-  riesgoFacturacionEstimada                  Int?
-  riesgoProveedorEstado                      String?
-  riesgoFacturasApocrifas                    Boolean?
-  riesgoDeudasFiscales                       Boolean?
-  riesgoPedidoQuebrasCantidad12Meses         Int?
-  riesgoPeorSituacionCon10Porciento12Mesas   String?
-  riesgoSectorActividadPrincipalDelEmpleador String?
-  riesgoSujetoObligado                       String?
-  riesgoPersonaExpuestaPoliticamente         String?
-  riesgoCantidadHomonimosEnBaseLaFt          Int?
-  riesgoEnlanceHomonimosEnBaseLaFt           String?
-  riesgoPeorSituacion12MesesBcra             String?
-  riesgoUltimaActualizacion                  DateTime?
-  compliancePersona1                         String?
-  compliancePersona2                         String?
-  compliancePersona3                         String?
-  complianceEmail1                           String?
-  complianceEmail2                           String?
-  complianceEmail3                           String?
+  id                                      Int                 @id @default(autoincrement())
+  codigoEntidad                           String              @unique
+  fecha                                   DateTime?
+  tipoRelacion                            TipoRelacion?
+  tipoActividad                           TipoActividad?
+  condicionIva                            CondicionIva?
+  codigoActividadAfip                     String?
+  tipoIndustria                           String?
+  otraActividad                           String?
+  ingresosEnPesos                         Decimal?            @db.Decimal(15, 2)
+  fechaCierrePesos                        DateTime?
+  tipoDePersona                           TipoEntidad?
+  direccion                               String?
+  ciudad                                  String?
+  estado                                  String?
+  codigoPostal                            String?
+  pais                                    String?
+  telefono                                String?
+  email                                   String?
+  contactoAfa                             String?
+  bancoCuentaBancaria                     String?
+  titularCuentaBancaria                   String?
+  sucursalCuentaBancaria                  String?
+  numeroCuentaBancaria                    String?
+  tipoCuentaBancaria                      TipoCuentaBancaria?
+  cbu                                     String?
+  alias                                   String?
+  cuentaEnExterior                        Boolean?
+  paisCuentaExterior                      String?
+  iban                                    String?
+  swift                                   String?
+  bancoCorresponsal                       String?
+  tieneOficinasExterior                   Boolean?
+  oficinasExterior                        String[]
+  tieneOperacionesExterior                Boolean?
+  operacionesExterior                     String[]
+  montoOperacionesExterior                Decimal?            @db.Decimal(15, 2)
+  fechaCierrePesosExterior                DateTime?
+  porcentajeExportacionVsTotal            Decimal?            @db.Decimal(15, 2)
+  nombreCompleto                          String?
+  nacionalidad                            String?
+  tipoDocumento                           TipoDocumento?
+  dni                                     String?
+  tipoDocumentoAfip                       TipoDocumentoAfip?
+  sexo                                    Sexo?
+  estadoCivil                             EstadoCivil?
+  fechaNacimiento                         DateTime?
+  paisNacimiento                          String?
+  profesion                               String?
+  oficio                                  String?
+  expuestaPoliticamente                   Boolean?
+  esPepEnCaracterDe                       String?
+  cuit                                    String?
+  conflictoInteresEmpleadosAfa            Boolean?
+  descripcionConflictoInteresEmpleadosAfa String?
+  empleadoActualExAfa                     Boolean?
+  exEmpleadoActualAfa                     Boolean?
+  familiarComunAfaEntidad                 Boolean?
+  personalConInteresEconomicoAfa          Boolean?
+  razonSocial                             String?
+  tipoSocietario                          TipoSocietario?
+  fechaConstitucionSociedad               DateTime?
+  fechaInscripcionRpc                     DateTime?
+  datosInscripcionRegistrales             String?
+  cotizaEnBolsa                           Boolean?
+  dondeCotiza                             String[]
+  esSujetoObligado                        Boolean?
+  razonSujetoObligado                     String?
+  tieneProgramaPrevencion                 Boolean?
+  tieneProgramaIntegridad                 Boolean?
+  personasInteres                         PersonaInteres[]
+  categoriaClub                           String?
+  tieneVinculosEstado                     Boolean?
+  vinculosOrganismos                      String[]
+  conflictoInteresAfa                     Boolean?
+  decJuradaBeneficiarios                  Boolean?
+  descripcionConflictoAfa                 String[]
+  createdAt                               DateTime            @default(now())
+  updatedAt                               DateTime            @updatedAt
+  riesgoPeorSituacion                     String?
+  riesgoCantidadBancos                    Int?
+  riesgoMontoTotal                        Decimal?            @db.Decimal(15, 2)
+  // riesgoAntiguedadBCRA                       Int?
+  riesgoPeorSituacion12Meses              String?
+  riesgoCantidadBancos12Meses             Int?
+  // riesgoPerfilCumplimientoDeudor             Int?
+  riesgoEsMoroso                          Boolean?
+  riesgoCantidadSinFondosNoPagados6Meses  Int?
+  riesgoMontoSinFondosNoPagados6Meses     Decimal?            @db.Decimal(15, 2)
+  riesgoJuiciosCantidad12Meses            Int?
+  riesgoConcursosQuiebrasCantidad12Meses  Int?
+  riesgoScore                             Int?
+  riesgoFacturacionEstimada               Int?
+  riesgoProveedorEstado                   String?
+  riesgoFacturasApocrifas                 Boolean?
+  riesgoDeudasFiscales                    Boolean?
+  riesgoPedidoQuebrasCantidad12Meses      Int?
+  // riesgoPeorSituacionCon10Porciento12Mesas   String?
+  // riesgoSectorActividadPrincipalDelEmpleador String?
+  riesgoSujetoObligado                    String?
+  // riesgoPersonaExpuestaPoliticamente         String?
+  // riesgoCantidadHomonimosEnBaseLaFt          Int?
+  // riesgoEnlanceHomonimosEnBaseLaFt           String?
+  // riesgoPeorSituacion12MesesBcra          String?
+  riesgoUltimaActualizacion               DateTime?
+  compliancePersona1                      String?
+  compliancePersona2                      String?
+  compliancePersona3                      String?
+  complianceEmail1                        String?
+  complianceEmail2                        String?
+  complianceEmail3                        String?
 
   estadosContables          EstadoContable[]
   solicitudes               PedidoEntidad[]
@@ -382,6 +382,7 @@ model IndicadorFinanciero {
   solvencia                 Decimal        @default(0) @db.Decimal(12, 2)
   roe                       Decimal        @default(0) @db.Decimal(12, 2)
   roa                       Decimal        @default(0) @db.Decimal(12, 2)
+  porcentajeCargasFiscales  Decimal        @default(0) @db.Decimal(12, 2)
   rentabilidadSobreIngresos Decimal        @default(0) @db.Decimal(12, 2)
   eecc                      EstadoContable @relation(fields: [eeccId], references: [id], onDelete: Cascade)
   eeccId                    Int            @unique
