@@ -3,6 +3,7 @@ import { columns } from "./_components/columns";
 import { getEntidades } from "@/actions/entidad";
 import { DataTable } from "@/components/DataTable/index";
 import { FiltersToolbar } from "./_components/FiltersToolbar";
+import { ActionsToolbar } from "./_components/ActionsToolbar";
 
 interface EntidadesProps {
   searchParams: SearchParams;
@@ -23,6 +24,7 @@ export default async function Entidades({ searchParams }: EntidadesProps) {
           data={entidades}
           columns={columns}
           filteringTool={FiltersToolbar}
+          actionsToolbar={ActionsToolbar}
         />
       </div>
     </div>

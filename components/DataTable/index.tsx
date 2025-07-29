@@ -34,6 +34,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
   filteringTool?: React.ElementType<{ table: ITable<TData> }>;
+  actionsToolbar?: React.ElementType<{ table: ITable<TData> }>;
   renderSubComponent?: (props: { row: Row<TData> }) => React.ReactElement;
 }
 
@@ -41,6 +42,7 @@ export function DataTable<TData, TValue>({
   data,
   columns,
   filteringTool,
+  actionsToolbar,
   renderSubComponent,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
@@ -76,11 +78,15 @@ export function DataTable<TData, TValue>({
   });
 
   const FilterTool = filteringTool;
+  const ActionsToolbar = actionsToolbar;
 
   return (
     <div className="space-y-4 flex flex-col h-full">
       {/* <DataTableToolbar table={table} /> */}
-      {FilterTool && <FilterTool table={table} />}
+      <div className="flex items-center justify-between">
+        {FilterTool && <FilterTool table={table} />}
+        {ActionsToolbar && <ActionsToolbar table={table} />}
+      </div>
       <div
         className="rounded-md border mb-4 overflow-scroll"
         style={{ marginBottom: "1rem" }}
