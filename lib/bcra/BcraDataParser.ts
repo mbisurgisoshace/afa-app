@@ -66,10 +66,8 @@ interface BcraParsedData {
   riesgoPeorSituacion: string;
   riesgoCantidadBancos: number;
   riesgoMontoTotal: number;
-  riesgoAntiguedadBCRA: number;
   riesgoPeorSituacion12Meses: string;
   riesgoCantidadBancos12Meses: number;
-  riesgoPerfilCumplimientoDeudor: number;
   riesgoEsMoroso: boolean;
   riesgoCantidadSinFondosNoPagados6Meses: number;
   riesgoMontoSinFondosNoPagados6Meses: number;
@@ -80,10 +78,7 @@ interface BcraParsedData {
   riesgoFacturasApocrifas: boolean;
   riesgoDeudasFiscales: boolean;
   riesgoPedidoQuebrasCantidad12Meses: number;
-  riesgoPeorSituacionCon10Porciento12Mesas: string;
-  riesgoSectorActividadPrincipalDelEmpleador: string;
   riesgoSujetoObligado: string;
-  riesgoPersonaExpuestaPoliticamente: string;
   riesgoUltimaActualizacion: Date;
 }
 
@@ -118,10 +113,8 @@ export default class BcraDataParser {
       riesgoCantidadBancos:
         this.bcraResponse.results.periodos[0].entidades.length,
       riesgoMontoTotal: this.getRiesgoMontoTotal(),
-      riesgoAntiguedadBCRA: this.getRiesgoAntiguedadBCRA(),
       riesgoPeorSituacion12Meses: this.getRiesgoPeorSituacion12Meses(),
       riesgoCantidadBancos12Meses: this.getRiesgoCantidadBancos12Meses(),
-      riesgoPerfilCumplimientoDeudor: this.getRiesgoPerfilCumplimientoDeudor(),
       riesgoEsMoroso: this.getRiesgoEsMoroso(),
       riesgoCantidadSinFondosNoPagados6Meses:
         this.getRiesgoCantidadSinFondosNoPagados6Meses(),
@@ -136,13 +129,7 @@ export default class BcraDataParser {
       riesgoDeudasFiscales: this.getRiesgoDeudasFiscales(),
       riesgoPedidoQuebrasCantidad12Meses:
         this.getRiesgoPedidoQuebrasCantidad12Meses(),
-      riesgoPeorSituacionCon10Porciento12Mesas:
-        this.getRiesgoPeorSituacionCon10Porciento12Mesas(),
-      riesgoSectorActividadPrincipalDelEmpleador:
-        this.getRiesgoSectorActividadPrincipalDelEmpleador(),
       riesgoSujetoObligado: this.getRiesgoSujetoObligado(),
-      riesgoPersonaExpuestaPoliticamente:
-        this.getRiesgoPersonaExpuestaPoliticamente(),
       riesgoUltimaActualizacion: this.getRiesgoUltimaActualizacion(),
     };
   }
@@ -166,11 +153,6 @@ export default class BcraDataParser {
       (total, entidad) => total + entidad.monto,
       0
     );
-  }
-
-  private getRiesgoAntiguedadBCRA(): number {
-    // TODO: implement
-    return 0;
   }
 
   private getRiesgoEsMoroso(): boolean {
@@ -205,11 +187,6 @@ export default class BcraDataParser {
     });
 
     return entidades.size;
-  }
-
-  private getRiesgoPerfilCumplimientoDeudor(): number {
-    // TODO: implement
-    return 0;
   }
 
   private getRiesgoJuiciosCantidad12Meses(): number {
@@ -285,24 +262,9 @@ export default class BcraDataParser {
     return 0;
   }
 
-  private getRiesgoPeorSituacionCon10Porciento12Mesas(): string {
-    // TODO: implement
-    return "";
-  }
-
-  private getRiesgoSectorActividadPrincipalDelEmpleador(): string {
-    // TODO: implement
-    return "";
-  }
-
   private getRiesgoSujetoObligado(): string {
     if (this.sujetoObligadoResponse.length > 0) return "Posible SO";
 
-    return "";
-  }
-
-  private getRiesgoPersonaExpuestaPoliticamente(): string {
-    // TODO: implement
     return "";
   }
 
