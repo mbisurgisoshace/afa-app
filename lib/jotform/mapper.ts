@@ -53,6 +53,16 @@ export const tipoEntidadDbMapper = {
   Otra: TipoEntidad.OTROS,
 };
 
+export const tipoEntidadAppMapper = {
+  [TipoEntidad.CLUB]: "Club",
+  [TipoEntidad.HUMANA]: "Humana",
+  [TipoEntidad.JURIDICA]: "Juridica",
+  [TipoEntidad.ORGANISMO_PUBLICO]: "Organismo Publico",
+  [TipoEntidad.FUNDACION_ASOCIACION_CIVIL]: "Fundacion o Asociacion Civil",
+  [TipoEntidad.FIDEICOMISO]: "Fideicomiso",
+  [TipoEntidad.OTROS]: "Otra",
+};
+
 export const tipoCuentaBancariaDbMapper = {
   "Caja de Ahorro en pesos": TipoCuentaBancaria.CAJA_AHORRO_PESOS,
   "Cuenta corriente en Pesos": TipoCuentaBancaria.CUENTA_CORRIENTE_PESOS,
@@ -75,6 +85,22 @@ export const tipoSocietarioDbMapper = {
     TipoSocietario.SOCIEDAD_COMANDITA_ACCIONES,
   "Asociacion Civil": TipoSocietario.ASOCIACION_CIVIL,
   Otra: TipoSocietario.OTRA,
+};
+
+export const tipoSocietarioAppMapper = {
+  [TipoSocietario.SOCIEDAD_ANONIMA]: "Sociedad Anonima",
+  [TipoSocietario.SOCIEDAD_ANONIMA_PARTICIPACION_ESTATAL]:
+    "Sociedad Anonima con participacion estatal mayoritaria",
+  [TipoSocietario.SOCIEDAD_COLECTIVA]: "Sociedad Colectiva",
+  [TipoSocietario.SOCIEDAD_CAPITAL_INDUSTRIA]:
+    "Sociedad de Capital e Industria",
+  [TipoSocietario.SOCIEDAD_HECHO]: "Sociedad de hecho",
+  [TipoSocietario.SOCIEDAD_RESPONSABILIDAD_LIMITADA]:
+    "Sociedad de Responsabilidad Limitada",
+  [TipoSocietario.SOCIEDAD_COMANDITA_ACCIONES]:
+    "Sociedad en comandita por acciones",
+  [TipoSocietario.ASOCIACION_CIVIL]: "Asociacion Civil",
+  [TipoSocietario.OTRA]: "Otra",
 };
 
 export const tipoDocumentoDbMapper = {

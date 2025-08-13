@@ -528,6 +528,14 @@ model TipoSocietarioRiesgo {
   @@map("TiposSocietariosRiesgo")
 }
 
+model PepRiesgo {
+  id               Int      @id @default(autoincrement())
+  pepEnCaracterDe  String
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("PepRiesgo")
+}
+
 model RelacionExportacion {
   id               Int      @id @default(autoincrement())
   desde            Decimal? @db.Decimal(12, 2)
