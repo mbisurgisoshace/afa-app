@@ -23,15 +23,24 @@ import { calcularRiesgoCantidadSinFondosNoPagados } from "./Campos/riesgoCantida
 import { calcularRiesgoEsMoroso } from "./Campos/riesgoEsMoroso";
 import { calcularRiesgoJuiciosCantidad12Meses } from "./Campos/riesgoJuiciosCantidad12Meses";
 import { calcularRiesgoMontoSinFondosNoPagados } from "./Campos/riesgoMontoSinFondosNoPagados6Meses";
-import { Decimal } from "@prisma/client/runtime/library";
 import { calcularRiesgoPedidoQuiebrasCantidad12Meses } from "./Campos/riesgoPedidoQuebrasCantidad12Meses";
 import { calcularRiesgoPeorSituacion } from "./Campos/riesgoPeorSituacion";
 import { calcularRiesgoPeorSituacion12Meses } from "./Campos/riesgoPeorSituacion12Meses";
 import { calcularRiesgoFactApocrifas } from "./Campos/riesgoFactApocrifas";
+import { calcularRiesgoSancionadosUif } from "./Campos/riesgoSancionadosUIF";
+import { calcularRiesgoSujetoObligado } from "./Campos/riesgoSujetoObligado";
+import { calcularEsSujetoObligado } from "./Campos/esSujetoObligado";
+import { calcularRazonSujetoObligado } from "./Campos/razonSujetoObligado";
+import { calcularDeclaracionJuradaBeneficiarios } from "./Campos/decJuradaBeneficiarios";
+import { calcularPorcentajeExportacionVsTotal } from "./Campos/porcentajeExportacionVsTotal";
+import { calcularCotizaEnBolsa } from "./Campos/cotizaEnBolsa";
 
 export default async function calcularRiesgo(entidadId: number): Promise<void> {
   const entidad = await db.entidad.findUnique({
     where: { id: entidadId },
+    include: {
+      personasInteres: true,
+    },
   });
 
   if (!entidad) {
@@ -179,6 +188,51 @@ async function calcularRiesgoCampo(entidad: Entidad, campo: CampoRiesgo) {
       entidad.riesgoPeorSituacion || "1",
       campo
     );
+  }
+
+  if (campo.campo === "riesgoSancionadosUIF") {
+    return calcularRiesgoSancionadosUif(
+      entidad.cuit?.replaceAll("-", "").replaceAll(" ", "") || "",
+      campo
+    );
+  }
+
+  if (campo.campo === "riesgoSujetoObligado") {
+    return calcularRiesgoSujetoObligado(
+      !!entidad.esSujetoObligado,
+      entidad.riesgoSujetoObligado === "Posible SO",
+      campo
+    );
+  }
+
+  if (campo.campo === "esSujetoObligado") {
+    return calcularEsSujetoObligado(!!entidad.esSujetoObligado, campo);
+  }
+
+  if (campo.campo === "razonSujetoObligado") {
+    return calcularRazonSujetoObligado(
+      entidad.razonSujetoObligado || "",
+      campo
+    );
+  }
+
+  if (campo.campo === "decJuradaBeneficiarios") {
+    return calcularDeclaracionJuradaBeneficiarios(
+      !!entidad.decJuradaBeneficiarios,
+      campo
+    );
+  }
+
+  if (campo.campo === "porcentajeExportacionVsTotal") {
+    return calcularPorcentajeExportacionVsTotal(
+      toNumber(entidad.ingresosEnPesos || 0),
+      toNumber(entidad.montoOperacionesExterior || 0),
+      campo
+    );
+  }
+
+  if (campo.campo === "cotizaEnBolsa") {
+    return calcularCotizaEnBolsa(!!entidad.cotizaEnBolsa, campo);
   }
 
   if (campo.campo === "tipoSocietario") {

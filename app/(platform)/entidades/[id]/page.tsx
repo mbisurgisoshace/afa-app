@@ -17,6 +17,7 @@ import IndicadoresFinancieros from "./_components/IndicadoresFinancieros";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Tareas from "./_components/Tareas";
 import { hasSolicitudesPendientes } from "@/actions/solicitud";
+import calcularRiesgo from "@/lib/riesgo/CalculadorRiesgo";
 
 interface EntidadProps {
   params: { id: string };
@@ -94,6 +95,8 @@ export default async function Entidad({ params }: EntidadProps) {
 
   const shouldRenderEECC =
     entidad?.tipoDePersona && entidad.tipoDePersona !== "HUMANA";
+
+  calcularRiesgo(entidad!.id);
 
   return (
     <div className="flex flex-col gap-2">
