@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { updateTablaStatus } from "../settings";
 
 export interface CuitApocrifoData {
-  CUIT: string;
+  " CUIT": string;
   " Descripcion ": string;
   " Fecha Condicion Apocrifo": string;
   " Fecha Publicacion": string;
@@ -33,7 +33,7 @@ export const updateCuitsApocrifos = async (
 
   const cuitsApocrifos = cuitsApocrifosData.map((data) => {
     return {
-      cuit: data.CUIT,
+      cuit: data[" CUIT"],
       descripcion: data[" Descripcion "],
       fechaCondicionApocrifo: formatDate(data[" Fecha Condicion Apocrifo"])!,
       fechaPublicacion: formatDate(data[" Fecha Publicacion"])!,
