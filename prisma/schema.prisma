@@ -569,6 +569,7 @@ model CampoRiesgo {
   id                Int         @id @default(autoincrement())
   grupoRiesgoId     Int
   campo             String
+  nombreCampo       String?
   ponderacionRiesgo Decimal?    @db.Decimal(12, 2)
   grupoRiesgo       GrupoRiesgo @relation(fields: [grupoRiesgoId], references: [id], onDelete: Cascade)
 
