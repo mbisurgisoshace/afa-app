@@ -268,7 +268,7 @@ export function calcPorcentajeCargasFiscales(eecc: EstadoContable) {
 
   if (cargasFiscales === 0) return 0;
 
-  return (cargasFiscales / patrimonioNeto) * 100;
+  return cargasFiscales / patrimonioNeto;
 }
 
 export function calcRentabilidadSobreIngresos(eecc: EstadoContable) {

@@ -34,6 +34,17 @@ import { calcularRazonSujetoObligado } from "./Campos/razonSujetoObligado";
 import { calcularDeclaracionJuradaBeneficiarios } from "./Campos/decJuradaBeneficiarios";
 import { calcularPorcentajeExportacionVsTotal } from "./Campos/porcentajeExportacionVsTotal";
 import { calcularCotizaEnBolsa } from "./Campos/cotizaEnBolsa";
+import { calcularNacionalidad } from "./Campos/nacionalidad";
+import { calcularOficinasExterior } from "./Campos/oficinasExterior";
+import { calcularOperacionesExterior } from "./Campos/operacionesExterior";
+import { calcularPais } from "./Campos/pais";
+import { calcularPaisCuentaExterior } from "./Campos/paisCuentaExterior";
+import { calcularDondeCotiza } from "./Campos/dondeCotiza";
+import { calcularRiesgoConcursosQuiebrasCantidad12Meses } from "./Campos/riesgoConcursosQuiebrasCantidad12Meses";
+import { EntidadWithPersonasInteres } from "@/types";
+import { calcularRiesgoScore } from "./Campos/riesgoScore";
+import { calcularRiesgoProgramaPrevencion } from "./Campos/tieneProgramaPrevencion";
+import { calcularRiesgoProgramaIntegridad } from "./Campos/tieneProgramaIntegridad";
 
 export default async function calcularRiesgo(entidadId: number): Promise<void> {
   const entidad = await db.entidad.findUnique({
@@ -49,8 +60,6 @@ export default async function calcularRiesgo(entidadId: number): Promise<void> {
 
   // Obtener el listado de campos a utilizar en el calculo del riesgo
   const camposCalculador = await obtenerCamposParaCalculo();
-
-  console.log("entidad", entidad);
 
   for (const campo of camposCalculador) {
     const riesgoCampo = await calcularRiesgoCampo(entidad, campo);
@@ -102,7 +111,11 @@ async function calcularRiesgoCampo(entidad: Entidad, campo: CampoRiesgo) {
   }
 
   if (campo.campo === "esPepEnCaracterDe") {
-    return calcularEsPepEnCaracterDe(entidad.esPepEnCaracterDe || "", campo);
+    return calcularEsPepEnCaracterDe(
+      entidad as EntidadWithPersonasInteres,
+      entidad.esPepEnCaracterDe || "",
+      campo
+    );
   }
 
   if (campo.campo === "exEmpleadoActualAfa") {
@@ -111,6 +124,7 @@ async function calcularRiesgoCampo(entidad: Entidad, campo: CampoRiesgo) {
 
   if (campo.campo === "expuestaPoliticamente") {
     return calcularExpuestaPoliticamente(
+      entidad as EntidadWithPersonasInteres,
       !!entidad.expuestaPoliticamente,
       campo
     );
@@ -235,12 +249,58 @@ async function calcularRiesgoCampo(entidad: Entidad, campo: CampoRiesgo) {
     return calcularCotizaEnBolsa(!!entidad.cotizaEnBolsa, campo);
   }
 
+  if (campo.campo === "dondeCotiza") {
+    return calcularDondeCotiza(entidad.dondeCotiza || [], campo);
+  }
+
   if (campo.campo === "tipoSocietario") {
     return calcularTipoSocietario(entidad.tipoSocietario || "", campo);
   }
 
   if (campo.campo === "tipoDePersona") {
     return calcularTipoDePersona(entidad.tipoDePersona || "", campo);
+  }
+
+  if (campo.campo === "nacionalidad") {
+    return calcularNacionalidad(entidad.nacionalidad || "", campo);
+  }
+
+  if (campo.campo === "oficinasExterior") {
+    return calcularOficinasExterior(entidad.oficinasExterior || [], campo);
+  }
+
+  if (campo.campo === "operacionesExterior") {
+    return calcularOperacionesExterior(
+      entidad.operacionesExterior || [],
+      campo
+    );
+  }
+
+  if (campo.campo === "pais") {
+    return calcularPais(entidad.pais || "", campo);
+  }
+
+  if (campo.campo === "paisCuentaExterior") {
+    return calcularPaisCuentaExterior(entidad.paisCuentaExterior || "", campo);
+  }
+
+  if (campo.campo === "riesgoConcursosQuiebrasCantidad12Meses") {
+    return calcularRiesgoConcursosQuiebrasCantidad12Meses(
+      entidad.riesgoConcursosQuiebrasCantidad12Meses || 0,
+      campo
+    );
+  }
+
+  if (campo.campo === "riesgoScore") {
+    return calcularRiesgoScore(entidad.id, campo);
+  }
+
+  if (campo.campo === "tieneProgramaIntegridad") {
+    return calcularRiesgoProgramaIntegridad(entidad, campo);
+  }
+
+  if (campo.campo === "tieneProgramaPrevencion") {
+    return calcularRiesgoProgramaPrevencion(entidad, campo);
   }
 
   return 0; // Retornar el valor calculado

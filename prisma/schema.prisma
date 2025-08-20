@@ -377,13 +377,13 @@ model EstadoContable {
 
 model IndicadorFinanciero {
   id                        Int            @id @default(autoincrement())
-  liquidezCorriente         Decimal        @default(0) @db.Decimal(12, 2)
-  endeudamientoTotal        Decimal        @default(0) @db.Decimal(12, 2)
-  solvencia                 Decimal        @default(0) @db.Decimal(12, 2)
-  roe                       Decimal        @default(0) @db.Decimal(12, 2)
-  roa                       Decimal        @default(0) @db.Decimal(12, 2)
-  porcentajeCargasFiscales  Decimal        @default(0) @db.Decimal(12, 2)
-  rentabilidadSobreIngresos Decimal        @default(0) @db.Decimal(12, 2)
+  liquidezCorriente         Decimal        @default(0) @db.Decimal(12, 4)
+  endeudamientoTotal        Decimal        @default(0) @db.Decimal(12, 4)
+  solvencia                 Decimal        @default(0) @db.Decimal(12, 4)
+  roe                       Decimal        @default(0) @db.Decimal(12, 4)
+  roa                       Decimal        @default(0) @db.Decimal(12, 4)
+  porcentajeCargasFiscales  Decimal        @default(0) @db.Decimal(12, 4)
+  rentabilidadSobreIngresos Decimal        @default(0) @db.Decimal(12, 4)
   eecc                      EstadoContable @relation(fields: [eeccId], references: [id], onDelete: Cascade)
   eeccId                    Int            @unique
   createdAt                 DateTime       @default(now())
@@ -583,4 +583,16 @@ model TablaStatus {
   updatedAt DateTime @updatedAt
 
   @@map("TablasStatus")
+}
+
+model RiesgoScore {
+  id               Int      @id @default(autoincrement())
+  nombreIndicador  String
+  campoIndicador   String
+  ponderacion      Decimal? @db.Decimal(12, 2)
+  desde            Decimal? @db.Decimal(12, 2)
+  hasta            Decimal? @db.Decimal(12, 2)
+  valoracionRiesgo Decimal? @db.Decimal(12, 2)
+
+  @@map("RiesgoScore")
 }
