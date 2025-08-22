@@ -32,6 +32,7 @@ import {
   tipoRelacionDbMapper,
   tipoSocietarioDbMapper,
 } from "@/lib/jotform/mapper";
+import { extractNumber } from "./answerTypes/number";
 
 export const jotformParser = (
   jotformResponse: Response<JotformResponseContent>
@@ -105,6 +106,8 @@ const extractAnswer = (jotformElement: JotformElement<any>) => {
     case "control_textbox":
     case "control_dropdown":
       return extractBaseAnswer(jotformElement);
+    case "control_number":
+      return extractNumber(jotformElement);
     case "control_phone":
       return extractPhoneAnswer(jotformElement);
     case "control_radio":
