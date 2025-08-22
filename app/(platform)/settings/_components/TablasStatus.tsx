@@ -79,6 +79,8 @@ export const TablasStatus = ({ statuses }: TablasStatusProps) => {
         const sheetName = workbook.SheetNames[2];
         const worksheet = workbook.Sheets[sheetName];
         const data: CuitApocrifoData[] = XLSX.utils.sheet_to_json(worksheet);
+        console.log("data", data);
+
         const dataChunks = chunkArray(data, 1000);
 
         await deleteCuitsApocrifos();

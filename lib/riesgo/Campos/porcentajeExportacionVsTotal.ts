@@ -8,6 +8,8 @@ export async function calcularPorcentajeExportacionVsTotal(
   valorExportaciones: number,
   campo: CampoRiesgo
 ) {
+  if (!valorPesos && !valorExportaciones) return 1;
+
   const totalIngresos = valorPesos + valorExportaciones;
   const porcentajeExportacion = valorExportaciones / totalIngresos;
 
