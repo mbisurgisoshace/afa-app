@@ -2,6 +2,7 @@ type JotformAnswerType =
   | "control_email"
   | "control_phone"
   | "control_radio"
+  | "control_number"
   | "control_widget"
   | "control_address"
   | "control_textbox"
@@ -24,6 +25,10 @@ export type WidgetFieldName =
   | "empleadosActualesExAfa"
   | "descripcionConflictoAfa"
   | "personasConInteresEconomicoAfa";
+
+export type JotformNumberAnswer = {
+  answer: string;
+};
 
 export type JotformPhoneAnswer = {
   full: string;
