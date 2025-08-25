@@ -51,6 +51,7 @@ export async function calcularEsPepEnCaracterDe(
           (r) => r.pepEnCaracterDe === persona.esPepEnCaracterDe
         );
         const pepRiesgo = pep ? toNumber(pep.valoracionRiesgo) : 3;
+
         return acc > pepRiesgo ? acc : pepRiesgo;
       },
       0

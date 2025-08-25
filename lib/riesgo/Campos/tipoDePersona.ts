@@ -16,7 +16,7 @@ export async function calcularTipoDePersona(valor: string, campo: CampoRiesgo) {
 
   const valorRiesgo = riesgoTipoDePersona
     ? toNumber(riesgoTipoDePersona.valoracionRiesgo)
-    : 3;
+    : 1;
 
   return valorRiesgo * toNumber(campo.ponderacionRiesgo);
 }

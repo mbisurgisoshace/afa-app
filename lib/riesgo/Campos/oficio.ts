@@ -14,7 +14,7 @@ export async function calcularOficio(valor: string, campo: CampoRiesgo) {
 
   const valorRiesgo = riesgoOficio
     ? toNumber(riesgoOficio.valoracionRiesgo)
-    : 3;
+    : 1;
 
   return valorRiesgo * toNumber(campo.ponderacionRiesgo);
 }

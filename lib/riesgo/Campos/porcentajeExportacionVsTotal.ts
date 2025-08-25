@@ -10,7 +10,8 @@ export async function calcularPorcentajeExportacionVsTotal(
 ) {
   if (!valorPesos && !valorExportaciones) return 1;
 
-  const totalIngresos = valorPesos + valorExportaciones;
+  const totalIngresos = valorPesos;
+
   const porcentajeExportacion = valorExportaciones / totalIngresos;
 
   const riesgoRelacionExportaciones = await db.relacionExportacion.findFirst({

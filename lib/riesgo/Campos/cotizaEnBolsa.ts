@@ -1,13 +1,19 @@
 import { toNumber } from "lodash";
 
-import { CampoRiesgo } from "@prisma/client";
+import { CampoRiesgo, Entidad } from "@prisma/client";
 
 export async function calcularCotizaEnBolsa(
+  entidad: Entidad,
   valor: boolean,
   campo: CampoRiesgo
 ) {
   const value = valor;
-  const valorRiesgo = value ? 4 : 1;
+
+  if (entidad.tipoDePersona === "HUMANA") {
+    return 1;
+  }
+
+  const valorRiesgo = value ? 1 : 4;
 
   return valorRiesgo * toNumber(campo.ponderacionRiesgo);
 }

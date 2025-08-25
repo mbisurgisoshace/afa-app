@@ -13,13 +13,13 @@ export async function calcularTipoSocietario(
 
   const riesgoTipoSocietario = await db.tipoSocietarioRiesgo.findFirst({
     where: {
-      tipoSocietario: value,
+      tipoSocietario: value || "",
     },
   });
 
   const valorRiesgo = riesgoTipoSocietario
     ? toNumber(riesgoTipoSocietario.valoracionRiesgo)
-    : 3;
+    : 1;
 
   return valorRiesgo * toNumber(campo.ponderacionRiesgo);
 }

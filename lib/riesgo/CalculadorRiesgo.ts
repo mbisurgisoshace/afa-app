@@ -60,7 +60,7 @@ export default async function calcularRiesgo(entidadId: number): Promise<void> {
 
   // Obtener el listado de campos a utilizar en el calculo del riesgo
   const camposCalculador = await obtenerCamposParaCalculo();
-
+  let riesgoTotal = 0;
   for (const campo of camposCalculador) {
     const riesgoCampo = await calcularRiesgoCampo(entidad, campo);
     const riesgoFinal =
@@ -68,7 +68,10 @@ export default async function calcularRiesgo(entidadId: number): Promise<void> {
 
     console.log("campo", campo.campo);
     console.log("riesgoFinal", riesgoFinal);
+    riesgoTotal += riesgoFinal;
   }
+
+  console.log("riesgoTotal:", riesgoTotal);
 
   // Procesar cada campo obtenido
 }
@@ -246,7 +249,7 @@ async function calcularRiesgoCampo(entidad: Entidad, campo: CampoRiesgo) {
   }
 
   if (campo.campo === "cotizaEnBolsa") {
-    return calcularCotizaEnBolsa(!!entidad.cotizaEnBolsa, campo);
+    return calcularCotizaEnBolsa(entidad, !!entidad.cotizaEnBolsa, campo);
   }
 
   if (campo.campo === "dondeCotiza") {

@@ -14,7 +14,7 @@ export async function calcularTipoIndustria(valor: string, campo: CampoRiesgo) {
 
   const valorRiesgo = riesgoTipoIndustria
     ? toNumber(riesgoTipoIndustria.valoracionRiesgo)
-    : 3;
+    : 1;
 
   return valorRiesgo * toNumber(campo.ponderacionRiesgo);
 }

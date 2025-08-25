@@ -16,11 +16,12 @@ export async function calcularExpuestaPoliticamente(
     valorRiesgo = value ? 5 : 1;
   } else {
     valorRiesgo = entidad.personasInteres.reduce((acc, persona) => {
+      let personaRiesgo = 1;
       if (persona.expuestaPoliticamente) {
-        return 5;
+        personaRiesgo = 5;
       }
 
-      return 1;
+      return acc > personaRiesgo ? acc : personaRiesgo;
     }, 1);
   }
 
