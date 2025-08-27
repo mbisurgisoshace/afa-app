@@ -1,6 +1,6 @@
 "use server";
 
-import { CampoRiesgo, Entidad } from "@prisma/client";
+import { CampoRiesgo, Entidad, RiesgoItem } from "@prisma/client";
 
 import { db } from "../db";
 import { toNumber } from "lodash";
@@ -46,9 +46,11 @@ import { calcularRiesgoScore } from "./Campos/riesgoScore";
 import { calcularRiesgoProgramaPrevencion } from "./Campos/tieneProgramaPrevencion";
 import { calcularRiesgoProgramaIntegridad } from "./Campos/tieneProgramaIntegridad";
 
-export default async function calcularRiesgo(entidadId: number): Promise<void> {
+export default async function calcularRiesgo(
+  codigoEntidad: string
+): Promise<void> {
   const entidad = await db.entidad.findUnique({
-    where: { id: entidadId },
+    where: { codigoEntidad },
     include: {
       personasInteres: true,
     },
@@ -61,19 +63,34 @@ export default async function calcularRiesgo(entidadId: number): Promise<void> {
   // Obtener el listado de campos a utilizar en el calculo del riesgo
   const camposCalculador = await obtenerCamposParaCalculo();
   let riesgoTotal = 0;
+  const riesgos = [];
   for (const campo of camposCalculador) {
     const riesgoCampo = await calcularRiesgoCampo(entidad, campo);
     const riesgoFinal =
       toNumber(riesgoCampo) * toNumber(campo.grupoRiesgo.ponderacionRiesgo);
 
-    console.log("campo", campo.campo);
-    console.log("riesgoFinal", riesgoFinal);
     riesgoTotal += riesgoFinal;
+    riesgos.push({
+      campoId: campo.id,
+      nombreCampo: campo.nombreCampo!,
+      categoriaCampo: campo.grupoRiesgo.grupo!,
+      valorCampo: riesgoFinal,
+    });
   }
 
-  console.log("riesgoTotal:", riesgoTotal);
+  const riesgo = {
+    entidadId: entidad.id,
+    valorRiesgoFinal: riesgoTotal,
+  };
 
-  // Procesar cada campo obtenido
+  await db.riesgo.create({
+    data: {
+      ...riesgo,
+      items: {
+        create: riesgos,
+      },
+    },
+  });
 }
 
 async function obtenerCamposParaCalculo() {

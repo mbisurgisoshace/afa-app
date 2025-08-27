@@ -16,6 +16,7 @@ import {
   createSolicitud,
 } from "@/actions/solicitud";
 import { MailWarningIcon } from "lucide-react";
+import calcularRiesgo from "@/lib/riesgo/CalculadorRiesgo";
 
 export default function Tareas({
   children,
@@ -58,6 +59,17 @@ export default function Tareas({
     setLoading(false);
   };
 
+  const onCalcularRiesgo = async () => {
+    setLoading(true);
+    try {
+      await calcularRiesgo(codigoEntidad);
+      toast.success("Riesgo calculado correctamente.");
+    } catch (err) {
+      toast.error("Ha ocurrido un error al calcular el riesgo.");
+    }
+    setLoading(false);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -84,6 +96,10 @@ export default function Tareas({
             </DropdownMenuItem>
           )}
         </DropdownMenuGroup>
+        <DropdownMenuLabel>Calculador Riesgo</DropdownMenuLabel>
+        <DropdownMenuItem onClick={onCalcularRiesgo} disabled={loading}>
+          Calcular
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

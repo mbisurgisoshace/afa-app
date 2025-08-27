@@ -25,6 +25,7 @@ interface EntidadProps {
 
 export default async function Entidad({ params }: EntidadProps) {
   const entidad = await getEntidad(params.id);
+
   const ultimoRiesgoGeografico = await getUltimoRiesgoGeografico(entidad!.id);
   const ultimoRiesgoTerrorista = await getUltimoRiesgoTerrorismo(entidad!.id);
   const ultimoRiesgoCuitApocrifo = await getUltimoRiesgoCuitApocrifo(
@@ -95,8 +96,6 @@ export default async function Entidad({ params }: EntidadProps) {
 
   const shouldRenderEECC =
     entidad?.tipoDePersona && entidad.tipoDePersona !== "HUMANA";
-
-  calcularRiesgo(entidad!.id);
 
   return (
     <div className="flex flex-col gap-2">
