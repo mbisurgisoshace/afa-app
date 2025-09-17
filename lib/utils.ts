@@ -208,6 +208,7 @@ export function matchNames(name1: string, name2: string) {
 export async function sendEmail(
   templateId: string,
   recipients: Address[],
+  subject: string,
   // contactos: string[],
   // jotformLink: string
   templateVariables: any
@@ -222,6 +223,7 @@ export async function sendEmail(
   await emailClient.send({
     from: sender,
     to: recipients,
+    subject,
     // template_uuid: process.env.SEND_SOLICITUD_TEMPLATE_ID!,
     template_uuid: templateId,
     template_variables: {

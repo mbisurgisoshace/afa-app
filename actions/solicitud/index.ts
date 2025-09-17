@@ -121,6 +121,7 @@ export const createSolicitud = async (codigoEntidad: string) => {
         { email: complianceEmail1!, name: compliancePersona1! },
         { email: complianceEmail2!, name: compliancePersona2! },
       ],
+      "Declaración Jurada Modelo de Riesgo - Ley N.º 25.246 Encubrimiento y Lavado de Activos de Origen Delictivo y Resoluciones de la Unidad de Información Financiera",
       {
         formulario,
         link: jotformLink,
@@ -144,7 +145,17 @@ export const createRecordatorioSolicitud = async (codigoEntidad: string) => {
   const entidad = await db.entidad.findUnique({ where: { codigoEntidad } });
 
   if (entidad) {
-    const pedidoEntidad = await db.pedidoEntidad.findFirst({
+    // const pedidoEntidad = await db.pedidoEntidad.findFirst({
+    //   where: {
+    //     entidadId: entidad?.id,
+    //     fechaRespuesta: null,
+    //     tipoReclamo: "MAIL",
+    //   },
+    //   orderBy: {
+    //     fecha: "desc",
+    //   },
+    // });
+    const pedidoEntidad = await db.pedidoEntidad.findMany({
       where: {
         entidadId: entidad?.id,
         fechaRespuesta: null,
@@ -166,6 +177,10 @@ export const createRecordatorioSolicitud = async (codigoEntidad: string) => {
 
     let sujeto = razonSocial || nombreCompleto || "";
 
+    let fechasSolicitudes = pedidoEntidad
+      .map((p) => format(p.fecha, "dd/MM/yyyy"))
+      .join(", ");
+
     const primerDigitoCodigoEntidad = parseInt(codigoEntidad[0], 10);
     const jotformBaseUrl =
       primerDigitoCodigoEntidad === 1
@@ -183,11 +198,13 @@ export const createRecordatorioSolicitud = async (codigoEntidad: string) => {
         { email: complianceEmail1!, name: compliancePersona1! },
         { email: complianceEmail2!, name: compliancePersona2! },
       ],
+      "REITERA SOLICITUD Declaración Jurada Modelo de Riesgo - Ley N.º 25.246 Encubrimiento y Lavado de Activos de Origen Delictivo y Resoluciones de la Unidad de Información Financiera",
       {
         formulario,
         link: jotformLink,
         personas: [sujeto].join(" / "),
-        fechaSolicitud: format(pedidoEntidad?.fecha!, "dd/MM/yyyy"),
+        //fechaSolicitud: format(pedidoEntidad?.fecha!, "dd/MM/yyyy"),
+        fechaSolicitud: fechasSolicitudes,
         fecha: format(new Date(), "dd/MM/yyyy"),
       }
     );
