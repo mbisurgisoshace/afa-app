@@ -111,7 +111,9 @@ export default async function Entidad({ params }: EntidadProps) {
       <h2 className="flex items-center font-semibold text-lg text-muted-foreground gap-4">
         {razonSocial?.toUpperCase()}
         <Badge variant={riesgo.variant as any}>{`${
-          ultimoRiesgo?.valorRiesgoFinal.toNumber().toFixed(2) ? " - " : ""
+          ultimoRiesgo
+            ? `${ultimoRiesgo?.valorRiesgoFinal.toNumber().toFixed(2)} - `
+            : ""
         } ${riesgo?.text}`}</Badge>
         {/* <EnviarSolicitud codigoEntidad={entidad?.codigoEntidad!} /> */}
         <Tareas
