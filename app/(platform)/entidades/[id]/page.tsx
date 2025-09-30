@@ -110,11 +110,9 @@ export default async function Entidad({ params }: EntidadProps) {
     <div className="flex flex-col gap-2">
       <h2 className="flex items-center font-semibold text-lg text-muted-foreground gap-4">
         {razonSocial?.toUpperCase()}
-        <Badge
-          variant={riesgo.variant as any}
-        >{`${ultimoRiesgo?.valorRiesgoFinal.toNumber().toFixed(2)} - ${
-          riesgo?.text
-        }`}</Badge>
+        <Badge variant={riesgo.variant as any}>{`${
+          ultimoRiesgo?.valorRiesgoFinal.toNumber().toFixed(2) ? " - " : ""
+        } ${riesgo?.text}`}</Badge>
         {/* <EnviarSolicitud codigoEntidad={entidad?.codigoEntidad!} /> */}
         <Tareas
           codigoEntidad={entidad?.codigoEntidad!}
