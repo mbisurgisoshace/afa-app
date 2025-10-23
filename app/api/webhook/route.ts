@@ -4,7 +4,11 @@ import { Response } from "jotform/dist/types/response";
 
 import { db } from "@/lib/db";
 import { jotformParser } from "@/lib/jotform";
-import { createEntidad, upsertEntidad } from "@/actions/entidad";
+import {
+  createEntidad,
+  getInfoFinancieraData,
+  upsertEntidad,
+} from "@/actions/entidad";
 import { JotformResponseContent } from "@/lib/jotform/types";
 import { createSubmittedForm, processSubmittedForm } from "@/actions/jotform";
 import { updateSolicitudEntidad } from "@/actions/solicitud";
@@ -38,6 +42,7 @@ export async function POST(request: NextRequest) {
     //await createEntidad(formattedSubmission);
     await upsertEntidad(formattedSubmission);
     await processSubmittedForm(submittedForm.id);
+    await getInfoFinancieraData(formattedSubmission.codigoEntidad);
   } catch (err) {
     console.log("err", err);
 
