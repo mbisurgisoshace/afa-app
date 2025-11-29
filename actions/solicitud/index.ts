@@ -115,12 +115,20 @@ export const createSolicitud = async (codigoEntidad: string) => {
         ? "Registro de Clubes"
         : "Registro de Proveedor, Sponsor y Agente Comercial";
 
+    const toEmails = [];
+
+    toEmails.push({ email: complianceEmail1!, name: compliancePersona1! });
+    if (complianceEmail2) {
+      toEmails.push({ email: complianceEmail2!, name: compliancePersona2! });
+    }
+
     await sendEmail(
       process.env.SEND_SOLICITUD_TEMPLATE_ID!,
-      [
-        { email: complianceEmail1!, name: compliancePersona1! },
-        { email: complianceEmail2!, name: compliancePersona2! },
-      ],
+      // [
+      //   { email: complianceEmail1!, name: compliancePersona1! },
+      //   { email: complianceEmail2!, name: compliancePersona2! },
+      // ],
+      toEmails,
       "Declaración Jurada Modelo de Riesgo - Ley N.º 25.246 Encubrimiento y Lavado de Activos de Origen Delictivo y Resoluciones de la Unidad de Información Financiera",
       {
         formulario,
@@ -192,12 +200,20 @@ export const createRecordatorioSolicitud = async (codigoEntidad: string) => {
         ? "Registro de Clubes"
         : "Registro de Proveedor, Sponsor y Agente Comercial";
 
+    const toEmails = [];
+
+    toEmails.push({ email: complianceEmail1!, name: compliancePersona1! });
+    if (complianceEmail2) {
+      toEmails.push({ email: complianceEmail2!, name: compliancePersona2! });
+    }
+
     await sendEmail(
       process.env.SEND_RECORDATORIO_TEMPLATE_ID!,
-      [
-        { email: complianceEmail1!, name: compliancePersona1! },
-        { email: complianceEmail2!, name: compliancePersona2! },
-      ],
+      // [
+      //   { email: complianceEmail1!, name: compliancePersona1! },
+      //   { email: complianceEmail2!, name: compliancePersona2! },
+      // ],
+      toEmails,
       "REITERA SOLICITUD Declaración Jurada Modelo de Riesgo - Ley N.º 25.246 Encubrimiento y Lavado de Activos de Origen Delictivo y Resoluciones de la Unidad de Información Financiera",
       {
         formulario,
