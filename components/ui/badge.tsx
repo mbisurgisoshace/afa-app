@@ -20,6 +20,8 @@ const badgeVariants = cva(
         riesgoBajo: "border-transparent bg-green-500 text-green-50",
         riesgoAlto: "border-transparent bg-red-500 text-red-50",
         riesgoMedio: "border-transparent bg-yellow-500 text-yellow-50",
+        riesgoMedioBajo: "border-transparent bg-lime-500 text-lime-50",
+        riesgoMedioAlto: "border-transparent bg-amber-500 text-amber-50",
         riesgoIntermedio: "border-transparent bg-orange-500 text-orange-50",
         sinCalificar: "border-transparent bg-gray-500 text-gray-50",
       },

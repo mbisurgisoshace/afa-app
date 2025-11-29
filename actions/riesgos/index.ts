@@ -6,6 +6,18 @@ import { revalidatePath } from "next/cache";
 import { matchNames } from "@/lib/utils";
 import { PersonaTerrorista } from "@prisma/client";
 
+export const getUltimoRiesgo = async (entidadId: number) => {
+  const ultimoRiesgo = await db.riesgo.findFirst({
+    where: { entidadId },
+    orderBy: { createdAt: "desc" },
+    include: {
+      items: true,
+    },
+  });
+
+  return ultimoRiesgo;
+};
+
 export const getUltimoRiesgoTerrorismo = async (entidadId: number) => {
   const ultimoRiesgoTerrorismo = await db.riesgoTerrorista.findFirst({
     where: { entidadId },

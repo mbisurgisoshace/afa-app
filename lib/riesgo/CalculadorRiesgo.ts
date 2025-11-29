@@ -45,6 +45,7 @@ import { EntidadWithPersonasInteres } from "@/types";
 import { calcularRiesgoScore } from "./Campos/riesgoScore";
 import { calcularRiesgoProgramaPrevencion } from "./Campos/tieneProgramaPrevencion";
 import { calcularRiesgoProgramaIntegridad } from "./Campos/tieneProgramaIntegridad";
+import { revalidatePath } from "next/cache";
 
 export default async function calcularRiesgo(
   codigoEntidad: string
@@ -91,6 +92,8 @@ export default async function calcularRiesgo(
       },
     },
   });
+
+  revalidatePath(`/entidades/${entidad.codigoEntidad}`);
 }
 
 async function obtenerCamposParaCalculo() {
