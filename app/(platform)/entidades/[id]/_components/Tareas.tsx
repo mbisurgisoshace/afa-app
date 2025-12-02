@@ -20,12 +20,14 @@ import calcularRiesgo from "@/lib/riesgo/CalculadorRiesgo";
 
 export default function Tareas({
   children,
+  procesado,
   codigoEntidad,
   align = "start",
   solicitud = true,
   recordatorio = true,
   solicitudesPendientes,
 }: {
+  procesado: boolean;
   solicitud?: boolean;
   codigoEntidad: string;
   recordatorio?: boolean;
@@ -97,7 +99,10 @@ export default function Tareas({
           )}
         </DropdownMenuGroup>
         <DropdownMenuLabel>Calculador Riesgo</DropdownMenuLabel>
-        <DropdownMenuItem onClick={onCalcularRiesgo} disabled={loading}>
+        <DropdownMenuItem
+          onClick={onCalcularRiesgo}
+          disabled={loading || !procesado}
+        >
           Calcular
         </DropdownMenuItem>
       </DropdownMenuContent>

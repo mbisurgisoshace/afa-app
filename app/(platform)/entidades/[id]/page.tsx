@@ -117,6 +117,7 @@ export default async function Entidad({ params }: EntidadProps) {
         } ${riesgo?.text}`}</Badge>
         {/* <EnviarSolicitud codigoEntidad={entidad?.codigoEntidad!} /> */}
         <Tareas
+          procesado={!!entidad?.fecha}
           codigoEntidad={entidad?.codigoEntidad!}
           solicitudesPendientes={tieneSolicitudesPendientes}
         />
