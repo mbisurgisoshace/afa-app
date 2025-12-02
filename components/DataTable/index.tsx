@@ -43,6 +43,10 @@ export function DataTable<TData, TValue>({
   filteringTool,
   renderSubComponent,
 }: DataTableProps<TData, TValue>) {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 50,
+  });
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   // const [expanded, setExpanded] = useState<ExpandedState>({});
@@ -55,6 +59,7 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       // expanded,
+      pagination,
       rowSelection,
       columnFilters,
       columnVisibility,
@@ -63,6 +68,7 @@ export function DataTable<TData, TValue>({
     getRowCanExpand: () => true,
     onSortingChange: setSorting,
     // onExpandedChange: setExpanded,
+    onPaginationChange: setPagination,
     onRowSelectionChange: setRowSelection,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
