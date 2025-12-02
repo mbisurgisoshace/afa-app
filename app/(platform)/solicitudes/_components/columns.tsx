@@ -116,12 +116,13 @@ export const columns: ColumnDef<EntidadWithSolicitudes>[] = [
     header: "",
     size: 10,
     cell: ({ row }) => {
-      const { id, codigoEntidad } = row.original;
+      const { id, codigoEntidad, fecha } = row.original;
       return (
         <div className="flex items-center gap-4 text-primary justify-evenly">
           <Tareas
             align="center"
             solicitud={false}
+            procesado={!!fecha}
             solicitudesPendientes
             codigoEntidad={codigoEntidad}
           >
